@@ -101,7 +101,12 @@ h2.screen-title{font-family:var(--disp);font-weight:400;font-size:28px;color:var
   color:var(--text);font-family:var(--ui);font-size:15px;padding:6px 2px;
 }
 .player-row input:focus{outline:none;border-bottom-color:var(--gold)}
-.char-dot{width:34px;height:34px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.25);box-shadow:inset 0 -3px 6px rgba(0,0,0,.35)}
+.char-dot{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  border:1.5px solid rgba(40,28,10,.5);
+  background-image:radial-gradient(circle at 35% 28%, rgba(255,255,255,.55), rgba(255,255,255,0) 50%);
+  box-shadow:inset 0 -4px 7px rgba(0,0,0,.35), 0 2px 4px rgba(0,0,0,.4);
+}
 .char-cycle{font-family:var(--ui);font-size:10px;letter-spacing:.05em;color:var(--dim);text-align:right;flex:none;width:84px;line-height:1.3}
 .char-cycle b{display:block;color:var(--text);font-size:11px}
 
@@ -135,57 +140,108 @@ h2.screen-title{font-family:var(--disp);font-weight:400;font-size:28px;color:var
 .tab{flex:1;min-height:40px;border-radius:5px;font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--dim)}
 .tab.on{background:var(--panel2);color:var(--gold);box-shadow:inset 0 0 0 1px var(--line2)}
 
-/* ============ TABLERO ============ */
+/* ============ TABLERO — cartón clásico ============ */
+:root{
+  --floor:#e9dbb4;          /* suelo de sala */
+  --field:#ddc890;          /* campo de pasillos */
+  --bink:#3a2e1c;           /* tinta impresa */
+  --bink-soft:rgba(56,42,22,.38);
+  --maroon:#5f1f28;         /* marco granate */
+}
 .board{
-  display:grid;gap:6px;
+  display:grid;gap:13px;position:relative;
   grid-template-columns:1fr 1.05fr 1fr;
   grid-template-areas:
     "cocina baile invernadero"
     "comedor centro billar"
     "comedor centro biblioteca"
     "salon vestibulo estudio";
-  background:#0a0e0b;border:1px solid var(--line2);border-radius:10px;padding:8px;
+  padding:14px;
+  background:
+    radial-gradient(340px 220px at 82% 12%, rgba(122,90,44,.14), transparent 70%),
+    radial-gradient(280px 200px at 12% 85%, rgba(122,90,44,.12), transparent 70%),
+    repeating-linear-gradient(0deg, var(--bink-soft) 0 1px, transparent 1px 13px),
+    repeating-linear-gradient(90deg, var(--bink-soft) 0 1px, transparent 1px 13px),
+    linear-gradient(160deg, #e2cf9e, var(--field));
+  border:9px solid var(--maroon);
+  box-shadow:
+    inset 0 0 0 2px #caa64a,
+    0 10px 30px rgba(0,0,0,.55),
+    0 2px 6px rgba(0,0,0,.4);
+  border-radius:3px;
 }
+.startsq{position:absolute;width:9px;height:9px;border:1px solid var(--bink);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.25);z-index:1}
 .room{
   grid-area:var(--area);
   background:
-    linear-gradient(135deg, rgba(255,255,255,.035), transparent 55%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 9px),
-    var(--panel2);
-  border:1px solid var(--line);border-radius:6px;
-  min-height:74px;padding:7px 7px 6px;
-  display:flex;flex-direction:column;gap:4px;position:relative;
-  font-family:var(--ui);
-  transition:box-shadow .2s ease;
+    repeating-linear-gradient(90deg, rgba(122,88,40,.10) 0 2px, transparent 2px 12px),
+    repeating-linear-gradient(0deg, rgba(122,88,40,.05) 0 1px, transparent 1px 26px),
+    var(--floor);
+  border:1.5px solid var(--bink);border-radius:2px;
+  min-height:76px;padding:6px 5px 5px;
+  display:flex;flex-direction:column;gap:3px;position:relative;
+  font-family:var(--disp);
+  box-shadow:inset 0 0 14px rgba(122,90,44,.18);
+  z-index:1;
 }
-.room .rname{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);line-height:1.2;padding-right:18px}
-.room .rico{position:absolute;top:5px;right:7px;font-size:13px;opacity:.8}
-.room.here{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold-dim)}
-.room.reach{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold), 0 0 14px rgba(201,164,55,.35);cursor:pointer;animation:pulse 1.4s ease infinite}
-.room.approach{border-color:var(--gold-dim);border-style:dashed;cursor:pointer}
-@keyframes pulse{50%{box-shadow:0 0 0 1px var(--gold), 0 0 22px rgba(201,164,55,.55)}}
-.room .reach-tag{font-size:9px;font-weight:700;letter-spacing:.05em;color:var(--gold);text-transform:uppercase}
-.room .passage{position:absolute;bottom:4px;right:6px;font-size:11px;opacity:.55}
-.tokens{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto}
+.room .rname{
+  font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:#33281a;line-height:1.2;text-align:center;position:relative;z-index:2;
+}
+.room .rico{
+  position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
+  font-size:27px;filter:sepia(1) saturate(.45) contrast(.75);opacity:.45;
+  pointer-events:none;z-index:0;
+}
+.room .door{position:absolute;background:var(--floor);z-index:2}
+.door.d-right{right:-3px;top:50%;transform:translateY(-50%);width:6px;height:17px;border-top:1.5px solid var(--bink);border-bottom:1.5px solid var(--bink)}
+.door.d-left{left:-3px;top:50%;transform:translateY(-50%);width:6px;height:17px;border-top:1.5px solid var(--bink);border-bottom:1.5px solid var(--bink)}
+.door.d-top{top:-3px;left:50%;transform:translateX(-50%);height:6px;width:17px;border-left:1.5px solid var(--bink);border-right:1.5px solid var(--bink)}
+.door.d-bottom{bottom:-3px;left:50%;transform:translateX(-50%);height:6px;width:17px;border-left:1.5px solid var(--bink);border-right:1.5px solid var(--bink)}
+.room.here{outline:3px double var(--maroon);outline-offset:-1px}
+.room.reach{cursor:pointer;outline:2px solid var(--maroon);outline-offset:1px;animation:pulse 1.6s ease infinite}
+.room.reach::before{content:'';position:absolute;inset:0;background:rgba(201,164,55,.20);z-index:0}
+.room.approach{cursor:pointer;outline:2px dashed var(--bink-soft);outline-offset:1px}
+@keyframes pulse{50%{outline-color:#a33a47}}
+.room .reach-tag{
+  align-self:center;position:relative;z-index:2;
+  font-family:var(--ui);font-size:8.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--maroon);border:1.5px solid var(--maroon);border-radius:2px;padding:1px 5px;
+  background:rgba(238,226,190,.85);transform:rotate(-2deg);
+}
+.room.approach .reach-tag{color:#5a4830;border-color:#5a4830;transform:rotate(2deg)}
+.room .passage{
+  position:absolute;bottom:2px;right:4px;z-index:2;
+  font-family:var(--ui);font-size:13px;font-weight:800;color:var(--maroon);opacity:.85;font-style:normal;
+}
+.tokens{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto;position:relative;z-index:2}
 .tok{
   width:20px;height:20px;border-radius:50%;flex:none;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--ui);font-size:9px;font-weight:800;color:rgba(0,0,0,.65);
-  border:1.5px solid rgba(255,255,255,.35);box-shadow:0 1px 3px rgba(0,0,0,.5), inset 0 -2px 3px rgba(0,0,0,.25);
+  background-image:radial-gradient(circle at 35% 28%, rgba(255,255,255,.6), rgba(255,255,255,0) 48%);
+  border:1px solid rgba(40,28,10,.55);box-shadow:0 2px 3px rgba(40,28,10,.45), inset 0 -3px 4px rgba(0,0,0,.3);
 }
-.tok.me{outline:2px solid var(--paper);outline-offset:1px}
-.tok.wtok{background:#2c2c2c;border-color:#666;color:#ddd;font-size:10px}
+.tok.me{outline:2px solid var(--maroon);outline-offset:1px}
+.tok.wtok{background-color:#b3b3b3;background-image:radial-gradient(circle at 35% 28%, rgba(255,255,255,.7), rgba(255,255,255,0) 55%);border-color:#3d3d3d;font-size:12px}
+.tok.wtok .wico{filter:grayscale(1) contrast(1.3) brightness(.75)}
 .centro{
-  grid-area:centro;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  border:1px dashed var(--gold-dim);border-radius:6px;padding:8px 4px;text-align:center;
+  grid-area:centro;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  border:1.5px solid var(--bink);border-radius:2px;padding:8px 4px;text-align:center;
+  background:
+    repeating-linear-gradient(45deg, rgba(122,88,40,.07) 0 3px, transparent 3px 9px),
+    #dcc78f;
+  box-shadow:inset 0 0 16px rgba(122,90,44,.22);z-index:1;position:relative;
 }
+.stairs{width:58px;height:22px;border:1.5px solid var(--bink);background:repeating-linear-gradient(180deg,#d6c294 0 4px,#8a744d 4px 5.5px)}
 .mini-envelope{
-  width:46px;height:32px;border:1.5px solid var(--gold-dim);border-radius:2px;position:relative;
-  background:linear-gradient(180deg,#2a2317,#1c1810);
+  width:46px;height:32px;border:1.5px solid var(--bink);border-radius:1px;position:relative;
+  background:linear-gradient(180deg,#dbc48d,#c9ae72);
+  box-shadow:0 2px 4px rgba(40,28,10,.35);
 }
-.mini-envelope::before{content:'';position:absolute;left:-1px;top:-1px;right:-1px;height:0;border-left:23px solid transparent;border-right:23px solid transparent;border-top:16px solid #3a3122}
-.mini-envelope::after{content:'✦';position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);color:var(--blood);font-size:11px}
-.centro .clab{font-family:var(--ui);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim);font-weight:700}
+.mini-envelope::before{content:'';position:absolute;left:1px;top:0;right:1px;height:0;border-left:21px solid transparent;border-right:21px solid transparent;border-top:15px solid #b89a5e}
+.mini-envelope::after{content:'✦';position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);color:var(--maroon);font-size:11px}
+.centro .clab{font-family:var(--disp);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#5c4a26;font-weight:700}
 .corridor-note{font-family:var(--ui);font-size:12px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 12px;text-align:center}
 .corridor-note b{color:var(--gold)}
 
@@ -209,15 +265,17 @@ h2.screen-title{font-family:var(--disp);font-weight:400;font-size:28px;color:var
 
 /* ============ CARTAS ============ */
 .card{
-  border-radius:8px;border:1px solid var(--line2);overflow:hidden;background:var(--panel2);
+  border-radius:4px;border:1.5px solid var(--bink);overflow:hidden;
+  background:linear-gradient(165deg,#f0e3c0,#e2d1a4);
   display:flex;flex-direction:column;align-items:center;text-align:center;
-  box-shadow:0 3px 10px rgba(0,0,0,.35);
+  box-shadow:0 4px 10px rgba(0,0,0,.45);position:relative;
 }
+.card::after{content:'';position:absolute;inset:3px;border:1px solid rgba(58,46,28,.45);border-radius:2px;pointer-events:none}
 .card .band{width:100%;height:5px}
 .card.cat-s .band{background:var(--cat-s)} .card.cat-w .band{background:var(--cat-w)} .card.cat-r .band{background:var(--cat-r)}
-.card .cico{font-size:30px;padding:12px 4px 2px}
-.card .cname{font-family:var(--disp);font-size:14px;color:var(--paper);padding:2px 6px 4px;line-height:1.15;text-wrap:balance}
-.card .ccat{font-family:var(--ui);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);padding-bottom:9px}
+.card .cico{font-size:30px;padding:12px 4px 2px;filter:sepia(.85) saturate(.55) contrast(.85)}
+.card .cname{font-family:var(--disp);font-size:14px;color:#2c2216;padding:2px 8px 4px;line-height:1.15;text-wrap:balance}
+.card .ccat{font-family:var(--ui);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#6e5b3a;padding-bottom:10px}
 .hand{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .card-lg{width:min(62vw,230px);margin:0 auto}
 .card-lg .cico{font-size:52px;padding-top:22px}
@@ -227,36 +285,41 @@ h2.screen-title{font-family:var(--disp);font-weight:400;font-size:28px;color:var
 /* ============ SELECTORES DE SUGERENCIA ============ */
 .pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pick{
-  border:1px solid var(--line);border-radius:8px;background:var(--panel);
+  border:1.5px solid var(--bink);border-radius:4px;
+  background:linear-gradient(165deg,#ecdfbc,#ddcb9e);
   padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;
-  font-family:var(--ui);
+  font-family:var(--ui);box-shadow:0 2px 6px rgba(0,0,0,.35);
 }
-.pick .pico{font-size:22px}
-.pick .pname{font-size:10px;font-weight:600;color:var(--dim);line-height:1.2;text-align:center}
-.pick.on{border-color:var(--gold);background:var(--panel2);box-shadow:0 0 0 1px var(--gold)}
-.pick.on .pname{color:var(--paper)}
-.pick:disabled{opacity:.35}
-.pick.mine::after{content:'tu carta';font-size:8px;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;font-weight:700}
+.pick .pico{font-size:22px;filter:sepia(.85) saturate(.55) contrast(.85)}
+.pick .pname{font-size:10px;font-weight:700;color:#4a3b24;line-height:1.2;text-align:center}
+.pick.on{outline:2.5px solid var(--maroon);outline-offset:1px;background:#f4e8c6}
+.pick.on .pname{color:var(--maroon)}
+.pick:disabled{opacity:.3;box-shadow:none}
+.pick.mine::after{content:'tu carta';font-size:8px;letter-spacing:.08em;color:var(--maroon);text-transform:uppercase;font-weight:800}
 .sect-label{font-family:var(--ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:6px}
 .sect-label b{color:var(--gold)}
 
 /* ============ CUADERNO ============ */
-.nb-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
-table.nb{border-collapse:collapse;width:100%;font-family:var(--ui)}
-.nb th,.nb td{border-bottom:1px solid var(--line);padding:0;text-align:center}
-.nb thead th{position:sticky;top:0;background:var(--panel2);z-index:2;padding:6px 2px}
-.nb .rowname{
-  text-align:left;padding:7px 8px;font-size:11.5px;color:var(--text);white-space:nowrap;
-  position:sticky;left:0;background:var(--panel);z-index:1;max-width:152px;overflow:hidden;text-overflow:ellipsis;
+.nb-wrap{
+  overflow-x:auto;border:1.5px solid var(--bink);border-radius:3px;
+  background:#e9dbb6;box-shadow:0 5px 14px rgba(0,0,0,.4);
 }
-.nb .group td{background:var(--ink);padding:5px 8px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;text-align:left;position:sticky;left:0}
-.nb .colchar{width:20px;height:20px;border-radius:50%;margin:0 auto;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:rgba(0,0,0,.6)}
-.nbcell{width:100%;min-width:38px;min-height:38px;font-size:15px;color:var(--dim);display:flex;align-items:center;justify-content:center}
-.nbcell.v-yes{color:var(--ok);font-weight:700}
-.nbcell.v-no{color:var(--blood)}
-.nbcell.v-q{color:var(--gold)}
-.nbcell.auto{background:rgba(201,164,55,.07)}
-tr.struck .rowname{color:var(--faint);text-decoration:line-through}
+table.nb{border-collapse:collapse;width:100%;font-family:var(--ui)}
+.nb th,.nb td{border-bottom:1px solid rgba(58,46,28,.28);padding:0;text-align:center}
+.nb thead th{position:sticky;top:0;background:#dbc793;z-index:2;padding:6px 2px;border-bottom:1.5px solid var(--bink)}
+.nb .rowname{
+  text-align:left;padding:7px 8px;font-size:12px;font-family:var(--body);color:#2c2418;white-space:nowrap;
+  position:sticky;left:0;background:#e9dbb6;z-index:1;max-width:152px;overflow:hidden;text-overflow:ellipsis;
+}
+.nb .group td{background:var(--maroon);padding:5px 8px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#ecdcb2;font-weight:700;text-align:left;position:sticky;left:0}
+.nb .colchar{width:20px;height:20px;border-radius:50%;margin:0 auto;border:1px solid rgba(40,28,10,.5);background-image:radial-gradient(circle at 35% 28%, rgba(255,255,255,.6), rgba(255,255,255,0) 48%);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:rgba(0,0,0,.6)}
+.nbcell{width:100%;min-width:38px;min-height:38px;font-size:16px;color:rgba(58,46,28,.4);display:flex;align-items:center;justify-content:center}
+.nbcell.v-yes{color:#24592f;font-weight:800}
+.nbcell.v-no{color:var(--maroon);font-weight:700}
+.nbcell.v-q{color:#8a6a1c;font-weight:800}
+.nbcell.auto{background:rgba(178,140,52,.20)}
+tr.struck .rowname{color:rgba(58,46,28,.42);text-decoration:line-through}
+.nb .ri{filter:sepia(.85) saturate(.5) contrast(.8);display:inline-block}
 .nb-legend{font-family:var(--ui);font-size:11px;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap;padding:2px 2px 0}
 .nb-legend span b{font-size:13px}
 
@@ -677,7 +740,7 @@ function setupScreen(){
       ${st.names.slice(0,st.count).map((nm,i)=>{
         const ch=SUSPECTS.find(s=>s.id===st.chars[i]);
         return `<div class="player-row">
-          <button class="char-dot" style="background:${ch.c}" data-a="cycle-char" data-i="${i}" aria-label="Cambiar personaje"></button>
+          <button class="char-dot" style="background-color:${ch.c}" data-a="cycle-char" data-i="${i}" aria-label="Cambiar personaje"></button>
           <input type="text" maxlength="14" value="${esc(nm)}" placeholder="Jugador ${i+1}" data-a="name" data-i="${i}" autocomplete="off">
           <button class="char-cycle" data-a="cycle-char" data-i="${i}">juega como<b>${ch.n}</b></button>
         </div>`;
@@ -707,7 +770,7 @@ function handoffScreen(){
       <div style="margin-top:16px" class="eyebrow dim">Pasa el móvil a</div>
       <div class="who" style="margin-top:6px">${esc(p.name)}</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px">
-        <span class="char-dot" style="background:${ch.c};width:22px;height:22px;display:inline-block"></span>
+        <span class="char-dot" style="background-color:${ch.c};width:22px;height:22px;display:inline-block"></span>
         <span class="eyebrow dim" style="letter-spacing:.15em">${ch.n}</span>
       </div>
       <p class="serif-note" style="margin-top:14px">${nextLabels[S.handoff.next]}<br>Que nadie más mire la pantalla.</p>
@@ -722,7 +785,7 @@ function turnScreen(){
   const tabs=[['board','Mansión'],['nb','Cuaderno'],['hand','Cartas'],['log','Registro']];
   return `<div class="screen" style="padding-bottom:18px">
     <div class="turn-head">
-      <span class="char-dot" style="background:${ch.c}"></span>
+      <span class="char-dot" style="background-color:${ch.c}"></span>
       <div class="tt">
         <div class="eyebrow dim">Ronda ${S.round} · ${ch.n}</div>
         <div class="name">${esc(p.name)}</div>
@@ -751,36 +814,47 @@ function boardTab(){
   return `
     <div class="corridor-note">${positionNote(p)}</div>
     ${boardHTML(opts)}
-    ${S.phase==='rolled' ? `<p class="action-note">Sacaste <b class="num">${S.dice[0]+S.dice[1]}</b>. Toca una sala <b>iluminada</b> para entrar, o una punteada para acercarte a ella.</p>`:''}
+    ${S.phase==='rolled' ? `<p class="action-note">Sacaste <b class="num">${S.dice[0]+S.dice[1]}</b>. Toca una sala con el sello <b>ENTRAR</b>, o una de borde punteado para acercarte a ella.</p>`:''}
     ${diceHTML(false)}
     ${actionBar()}
   `;
 }
 
+const PASSAGE_ARROW={r0:'↘', r8:'↖', r2:'↙', r6:'↗'};
+const DOOR_SIDE={r0:'right', r1:'bottom', r2:'left', r3:'right', r4:'left', r5:'left', r6:'right', r7:'top', r8:'left'};
+
 function boardHTML(opts){
   const meChar=cur().charId;
   const roomCells=ROOMS.map(r=>{
     const chips=SUSPECTS.filter(s=>S.charLoc[s.id]===r.id)
-      .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background:${s.c}" title="${s.n}">${s.ini}</span>`).join('');
+      .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background-color:${s.c}" title="${s.n}">${s.ini}</span>`).join('');
     const wchips=WEAPONS.filter(w=>S.weaponLoc[w.id]===r.id)
-      .map(w=>`<span class="tok wtok" title="${w.n}">${w.ico}</span>`).join('');
+      .map(w=>`<span class="tok wtok" title="${w.n}"><span class="wico">${w.ico}</span></span>`).join('');
     const o=opts?opts[r.id]:null;
     const cls=[ 'room',
       cur().room===r.id?'here':'',
       o&&o.kind==='enter'?'reach':'',
       o&&o.kind==='approach'?'approach':'' ].join(' ');
-    const tag = o ? (o.kind==='enter' ? `<span class="reach-tag">Entrar</span>` : `<span class="reach-tag" style="color:var(--dim)">a ${o.left}</span>`) : '';
-    const pas = PASSAGES[r.id] ? `<span class="passage" title="Pasadizo secreto a ${CARD[PASSAGES[r.id]].n}">🕳️</span>` : '';
+    const tag = o ? (o.kind==='enter' ? `<span class="reach-tag">Entrar</span>` : `<span class="reach-tag">a ${o.left}</span>`) : '';
+    const pas = PASSAGES[r.id] ? `<span class="passage" title="Pasadizo secreto a ${CARD[PASSAGES[r.id]].n}">${PASSAGE_ARROW[r.id]}</span>` : '';
     return `<div class="${cls}" style="--area:${r.area}" ${o?`data-a="room" data-r="${r.id}" role="button" tabindex="0"`:''}>
       <span class="rname">${r.n}</span><span class="rico">${r.ico}</span>
+      <span class="door d-${DOOR_SIDE[r.id]}"></span>
       ${tag}<div class="tokens">${chips}${wchips}</div>${pas}
     </div>`;
   }).join('');
   const corridorChips=SUSPECTS.filter(s=>S.charLoc[s.id]===null)
-    .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background:${s.c}" title="${s.n} (pasillos)">${s.ini}</span>`).join('');
+    .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background-color:${s.c}" title="${s.n} (pasillos)">${s.ini}</span>`).join('');
+  const startsq=[
+    ['top:2px;left:34%','#c9403a'],['top:2px;right:18%','#4a8a58'],
+    ['left:2px;top:56%','#d8a53a'],['right:2px;top:44%','#4a7fa8'],
+    ['bottom:2px;left:24%','#e8e4da'],['bottom:2px;right:32%','#8a5a9a'],
+  ].map(([pos,c])=>`<i class="startsq" style="${pos};background-color:${c}"></i>`).join('');
   return `<div class="board">
+    ${startsq}
     ${roomCells}
     <div class="centro">
+      <div class="stairs" title="Escaleras"></div>
       <div class="mini-envelope"></div>
       <span class="clab">Sobre del caso</span>
       ${corridorChips?`<div class="tokens" style="justify-content:center">${corridorChips}</div><span class="clab" style="letter-spacing:.1em">en los pasillos</span>`:''}
@@ -800,7 +874,7 @@ function actionBar(){
   if(S.phase==='idle'){
     b.push(`<button class="btn primary" data-a="roll">🎲 Tirar los dados</button>`);
     if(p.room && PASSAGES[p.room])
-      b.push(`<button class="btn" data-a="passage">🕳️ Pasadizo secreto <span class="sub">ir directo a ${esc(CARD[PASSAGES[p.room]].n)}</span></button>`);
+      b.push(`<button class="btn" data-a="passage">${PASSAGE_ARROW[p.room]} Pasadizo secreto <span class="sub">ir directo a ${esc(CARD[PASSAGES[p.room]].n)}</span></button>`);
     if(p.room && p.movedBySug)
       b.push(`<button class="btn" data-a="stay-suggest">🔍 Sugerir sin moverte <span class="sub">te trajeron aquí con una sugerencia</span></button>`);
   }
@@ -820,7 +894,7 @@ function nbTab(){
   const me=S.turn, p=cur();
   const cols=S.players;
   const head=`<tr><th class="rowname" style="background:var(--panel2)"><span class="eyebrow dim" style="letter-spacing:.15em">Cuaderno</span></th>${
-    cols.map((pl,i)=>{const c=charOf(pl);return `<th title="${esc(pl.name)}"><span class="colchar" style="background:${c.c}">${i===me?'YO':c.ini}</span></th>`;}).join('')}</tr>`;
+    cols.map((pl,i)=>{const c=charOf(pl);return `<th title="${esc(pl.name)}"><span class="colchar" style="background-color:${c.c}">${i===me?'YO':c.ini}</span></th>`;}).join('')}</tr>`;
   const group=(label)=>`<tr class="group"><td colspan="${cols.length+1}">${label}</td></tr>`;
   const row=(c)=>{
     const cells=cols.map((pl,i)=>{
@@ -830,7 +904,7 @@ function nbTab(){
       return `<td><button class="nbcell v-${v} ${cell&&cell.auto?'auto':''}" data-a="nb" data-c="${c.id}" data-col="${i}" aria-label="${esc(c.n)}, columna ${esc(pl.name)}">${sym}</button></td>`;
     }).join('');
     const struck = cols.some((_,i)=>{const cl=p.nb[c.id+'|'+i]; return cl&&cl.v==='yes';});
-    return `<tr class="${struck?'struck':''}"><td class="rowname">${cardIco(c.id)} ${c.n}</td>${cells}</tr>`;
+    return `<tr class="${struck?'struck':''}"><td class="rowname"><span class="ri">${cardIco(c.id)}</span> ${c.n}</td>${cells}</tr>`;
   };
   return `
     <div class="nb-wrap"><table class="nb">
@@ -1027,7 +1101,7 @@ function rulesScreen(){
       <h2 class="screen-title">Cómo se juega</h2>
     </div>
     ${rc('I','El caso', `El Dr. Black ha sido asesinado. En el <b>sobre del caso</b> (centro del tablero) hay tres cartas boca abajo: <b>un culpable, un arma y una sala</b>. El resto de cartas se reparte entre los jugadores. Gana quien primero descubra las tres.`)}
-    ${rc('II','Tu turno', `<b>Tira los dados</b> y muévete por la mansión: entra en una sala iluminada, o acércate a una lejana (llegarás en próximos turnos). Desde las salas de las esquinas puedes usar un <b>pasadizo secreto 🕳️</b> en vez de tirar.`)}
+    ${rc('II','Tu turno', `<b>Tira los dados</b> y muévete por la mansión: entra en una sala marcada con ENTRAR, o acércate a una lejana (llegarás en próximos turnos). Desde las salas de las esquinas puedes usar un <b>pasadizo secreto</b> (la flecha ↘ del tablero) en vez de tirar.`)}
     ${rc('III','La sugerencia', `Al entrar en una sala, di en voz alta: «Sospecho que fue <b>X</b>, con <b>Y</b>, aquí en <b>esta sala</b>». El sospechoso y el arma nombrados se trasladan a tu sala.`)}
     ${rc('IV','La refutación', `En sentido horario, el <b>primer</b> jugador que tenga alguna de las tres cartas nombradas debe enseñarte <b>una</b> (solo a ti, pasándose el móvil). Si nadie puede refutar… anótalo bien: es una pista de oro.`)}
     ${rc('V','El cuaderno', `Tacha lo que sepas: cada carta que veas en una mano <b>no está en el sobre</b>. La app anota sola tus cartas, las que te enseñen y quién pasó sin refutar; el resto de deducciones son cosa tuya.`)}
