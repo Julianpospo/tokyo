@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0e130f">
+<title>Cluedo · La Mansión Black</title>
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#0e130f;          /* negro-verdoso, fieltro de billar */
+  --panel:#161d17;
+  --panel2:#1c241d;
+  --line:#2b372d;
+  --line2:#3a4a3c;
+  --paper:#ead9b0;        /* pergamino */
+  --paper2:#d9c495;
+  --gold:#c9a437;         /* latón */
+  --gold-dim:#8a7020;
+  --blood:#a52a3a;        /* carmesí */
+  --blood2:#7c1f2c;
+  --text:#e9e2cd;
+  --dim:#97a091;
+  --faint:#5c675c;
+  --ok:#5da06a;
+  --cat-s:#a52a3a;        /* sospechosos */
+  --cat-w:#a8823c;        /* armas */
+  --cat-r:#41694c;        /* salas */
+  --disp:'Didot','Bodoni MT','Playfair Display','Times New Roman',serif;
+  --body:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --ui:-apple-system,'SF Pro Text','Segoe UI',Roboto,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{
+  min-height:100%;
+  background:var(--ink);
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(201,164,55,.06), transparent 60%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.010) 0 2px, transparent 2px 6px);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.5;
+  overscroll-behavior-y:contain;
+}
+#app{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ============ TIPOS DE TEXTO ============ */
+.eyebrow{font-family:var(--ui);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.eyebrow.dim{color:var(--dim)}
+h1.masthead{font-family:var(--disp);font-weight:400;font-size:clamp(40px,13vw,64px);line-height:.95;letter-spacing:.01em;color:var(--paper);text-wrap:balance}
+h2.screen-title{font-family:var(--disp);font-weight:400;font-size:28px;color:var(--paper);line-height:1.1;text-wrap:balance}
+.serif-note{font-style:italic;color:var(--dim);font-size:14px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ============ ESTRUCTURA DE PANTALLA ============ */
+.screen{flex:1;display:flex;flex-direction:column;padding:20px 18px 26px;gap:16px;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.spacer{flex:1}
+.rule-line{height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);border:none}
+
+/* ============ BOTONES ============ */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:54px;padding:12px 18px;border-radius:6px;
+  font-family:var(--ui);font-size:15px;font-weight:600;letter-spacing:.02em;
+  border:1px solid var(--line2);background:var(--panel2);color:var(--text);
+  transition:transform .08s ease, background .15s ease;
+  width:100%;text-align:center;
+}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:linear-gradient(180deg,#d4b04a,#b18f2c);color:#241c05;border-color:#e3c665;box-shadow:0 2px 12px rgba(201,164,55,.25)}
+.btn.danger{background:linear-gradient(180deg,#b23347,#8c2233);border-color:#c85568;color:#ffe9ec}
+.btn.ghost{background:transparent;border-color:var(--line)}
+.btn:disabled{opacity:.38;pointer-events:none}
+.btn .sub{display:block;font-weight:400;font-size:11px;opacity:.75;letter-spacing:.04em}
+.btn-col{display:flex;flex-direction:column;gap:10px}
+.btn .big-ico{font-size:20px}
+
+/* ============ PORTADA ============ */
+.home-hero{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:14px;padding:24px 0}
+.seal{
+  width:92px;height:92px;margin:0 auto;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #c04a5c, var(--blood2) 70%);
+  box-shadow:0 4px 18px rgba(165,42,58,.4), inset 0 2px 6px rgba(255,255,255,.18), inset 0 -4px 10px rgba(0,0,0,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-size:38px;color:#f4d9d9;
+}
+.home-sub{font-style:italic;color:var(--dim);font-size:15px;max-width:32ch;margin:0 auto;text-wrap:balance}
+
+/* ============ CONFIGURACIÓN ============ */
+.count-row{display:flex;gap:8px}
+.count-chip{flex:1;min-height:46px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);font-family:var(--ui);font-size:16px;font-weight:600;color:var(--dim)}
+.count-chip.on{background:var(--gold);color:#241c05;border-color:#e3c665}
+.player-row{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.player-row input{
+  flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--line2);
+  color:var(--text);font-family:var(--ui);font-size:15px;padding:6px 2px;
+}
+.player-row input:focus{outline:none;border-bottom-color:var(--gold)}
+.char-dot{width:34px;height:34px;border-radius:50%;flex:none;border:2px solid rgba(255,255,255,.25);box-shadow:inset 0 -3px 6px rgba(0,0,0,.35)}
+.char-cycle{font-family:var(--ui);font-size:10px;letter-spacing:.05em;color:var(--dim);text-align:right;flex:none;width:84px;line-height:1.3}
+.char-cycle b{display:block;color:var(--text);font-size:11px}
+
+/* ============ HANDOFF (pantalla privada) ============ */
+.handoff{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;padding:30px 22px}
+.handoff .who{font-family:var(--disp);font-size:42px;color:var(--paper);line-height:1}
+.dossier{
+  border:1px solid var(--gold-dim);border-radius:4px;padding:26px 22px;width:100%;
+  background:
+    linear-gradient(160deg, rgba(201,164,55,.05), transparent 40%),
+    var(--panel);
+  position:relative;
+}
+.dossier::before{content:'';position:absolute;inset:6px;border:1px solid rgba(201,164,55,.22);border-radius:2px;pointer-events:none}
+.confidencial{
+  display:inline-block;transform:rotate(-6deg);
+  border:2px solid var(--blood);color:var(--blood);border-radius:3px;
+  font-family:var(--ui);font-weight:800;font-size:12px;letter-spacing:.3em;text-transform:uppercase;
+  padding:4px 10px;opacity:.9;
+}
+
+/* ============ CABECERA DE TURNO ============ */
+.turn-head{display:flex;align-items:center;gap:12px}
+.turn-head .char-dot{width:40px;height:40px}
+.turn-head .tt{flex:1;min-width:0}
+.turn-head .tt .name{font-family:var(--disp);font-size:24px;color:var(--paper);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{width:42px;height:42px;flex:none;border:1px solid var(--line2);border-radius:6px;background:var(--panel);font-size:17px;display:flex;align-items:center;justify-content:center}
+
+/* ============ TABS ============ */
+.tabs{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:4px}
+.tab{flex:1;min-height:40px;border-radius:5px;font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--dim)}
+.tab.on{background:var(--panel2);color:var(--gold);box-shadow:inset 0 0 0 1px var(--line2)}
+
+/* ============ TABLERO ============ */
+.board{
+  display:grid;gap:6px;
+  grid-template-columns:1fr 1.05fr 1fr;
+  grid-template-areas:
+    "cocina baile invernadero"
+    "comedor centro billar"
+    "comedor centro biblioteca"
+    "salon vestibulo estudio";
+  background:#0a0e0b;border:1px solid var(--line2);border-radius:10px;padding:8px;
+}
+.room{
+  grid-area:var(--area);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.035), transparent 55%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.14) 0 1px, transparent 1px 9px),
+    var(--panel2);
+  border:1px solid var(--line);border-radius:6px;
+  min-height:74px;padding:7px 7px 6px;
+  display:flex;flex-direction:column;gap:4px;position:relative;
+  font-family:var(--ui);
+  transition:box-shadow .2s ease;
+}
+.room .rname{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);line-height:1.2}
+.room .rico{position:absolute;top:5px;right:7px;font-size:13px;opacity:.8}
+.room.here{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold-dim)}
+.room.reach{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold), 0 0 14px rgba(201,164,55,.35);cursor:pointer;animation:pulse 1.4s ease infinite}
+.room.approach{border-color:var(--gold-dim);border-style:dashed;cursor:pointer}
+@keyframes pulse{50%{box-shadow:0 0 0 1px var(--gold), 0 0 22px rgba(201,164,55,.55)}}
+.room .reach-tag{font-size:9px;font-weight:700;letter-spacing:.05em;color:var(--gold);text-transform:uppercase}
+.room .passage{position:absolute;bottom:4px;right:6px;font-size:11px;opacity:.55}
+.tokens{display:flex;flex-wrap:wrap;gap:3px;margin-top:auto}
+.tok{
+  width:20px;height:20px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--ui);font-size:9px;font-weight:800;color:rgba(0,0,0,.65);
+  border:1.5px solid rgba(255,255,255,.35);box-shadow:0 1px 3px rgba(0,0,0,.5), inset 0 -2px 3px rgba(0,0,0,.25);
+}
+.tok.me{outline:2px solid var(--paper);outline-offset:1px}
+.tok.wtok{background:#2c2c2c;border-color:#666;color:#ddd;font-size:10px}
+.centro{
+  grid-area:centro;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border:1px dashed var(--gold-dim);border-radius:6px;padding:8px 4px;text-align:center;
+}
+.mini-envelope{
+  width:46px;height:32px;border:1.5px solid var(--gold-dim);border-radius:2px;position:relative;
+  background:linear-gradient(180deg,#2a2317,#1c1810);
+}
+.mini-envelope::before{content:'';position:absolute;left:-1px;top:-1px;right:-1px;height:0;border-left:23px solid transparent;border-right:23px solid transparent;border-top:16px solid #3a3122}
+.mini-envelope::after{content:'✦';position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);color:var(--blood);font-size:11px}
+.centro .clab{font-family:var(--ui);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim);font-weight:700}
+.corridor-note{font-family:var(--ui);font-size:12px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 12px;text-align:center}
+.corridor-note b{color:var(--gold)}
+
+/* ============ DADOS ============ */
+.dice-wrap{display:flex;align-items:center;justify-content:center;gap:14px;padding:6px 0}
+.die{
+  width:52px;height:52px;border-radius:9px;background:linear-gradient(160deg,#f4ecd8,#d8cba6);
+  box-shadow:0 3px 8px rgba(0,0,0,.5), inset 0 -3px 5px rgba(0,0,0,.15);
+  display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:8px;
+}
+.die.rolling{animation:shake .5s ease infinite}
+@keyframes shake{25%{transform:rotate(-8deg) translateY(-2px)}75%{transform:rotate(8deg) translateY(2px)}}
+.pip{width:9px;height:9px;border-radius:50%;background:#241c05;place-self:center;visibility:hidden}
+.die[data-v="1"] .pip:nth-child(5),
+.die[data-v="2"] .pip:nth-child(1),.die[data-v="2"] .pip:nth-child(9),
+.die[data-v="3"] .pip:nth-child(1),.die[data-v="3"] .pip:nth-child(5),.die[data-v="3"] .pip:nth-child(9),
+.die[data-v="4"] .pip:nth-child(1),.die[data-v="4"] .pip:nth-child(3),.die[data-v="4"] .pip:nth-child(7),.die[data-v="4"] .pip:nth-child(9),
+.die[data-v="5"] .pip:nth-child(1),.die[data-v="5"] .pip:nth-child(3),.die[data-v="5"] .pip:nth-child(5),.die[data-v="5"] .pip:nth-child(7),.die[data-v="5"] .pip:nth-child(9),
+.die[data-v="6"] .pip:nth-child(1),.die[data-v="6"] .pip:nth-child(3),.die[data-v="6"] .pip:nth-child(4),.die[data-v="6"] .pip:nth-child(6),.die[data-v="6"] .pip:nth-child(7),.die[data-v="6"] .pip:nth-child(9){visibility:visible}
+.dice-total{font-family:var(--disp);font-size:30px;color:var(--gold);min-width:44px;text-align:center}
+
+/* ============ CARTAS ============ */
+.card{
+  border-radius:8px;border:1px solid var(--line2);overflow:hidden;background:var(--panel2);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.35);
+}
+.card .band{width:100%;height:5px}
+.card.cat-s .band{background:var(--cat-s)} .card.cat-w .band{background:var(--cat-w)} .card.cat-r .band{background:var(--cat-r)}
+.card .cico{font-size:30px;padding:12px 4px 2px}
+.card .cname{font-family:var(--disp);font-size:14px;color:var(--paper);padding:2px 6px 4px;line-height:1.15;text-wrap:balance}
+.card .ccat{font-family:var(--ui);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);padding-bottom:9px}
+.hand{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card-lg{width:min(62vw,230px);margin:0 auto}
+.card-lg .cico{font-size:52px;padding-top:22px}
+.card-lg .cname{font-size:22px;padding-bottom:8px}
+.card-lg .ccat{font-size:10px;padding-bottom:16px}
+
+/* ============ SELECTORES DE SUGERENCIA ============ */
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pick{
+  border:1px solid var(--line);border-radius:8px;background:var(--panel);
+  padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-family:var(--ui);
+}
+.pick .pico{font-size:22px}
+.pick .pname{font-size:10px;font-weight:600;color:var(--dim);line-height:1.2;text-align:center}
+.pick.on{border-color:var(--gold);background:var(--panel2);box-shadow:0 0 0 1px var(--gold)}
+.pick.on .pname{color:var(--paper)}
+.pick:disabled{opacity:.35}
+.pick.mine::after{content:'tu carta';font-size:8px;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;font-weight:700}
+.sect-label{font-family:var(--ui);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:6px}
+.sect-label b{color:var(--gold)}
+
+/* ============ CUADERNO ============ */
+.nb-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+table.nb{border-collapse:collapse;width:100%;font-family:var(--ui)}
+.nb th,.nb td{border-bottom:1px solid var(--line);padding:0;text-align:center}
+.nb thead th{position:sticky;top:0;background:var(--panel2);z-index:2;padding:6px 2px}
+.nb .rowname{
+  text-align:left;padding:7px 8px;font-size:11.5px;color:var(--text);white-space:nowrap;
+  position:sticky;left:0;background:var(--panel);z-index:1;max-width:130px;overflow:hidden;text-overflow:ellipsis;
+}
+.nb .group td{background:var(--ink);padding:5px 8px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;text-align:left;position:sticky;left:0}
+.nb .colchar{width:20px;height:20px;border-radius:50%;margin:0 auto;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:rgba(0,0,0,.6)}
+.nbcell{width:100%;min-width:38px;min-height:38px;font-size:15px;color:var(--dim);display:flex;align-items:center;justify-content:center}
+.nbcell.v-yes{color:var(--ok);font-weight:700}
+.nbcell.v-no{color:var(--blood)}
+.nbcell.v-q{color:var(--gold)}
+.nbcell.auto{background:rgba(201,164,55,.07)}
+tr.struck .rowname{color:var(--faint);text-decoration:line-through}
+.nb-legend{font-family:var(--ui);font-size:11px;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap;padding:2px 2px 0}
+.nb-legend span b{font-size:13px}
+
+/* ============ REGISTRO ============ */
+.log{display:flex;flex-direction:column;gap:8px}
+.log-entry{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:6px;padding:9px 12px;font-size:13.5px;font-family:var(--ui);color:var(--text)}
+.log-entry .lr{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);font-weight:700;display:block;margin-bottom:2px}
+.log-entry.t-sug{border-left-color:var(--gold-dim)}
+.log-entry.t-show{border-left-color:var(--ok)}
+.log-entry.t-none{border-left-color:var(--blood)}
+.log-entry.t-acc{border-left-color:var(--blood);background:linear-gradient(90deg,rgba(165,42,58,.12),var(--panel))}
+.log-entry b{color:var(--paper)}
+
+/* ============ MODAL ============ */
+.overlay{position:fixed;inset:0;background:rgba(5,8,6,.82);display:flex;align-items:center;justify-content:center;padding:22px;z-index:50;animation:fadein .2s ease}
+.modal{background:var(--panel);border:1px solid var(--gold-dim);border-radius:10px;padding:22px 20px;width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px;max-height:86dvh;overflow-y:auto}
+
+/* ============ REGLAS ============ */
+.rule-card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;gap:13px;align-items:flex-start}
+.rule-card .rn{font-family:var(--disp);font-size:24px;color:var(--gold);line-height:1;min-width:26px;text-align:center;padding-top:2px}
+.rule-card .rtxt{font-size:14px;color:var(--text)}
+.rule-card .rtxt b{color:var(--gold)}
+.rule-card .rtxt .rt-title{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);display:block;margin-bottom:3px}
+
+/* ============ FIN DE PARTIDA ============ */
+.reveal-cards{display:flex;gap:10px;justify-content:center}
+.reveal-cards .card{flex:1;max-width:120px;animation:flipin .7s cubic-bezier(.2,.8,.3,1.1) backwards}
+.reveal-cards .card:nth-child(2){animation-delay:.35s}
+.reveal-cards .card:nth-child(3){animation-delay:.7s}
+@keyframes flipin{from{transform:rotateY(90deg) scale(.8);opacity:0}to{transform:none;opacity:1}}
+.winner-name{font-family:var(--disp);font-size:44px;color:var(--gold);line-height:1;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.06em;padding:4px 10px;border-radius:20px;border:1px solid var(--line2);color:var(--dim)}
+.badge.out{border-color:var(--blood);color:var(--blood)}
+.action-note{font-family:var(--ui);font-size:12.5px;color:var(--dim);text-align:center;padding:0 8px;text-wrap:balance}
+.action-note b{color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="app" role="main"></div>
+<script>
+'use strict';
+/* ==================================================================
+   CLUEDO · La Mansión Black — modo "pasa el móvil" para 3–6 jugadores
+   ================================================================== */
+
+const SUSPECTS = [
+  {id:'s0', n:'Srta. Amapola',  short:'Amapola', c:'#c9403a', ini:'A'},
+  {id:'s1', n:'Coronel Rubio',  short:'Rubio',   c:'#d8a53a', ini:'R'},
+  {id:'s2', n:'Sra. Blanca',    short:'Blanca',  c:'#e8e4da', ini:'B'},
+  {id:'s3', n:'Rev. Verdi',     short:'Verdi',   c:'#4a8a58', ini:'V'},
+  {id:'s4', n:'Sra. Celeste',   short:'Celeste', c:'#4a7fa8', ini:'C'},
+  {id:'s5', n:'Prof. Mora',     short:'Mora',    c:'#8a5a9a', ini:'M'},
+];
+const WEAPONS = [
+  {id:'w0', n:'Candelabro', ico:'🕯️'},
+  {id:'w1', n:'Cuchillo', ico:'🔪'},
+  {id:'w2', n:'Tubería de plomo', ico:'🚰'},
+  {id:'w3', n:'Revólver', ico:'🔫'},
+  {id:'w4', n:'Cuerda', ico:'➰'},
+  {id:'w5', n:'Llave inglesa', ico:'🔧'},
+];
+const ROOMS = [
+  {id:'r0', n:'Cocina',         area:'cocina',      ico:'🍳', xy:[1,1]},
+  {id:'r1', n:'Sala de Baile',  area:'baile',       ico:'🎹', xy:[5,1]},
+  {id:'r2', n:'Invernadero',    area:'invernadero', ico:'🪴', xy:[9,1]},
+  {id:'r3', n:'Comedor',        area:'comedor',     ico:'🍽️', xy:[1,4]},
+  {id:'r4', n:'Sala de Billar', area:'billar',      ico:'🎱', xy:[9,4]},
+  {id:'r5', n:'Biblioteca',     area:'biblioteca',  ico:'📚', xy:[9,7]},
+  {id:'r6', n:'Salón',          area:'salon',       ico:'🛋️', xy:[1,8]},
+  {id:'r7', n:'Vestíbulo',      area:'vestibulo',   ico:'🕰️', xy:[5,9]},
+  {id:'r8', n:'Estudio',        area:'estudio',     ico:'🖋️', xy:[9,10]},
+];
+const PASSAGES = {r0:'r8', r8:'r0', r2:'r6', r6:'r2'};   // pasadizos secretos
+const START_XY = [5,5];                                   // pasillo central
+const ALL_CARDS = [...SUSPECTS.map(s=>({...s,cat:'s'})), ...WEAPONS.map(w=>({...w,cat:'w'})), ...ROOMS.map(r=>({...r,cat:'r'}))];
+const CARD = Object.fromEntries(ALL_CARDS.map(c=>[c.id,c]));
+const CAT_NAME = {s:'Sospechoso', w:'Arma', r:'Sala'};
+const SUS_ICO = '🕵️';
+
+function cardIco(id){ const c=CARD[id]; return c.cat==='s' ? SUS_ICO : c.ico; }
+function esc(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function roomXY(id){ return ROOMS.find(r=>r.id===id).xy; }
+function dist(fromRoomId, toRoomId){
+  const a = fromRoomId ? roomXY(fromRoomId) : START_XY;
+  const b = roomXY(toRoomId);
+  return Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]);
+}
+function shuffle(a){ const x=[...a]; for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [x[i],x[j]]=[x[j],x[i]]; } return x; }
+
+/* ---------------- Estado ---------------- */
+let S = null;          // estado de partida
+let UI = { tab:'board', modal:null, rulesFrom:null, rolling:false, suggestPick:{s:null,w:null}, accusePick:{s:null,w:null,r:null}, revealSeen:false };
+const SAVE_KEY = 'cluedo-mansion-black-v1';
+
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function loadSave(){ try{ const j=localStorage.getItem(SAVE_KEY); return j?JSON.parse(j):null; }catch(e){ return null; } }
+function clearSave(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
+
+function newGame(names, charIds){
+  const n = names.length;
+  const deck = shuffle(ALL_CARDS.map(c=>c.id));
+  const env = [
+    shuffle(SUSPECTS)[0].id,
+    shuffle(WEAPONS)[0].id,
+    shuffle(ROOMS)[0].id,
+  ];
+  const rest = shuffle(deck.filter(id=>!env.includes(id)));
+  const players = names.map((name,i)=>({
+    name, charId:charIds[i], cards:[], eliminated:false,
+    room:null, origin:null, target:null, progress:0, movedBySug:false,
+    nb:{},   // cuaderno: clave `${cardId}|${col}` -> {v:'yes'|'no'|'q', auto:true?}
+  }));
+  rest.forEach((id,i)=>players[i%n].cards.push(id));
+  // auto-marcar cartas propias
+  players.forEach((p,i)=>p.cards.forEach(id=>{ p.nb[id+'|'+i]={v:'yes',auto:true}; }));
+  // fichas de personajes no jugados
+  const charLoc = {}; SUSPECTS.forEach(s=>charLoc[s.id]=null);
+  // armas repartidas por salas al azar
+  const weaponLoc = {}; const rr = shuffle(ROOMS.map(r=>r.id));
+  WEAPONS.forEach((w,i)=>weaponLoc[w.id]=rr[i]);
+  S = {
+    players, envelope:env, charLoc, weaponLoc,
+    turn:0, round:1,
+    phase:'idle',            // idle | rolled | moved | done  (dentro del turno)
+    dice:null,
+    pending:null,            // sugerencia en curso
+    shown:null,              // {card, from} para revelar al sugeridor
+    log:[],
+    screen:'handoff',
+    handoff:{to:0, next:'turn'},
+    winner:null, winBy:null,
+  };
+  addLog('sug', `Comienza la investigación en la Mansión Black. <b>${esc(players[0].name)}</b> abre el caso.`);
+  save();
+}
+
+function addLog(type, html){ S.log.unshift({t:type, r:S.round, h:html}); }
+function activeCount(){ return S.players.filter(p=>!p.eliminated).length; }
+function cur(){ return S.players[S.turn]; }
+function charOf(p){ return SUSPECTS.find(s=>s.id===p.charId); }
+function playerByChar(charId){ return S.players.findIndex(p=>p.charId===charId); }
+
+/* ---------------- Cuaderno ---------------- */
+function setAuto(p, cardId, col, v){
+  const k = cardId+'|'+col;
+  p.nb[k] = {v, auto:true};
+}
+function cycleCell(pIdx, cardId, col){
+  const p = S.players[pIdx];
+  const k = cardId+'|'+col;
+  const cell = p.nb[k];
+  if(cell && cell.auto) return;
+  const order = [undefined,'yes','no','q'];
+  const curV = cell ? cell.v : undefined;
+  const next = order[(order.indexOf(curV)+1) % order.length];
+  if(next===undefined) delete p.nb[k]; else p.nb[k]={v:next};
+  save(); render();
+}
+
+/* ---------------- Turnos ---------------- */
+function nextTurn(){
+  let i = S.turn;
+  do { i = (i+1) % S.players.length; if(i===0) S.round++; } while(S.players[i].eliminated);
+  S.turn = i;
+  S.phase='idle'; S.dice=null; S.pending=null; S.shown=null;
+  UI.tab='board'; UI.suggestPick={s:null,w:null}; UI.accusePick={s:null,w:null,r:null};
+  S.handoff={to:i, next:'turn'};
+  S.screen='handoff';
+  save(); render();
+}
+
+function rollDice(){
+  if(UI.rolling || S.phase!=='idle') return;
+  UI.rolling = true;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const done = ()=>{
+    UI.rolling=false;
+    S.dice=[1+Math.floor(Math.random()*6), 1+Math.floor(Math.random()*6)];
+    S.phase='rolled';
+    if(navigator.vibrate) navigator.vibrate(30);
+    save(); render();
+  };
+  if(reduce){ done(); return; }
+  S.dice=[1,1];
+  let n=0;
+  const iv=setInterval(()=>{
+    S.dice=[1+Math.floor(Math.random()*6), 1+Math.floor(Math.random()*6)];
+    renderDiceOnly();
+    if(++n>=8){ clearInterval(iv); done(); }
+  },70);
+  render();
+}
+function renderDiceOnly(){
+  const w=document.querySelector('.dice-wrap');
+  if(w) w.outerHTML=diceHTML(true);
+}
+
+function moveOptions(){
+  const p = cur();
+  const roll = S.dice[0]+S.dice[1];
+  const opts = {};
+  ROOMS.forEach(r=>{
+    if(p.room===r.id) return;
+    let d = dist(p.room ?? p.origin, r.id);
+    if(!p.room && p.target===r.id) d -= p.progress;
+    if(d<=0) d=1;
+    opts[r.id] = (roll>=d) ? {kind:'enter'} : {kind:'approach', left:d-roll};
+  });
+  return opts;
+}
+
+function chooseRoom(roomId){
+  if(S.phase!=='rolled') return;
+  const p = cur();
+  const opt = moveOptions()[roomId];
+  if(!opt) return;
+  if(opt.kind==='enter'){
+    enterRoom(p, roomId);
+    S.phase='moved';
+    UI.modal={kind:'arrived', room:roomId};
+  } else {
+    const roll = S.dice[0]+S.dice[1];
+    if(p.room){ p.origin=p.room; p.room=null; p.progress=0; }
+    if(p.target!==roomId){ p.target=roomId; p.progress=0; }
+    p.progress += roll;
+    p.movedBySug=false;
+    S.charLoc[p.charId]=null;
+    S.phase='done';
+    UI.modal={kind:'corridor', room:roomId, left:opt.left};
+  }
+  save(); render();
+}
+
+function enterRoom(p, roomId){
+  p.room=roomId; p.origin=roomId; p.target=null; p.progress=0; p.movedBySug=false;
+  S.charLoc[p.charId]=roomId;
+}
+
+function usePassage(){
+  const p = cur();
+  if(S.phase!=='idle' || !p.room || !PASSAGES[p.room]) return;
+  const dest = PASSAGES[p.room];
+  const from = CARD[p.room].n;
+  enterRoom(p, dest);
+  S.phase='moved';
+  addLog('sug', `<b>${esc(p.name)}</b> usa el pasadizo secreto de ${esc(from)} a <b>${esc(CARD[dest].n)}</b>.`);
+  UI.modal={kind:'arrived', room:dest, passage:true};
+  save(); render();
+}
+
+function staySuggest(){
+  const p = cur();
+  if(S.phase!=='idle' || !p.room || !p.movedBySug) return;
+  p.movedBySug=false;
+  S.phase='moved';
+  S.screen='suggest';
+  save(); render();
+}
+
+/* ---------------- Sugerencias ---------------- */
+function openSuggest(){ S.screen='suggest'; UI.suggestPick={s:null,w:null}; save(); render(); }
+
+function confirmSuggest(){
+  const p = cur();
+  const {s,w} = UI.suggestPick;
+  if(!s || !w || !p.room) return;
+  const r = p.room;
+  // mover ficha del sospechoso y del arma a la sala
+  S.charLoc[s]=r;
+  const suspPlayer = playerByChar(s);
+  if(suspPlayer>=0 && suspPlayer!==S.turn){
+    const sp=S.players[suspPlayer];
+    sp.room=r; sp.origin=r; sp.target=null; sp.progress=0; sp.movedBySug=true;
+  }
+  S.weaponLoc[w]=r;
+  addLog('sug', `<b>${esc(p.name)}</b> sugiere: <b>${esc(CARD[s].n)}</b> con <b>${esc(CARD[w].n)}</b> en <b>${esc(CARD[r].n)}</b>.`);
+  // buscar refutador en sentido horario
+  const n=S.players.length;
+  const passed=[];
+  let responder=-1;
+  for(let k=1;k<n;k++){
+    const i=(S.turn+k)%n;
+    const hasOne=[s,w,r].some(id=>S.players[i].cards.includes(id));
+    if(hasOne){ responder=i; break; }
+    passed.push(i);
+    addLog('none', `<b>${esc(S.players[i].name)}</b> no tiene nada que mostrar.`);
+    [s,w,r].forEach(id=>setAuto(p, id, i, 'no'));   // dato público, anotado al sugeridor
+  }
+  S.pending={by:S.turn, cards:[s,w,r], responder, passed};
+  S.phase='done';
+  if(responder<0){
+    addLog('none', `<b>¡Nadie</b> pudo refutar la sugerencia de ${esc(p.name)}!`);
+    UI.modal={kind:'norefute'};
+    S.pending=null;
+    S.screen='turn';
+  } else {
+    const rp = S.players[responder];
+    if(rp.eliminated){
+      // un jugador eliminado sigue refutando: la app elige por él
+      const matches=[s,w,r].filter(id=>rp.cards.includes(id));
+      const shownBefore = matches.find(id=>rp.nb[id+'|shownTo'+S.turn]);
+      const cardToShow = shownBefore || matches[Math.floor(Math.random()*matches.length)];
+      finishRefute(responder, cardToShow, true);
+      return;
+    }
+    S.screen='handoff';
+    S.handoff={to:responder, next:'refute'};
+  }
+  save(); render();
+}
+
+function pickRefuteCard(cardId){
+  const pend=S.pending; if(!pend) return;
+  const rp=S.players[pend.responder];
+  if(!rp.cards.includes(cardId) || !pend.cards.includes(cardId)) return;
+  finishRefute(pend.responder, cardId, false);
+}
+
+function finishRefute(responderIdx, cardId, autoPicked){
+  const pend=S.pending;
+  const by=S.players[pend.by];
+  const rp=S.players[responderIdx];
+  rp.nb[cardId+'|shownTo'+pend.by]=true;  // recordar qué se enseñó a quién
+  setAuto(by, cardId, responderIdx, 'yes');
+  S.shown={card:cardId, from:responderIdx, auto:autoPicked};
+  addLog('show', `<b>${esc(rp.name)}</b>${rp.eliminated?' (fuera del caso)':''} muestra una carta en privado a <b>${esc(by.name)}</b>.`);
+  S.turn=pend.by;  // por claridad (no cambia)
+  S.screen='handoff';
+  S.handoff={to:pend.by, next:'reveal'};
+  S.pending=null;
+  save(); render();
+}
+
+/* ---------------- Acusación ---------------- */
+function openAccuse(){ S.screen='accuse'; UI.accusePick={s:null,w:null,r:null}; save(); render(); }
+
+function confirmAccuse(){
+  const {s,w,r}=UI.accusePick;
+  if(!s||!w||!r) return;
+  const p=cur();
+  const [es,ew,er]=S.envelope;
+  const ok = s===es && w===ew && r===er;
+  addLog('acc', `<b>${esc(p.name)}</b> hace su ACUSACIÓN FINAL: ${esc(CARD[s].n)}, ${esc(CARD[w].n)}, ${esc(CARD[r].n)}.`);
+  if(ok){
+    S.winner=S.turn; S.winBy='accuse';
+    addLog('acc', `<b>¡Caso resuelto!</b> ${esc(p.name)} acertó.`);
+    S.screen='gameover';
+  } else {
+    p.eliminated=true;
+    addLog('acc', `La acusación de <b>${esc(p.name)}</b> era falsa. Queda fuera de la investigación (pero seguirá enseñando cartas).`);
+    if(activeCount()===1){
+      S.winner=S.players.findIndex(pl=>!pl.eliminated);
+      S.winBy='last';
+      addLog('acc', `Solo queda <b>${esc(S.players[S.winner].name)}</b> en pie: gana el caso.`);
+    }
+    S.screen='accusefail';
+  }
+  save(); render();
+}
+
+/* ==================================================================
+   RENDER
+   ================================================================== */
+const app=document.getElementById('app');
+
+function render(){
+  if(!S){ app.innerHTML = UI.setup ? setupScreen() : homeScreen(); return; }
+  const scr = {
+    handoff: handoffScreen,
+    turn: turnScreen,
+    suggest: suggestScreen,
+    refute: refuteScreen,
+    reveal: revealScreen,
+    accuse: accuseScreen,
+    accusefail: accuseFailScreen,
+    gameover: gameoverScreen,
+    rules: rulesScreen,
+  }[S.screen] || turnScreen;
+  app.innerHTML = scr() + (UI.modal ? modalHTML() : '');
+}
+
+/* ---------------- Portada + setup ---------------- */
+function homeScreen(){
+  const saved = loadSave();
+  return `<div class="screen">
+    <div class="home-hero">
+      <div class="seal">✦</div>
+      <div>
+        <div class="eyebrow">Un crimen · Seis investigadores · Un móvil</div>
+        <h1 class="masthead">CLUEDO</h1>
+        <div class="eyebrow dim" style="margin-top:6px">La Mansión Black</div>
+      </div>
+      <p class="home-sub">El Dr. Black, vuestro anfitrión, ha aparecido muerto. El culpable está sentado a esta mesa.</p>
+    </div>
+    <div class="btn-col">
+      ${saved && !saved.winner ? `<button class="btn primary" data-a="resume"><span class="big-ico">🔎</span> Continuar partida</button>`:''}
+      <button class="btn ${saved && !saved.winner ?'':'primary'}" data-a="to-setup"><span class="big-ico">🩸</span> Nueva partida</button>
+      <button class="btn ghost" data-a="rules-home">📖 Cómo se juega</button>
+    </div>
+  </div>`;
+}
+
+function setupScreen(){
+  const st=UI.setup;
+  return `<div class="screen">
+    <div>
+      <div class="eyebrow">Nueva partida</div>
+      <h2 class="screen-title">Los investigadores</h2>
+      <p class="serif-note">El orden de la lista será el orden de los turnos, en sentido horario alrededor de la mesa.</p>
+    </div>
+    <div>
+      <div class="sect-label">¿Cuántos jugáis?</div>
+      <div class="count-row">
+        ${[3,4,5,6].map(n=>`<button class="count-chip num ${st.count===n?'on':''}" data-a="count" data-n="${n}">${n}</button>`).join('')}
+      </div>
+    </div>
+    <div class="btn-col" style="gap:8px">
+      ${st.names.slice(0,st.count).map((nm,i)=>{
+        const ch=SUSPECTS.find(s=>s.id===st.chars[i]);
+        return `<div class="player-row">
+          <button class="char-dot" style="background:${ch.c}" data-a="cycle-char" data-i="${i}" aria-label="Cambiar personaje"></button>
+          <input type="text" maxlength="14" value="${esc(nm)}" placeholder="Jugador ${i+1}" data-a="name" data-i="${i}" autocomplete="off">
+          <button class="char-cycle" data-a="cycle-char" data-i="${i}">juega como<b>${ch.n}</b></button>
+        </div>`;
+      }).join('')}
+    </div>
+    <p class="action-note">Toca el círculo de color para cambiar de personaje. Cada uno debe ser distinto.</p>
+    <div class="spacer"></div>
+    <div class="btn-col">
+      <button class="btn primary" data-a="start">🕯️ Apagar las luces y empezar</button>
+      <button class="btn ghost" data-a="to-home">Volver</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------- Handoff ---------------- */
+function handoffScreen(){
+  const p=S.players[S.handoff.to];
+  const ch=charOf(p);
+  const nextLabels={
+    turn:'Es su turno de investigar.',
+    refute:'Debe enseñar una carta en privado.',
+    reveal:'Va a ver la carta que le enseñan.',
+  };
+  return `<div class="screen"><div class="handoff">
+    <div class="dossier">
+      <div class="confidencial">Confidencial</div>
+      <div style="margin-top:16px" class="eyebrow dim">Pasa el móvil a</div>
+      <div class="who" style="margin-top:6px">${esc(p.name)}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px">
+        <span class="char-dot" style="background:${ch.c};width:22px;height:22px;display:inline-block"></span>
+        <span class="eyebrow dim" style="letter-spacing:.15em">${ch.n}</span>
+      </div>
+      <p class="serif-note" style="margin-top:14px">${nextLabels[S.handoff.next]}<br>Que nadie más mire la pantalla.</p>
+    </div>
+    <button class="btn primary" data-a="handoff-go" style="max-width:340px">Soy ${esc(p.name)} — abrir mi expediente</button>
+  </div></div>`;
+}
+
+/* ---------------- Pantalla de turno ---------------- */
+function turnScreen(){
+  const p=cur(); const ch=charOf(p);
+  const tabs=[['board','Mansión'],['nb','Cuaderno'],['hand','Cartas'],['log','Registro']];
+  return `<div class="screen" style="padding-bottom:18px">
+    <div class="turn-head">
+      <span class="char-dot" style="background:${ch.c}"></span>
+      <div class="tt">
+        <div class="eyebrow dim">Ronda ${S.round} · ${ch.n}</div>
+        <div class="name">${esc(p.name)}</div>
+      </div>
+      <button class="icon-btn" data-a="rules-game" aria-label="Reglas">📖</button>
+    </div>
+    <div class="tabs" role="tablist">
+      ${tabs.map(([k,l])=>`<button class="tab ${UI.tab===k?'on':''}" role="tab" data-a="tab" data-t="${k}">${l}</button>`).join('')}
+    </div>
+    ${ {board:boardTab, nb:nbTab, hand:handTab, log:logTab}[UI.tab]() }
+  </div>`;
+}
+
+function positionNote(p){
+  if(p.room) return `Estás en <b>${esc(CARD[p.room].n)}</b>.`;
+  if(p.target){
+    const left=Math.max(1, dist(p.origin, p.target)-p.progress);
+    return `Estás en los pasillos, a <b>${left}</b> paso${left===1?'':'s'} de <b>${esc(CARD[p.target].n)}</b>.`;
+  }
+  return `Estás en los pasillos de la mansión.`;
+}
+
+function boardTab(){
+  const p=cur();
+  const opts = S.phase==='rolled' ? moveOptions() : null;
+  return `
+    <div class="corridor-note">${positionNote(p)}</div>
+    ${boardHTML(opts)}
+    ${S.phase==='rolled' ? `<p class="action-note">Sacaste <b class="num">${S.dice[0]+S.dice[1]}</b>. Toca una sala <b>iluminada</b> para entrar, o una punteada para acercarte a ella.</p>`:''}
+    ${diceHTML(false)}
+    ${actionBar()}
+  `;
+}
+
+function boardHTML(opts){
+  const meChar=cur().charId;
+  const roomCells=ROOMS.map(r=>{
+    const chips=SUSPECTS.filter(s=>S.charLoc[s.id]===r.id)
+      .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background:${s.c}" title="${s.n}">${s.ini}</span>`).join('');
+    const wchips=WEAPONS.filter(w=>S.weaponLoc[w.id]===r.id)
+      .map(w=>`<span class="tok wtok" title="${w.n}">${w.ico}</span>`).join('');
+    const o=opts?opts[r.id]:null;
+    const cls=[ 'room',
+      cur().room===r.id?'here':'',
+      o&&o.kind==='enter'?'reach':'',
+      o&&o.kind==='approach'?'approach':'' ].join(' ');
+    const tag = o ? (o.kind==='enter' ? `<span class="reach-tag">Entrar</span>` : `<span class="reach-tag" style="color:var(--dim)">a ${o.left}</span>`) : '';
+    const pas = PASSAGES[r.id] ? `<span class="passage" title="Pasadizo secreto a ${CARD[PASSAGES[r.id]].n}">🕳️</span>` : '';
+    return `<div class="${cls}" style="--area:${r.area}" ${o?`data-a="room" data-r="${r.id}" role="button" tabindex="0"`:''}>
+      <span class="rname">${r.n}</span><span class="rico">${r.ico}</span>
+      ${tag}<div class="tokens">${chips}${wchips}</div>${pas}
+    </div>`;
+  }).join('');
+  const corridorChips=SUSPECTS.filter(s=>S.charLoc[s.id]===null)
+    .map(s=>`<span class="tok ${s.id===meChar?'me':''}" style="background:${s.c}" title="${s.n} (pasillos)">${s.ini}</span>`).join('');
+  return `<div class="board">
+    ${roomCells}
+    <div class="centro">
+      <div class="mini-envelope"></div>
+      <span class="clab">Sobre del caso</span>
+      ${corridorChips?`<div class="tokens" style="justify-content:center">${corridorChips}</div><span class="clab" style="letter-spacing:.1em">en los pasillos</span>`:''}
+    </div>
+  </div>`;
+}
+
+function diceHTML(rolling){
+  const d=S.dice||[null,null];
+  const die=v=>`<div class="die ${rolling?'rolling':''}" data-v="${v||''}">${'<span class="pip"></span>'.repeat(9)}</div>`;
+  return `<div class="dice-wrap">${die(d[0])}${die(d[1])}<div class="dice-total num">${d[0]?d[0]+d[1]:'—'}</div></div>`;
+}
+
+function actionBar(){
+  const p=cur();
+  const b=[];
+  if(S.phase==='idle'){
+    b.push(`<button class="btn primary" data-a="roll">🎲 Tirar los dados</button>`);
+    if(p.room && PASSAGES[p.room])
+      b.push(`<button class="btn" data-a="passage">🕳️ Pasadizo secreto <span class="sub">ir directo a ${esc(CARD[PASSAGES[p.room]].n)}</span></button>`);
+    if(p.room && p.movedBySug)
+      b.push(`<button class="btn" data-a="stay-suggest">🔍 Sugerir sin moverte <span class="sub">te trajeron aquí con una sugerencia</span></button>`);
+  }
+  if(S.phase==='moved' && p.room){
+    b.push(`<button class="btn primary" data-a="suggest">🔍 Hacer una sugerencia <span class="sub">en ${esc(CARD[p.room].n)}</span></button>`);
+    b.push(`<button class="btn ghost" data-a="skip-suggest">No sugerir</button>`);
+  }
+  if(S.phase==='done'){
+    b.push(`<button class="btn primary" data-a="end-turn">Terminar turno ➞</button>`);
+  }
+  b.push(`<button class="btn ghost" data-a="accuse" style="border-color:var(--blood2);color:#d98a96">⚖️ Acusación final <span class="sub">solo si estás seguro: fallar te elimina</span></button>`);
+  return `<div class="btn-col" style="margin-top:2px">${b.join('')}</div>`;
+}
+
+/* ---------------- Cuaderno ---------------- */
+function nbTab(){
+  const me=S.turn, p=cur();
+  const cols=S.players;
+  const head=`<tr><th class="rowname" style="background:var(--panel2)"><span class="eyebrow dim" style="letter-spacing:.15em">Cuaderno</span></th>${
+    cols.map((pl,i)=>{const c=charOf(pl);return `<th title="${esc(pl.name)}"><span class="colchar" style="background:${c.c}">${i===me?'YO':c.ini}</span></th>`;}).join('')}</tr>`;
+  const group=(label)=>`<tr class="group"><td colspan="${cols.length+1}">${label}</td></tr>`;
+  const row=(c)=>{
+    const cells=cols.map((pl,i)=>{
+      const cell=p.nb[c.id+'|'+i];
+      const v=cell?cell.v:'';
+      const sym={yes:'✓',no:'✗',q:'?'}[v]||'·';
+      return `<td><button class="nbcell v-${v} ${cell&&cell.auto?'auto':''}" data-a="nb" data-c="${c.id}" data-col="${i}" aria-label="${esc(c.n)}, columna ${esc(pl.name)}">${sym}</button></td>`;
+    }).join('');
+    const struck = cols.some((_,i)=>{const cl=p.nb[c.id+'|'+i]; return cl&&cl.v==='yes';});
+    return `<tr class="${struck?'struck':''}"><td class="rowname">${cardIco(c.id)} ${c.n}</td>${cells}</tr>`;
+  };
+  return `
+    <div class="nb-wrap"><table class="nb">
+      <thead>${head}</thead>
+      <tbody>
+        ${group('Sospechosos')}${SUSPECTS.map(row).join('')}
+        ${group('Armas')}${WEAPONS.map(row).join('')}
+        ${group('Salas')}${ROOMS.map(row).join('')}
+      </tbody>
+    </table></div>
+    <div class="nb-legend">
+      <span><b style="color:var(--ok)">✓</b> tiene la carta</span>
+      <span><b style="color:var(--blood)">✗</b> no la tiene</span>
+      <span><b style="color:var(--gold)">?</b> sospecha</span>
+      <span>toca una casilla para marcar</span>
+    </div>
+    <p class="action-note">Las casillas doradas se rellenan solas: tus cartas, las que te enseñen y quien pase sin refutar. Una fila tachada ya no puede estar en el sobre.</p>`;
+}
+
+function handTab(){
+  const p=cur();
+  return `
+    <div class="sect-label">Tus ${p.cards.length} cartas — solo tú las conoces</div>
+    <div class="hand">${p.cards.map(id=>cardHTML(id)).join('')}</div>
+    <p class="action-note">Si una carta está en tu mano, <b>no puede estar en el sobre</b>. Úsalas para refutar y despistar: sugerir una carta tuya es un farol clásico.</p>`;
+}
+
+function cardHTML(id, lg){
+  const c=CARD[id];
+  return `<div class="card cat-${c.cat} ${lg?'card-lg':''}">
+    <div class="band"></div>
+    <div class="cico">${cardIco(id)}</div>
+    <div class="cname">${c.n}</div>
+    <div class="ccat">${CAT_NAME[c.cat]}</div>
+  </div>`;
+}
+
+function logTab(){
+  if(!S.log.length) return `<p class="serif-note" style="text-align:center;padding:30px 0">Aún no ha pasado nada… que se sepa.</p>`;
+  return `<div class="log">${S.log.map(e=>`<div class="log-entry t-${e.t}"><span class="lr">Ronda ${e.r}</span>${e.h}</div>`).join('')}</div>`;
+}
+
+/* ---------------- Sugerencia ---------------- */
+function suggestScreen(){
+  const p=cur();
+  const pk=UI.suggestPick;
+  const pickBtn=(c,kind)=>{
+    const on=pk[kind]===c.id;
+    const mine=p.cards.includes(c.id);
+    return `<button class="pick ${on?'on':''} ${mine?'mine':''}" data-a="pick-sug" data-k="${kind}" data-id="${c.id}">
+      <span class="pico">${cardIco(c.id)}</span><span class="pname">${c.n}</span>
+    </button>`;
+  };
+  return `<div class="screen">
+    <div>
+      <div class="eyebrow">Sugerencia</div>
+      <h2 class="screen-title">«Sospecho que fue…»</h2>
+      <p class="serif-note">La sala es donde estás: <b style="color:var(--gold)">${esc(CARD[p.room].n)} ${CARD[p.room].ico}</b>. El sospechoso y el arma que nombres serán traídos a esta sala.</p>
+    </div>
+    <div>
+      <div class="sect-label">¿Quién? ${pk.s?`— <b>${esc(CARD[pk.s].n)}</b>`:''}</div>
+      <div class="pick-grid">${SUSPECTS.map(c=>pickBtn(c,'s')).join('')}</div>
+    </div>
+    <div>
+      <div class="sect-label">¿Con qué? ${pk.w?`— <b>${esc(CARD[pk.w].n)}</b>`:''}</div>
+      <div class="pick-grid">${WEAPONS.map(c=>pickBtn(c,'w')).join('')}</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="btn-col">
+      <button class="btn primary" data-a="confirm-sug" ${pk.s&&pk.w?'':'disabled'}>Anunciar sugerencia</button>
+      <button class="btn ghost" data-a="cancel-sug">Volver</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------- Refutación ---------------- */
+function refuteScreen(){
+  const pend=S.pending;
+  const rp=S.players[pend.responder];
+  const by=S.players[pend.by];
+  const matches=pend.cards.filter(id=>rp.cards.includes(id));
+  return `<div class="screen">
+    <div>
+      <div class="eyebrow">Refutación · solo para ${esc(rp.name)}</div>
+      <h2 class="screen-title">Enseña una carta</h2>
+      <p class="serif-note"><b>${esc(by.name)}</b> ha sugerido lo siguiente. Tienes ${matches.length===1?'una carta que lo desmiente':'varias cartas que lo desmienten'}: elige <b>una</b> para enseñársela en privado.</p>
+    </div>
+    <div class="pick-grid">
+      ${pend.cards.map(id=>{
+        const has=rp.cards.includes(id);
+        return `<button class="pick ${has?'':''}" data-a="pick-refute" data-id="${id}" ${has?'':'disabled'}>
+          <span class="pico">${cardIco(id)}</span><span class="pname">${CARD[id].n}</span>
+          ${has?'<span class="reach-tag">tu carta</span>':''}
+        </button>`;
+      }).join('')}
+    </div>
+    <p class="action-note">Consejo de detective: si puedes, repite la carta que ya le enseñaste otra vez — así le das la mínima información nueva.</p>
+    <div class="spacer"></div>
+  </div>`;
+}
+
+function revealScreen(){
+  const sh=S.shown;
+  const from=S.players[sh.from];
+  const p=cur();
+  return `<div class="screen">
+    <div style="text-align:center">
+      <div class="eyebrow">Solo para tus ojos, ${esc(p.name)}</div>
+      <h2 class="screen-title" style="margin-top:4px">${esc(from.name)} te enseña…</h2>
+    </div>
+    <div style="padding:10px 0">${cardHTML(sh.card,true)}</div>
+    <p class="action-note">Esta carta está en la mano de <b>${esc(from.name)}</b>, así que <b>no está en el sobre</b>. Ya quedó anotada en tu cuaderno.</p>
+    <div class="spacer"></div>
+    <button class="btn primary" data-a="reveal-done">Lo he memorizado</button>
+  </div>`;
+}
+
+/* ---------------- Acusación ---------------- */
+function accuseScreen(){
+  const pk=UI.accusePick;
+  const pickBtn=(c,kind)=>{
+    const on=pk[kind]===c.id;
+    return `<button class="pick ${on?'on':''}" data-a="pick-acc" data-k="${kind}" data-id="${c.id}">
+      <span class="pico">${cardIco(c.id)}</span><span class="pname">${c.n}</span>
+    </button>`;
+  };
+  return `<div class="screen">
+    <div>
+      <div class="eyebrow" style="color:var(--blood)">Acusación final</div>
+      <h2 class="screen-title">El momento de la verdad</h2>
+      <p class="serif-note">Se abrirá el sobre del caso. Si aciertas las tres cartas, ganas. Si fallas <b>una sola</b>, quedas eliminado de la investigación.</p>
+    </div>
+    <div><div class="sect-label">El culpable</div><div class="pick-grid">${SUSPECTS.map(c=>pickBtn(c,'s')).join('')}</div></div>
+    <div><div class="sect-label">El arma</div><div class="pick-grid">${WEAPONS.map(c=>pickBtn(c,'w')).join('')}</div></div>
+    <div><div class="sect-label">La sala</div><div class="pick-grid">${ROOMS.map(c=>pickBtn(c,'r')).join('')}</div></div>
+    <div class="spacer"></div>
+    <div class="btn-col">
+      <button class="btn danger" data-a="confirm-acc" ${pk.s&&pk.w&&pk.r?'':'disabled'}>⚖️ Abrir el sobre y acusar</button>
+      <button class="btn ghost" data-a="cancel-acc">Mejor sigo investigando</button>
+    </div>
+  </div>`;
+}
+
+function accuseFailScreen(){
+  const p=cur();
+  if(S.winner!==null && S.winBy==='last'){
+    // el fallo dejó a un único jugador: mostrar primero el sobre al fallido, luego fin
+  }
+  return `<div class="screen">
+    <div style="text-align:center">
+      <div class="eyebrow" style="color:var(--blood)">Acusación fallida · solo para ${esc(p.name)}</div>
+      <h2 class="screen-title">Te equivocaste</h2>
+      <p class="serif-note">Como manda la tradición, miras el sobre en secreto. La verdad era esta — <b>no digas nada</b> y devuelve las cartas al sobre:</p>
+    </div>
+    <div class="reveal-cards">${S.envelope.map(id=>cardHTML(id)).join('')}</div>
+    <p class="action-note">Quedas fuera del caso: ya no tienes turnos ni puedes acusar, pero <b>seguirás enseñando cartas</b> cuando te toque refutar (la app lo hará por ti).</p>
+    <div class="spacer"></div>
+    <button class="btn primary" data-a="fail-done">${S.winner!==null?'Continuar':'Devolver el móvil al grupo'}</button>
+  </div>`;
+}
+
+function gameoverScreen(){
+  const w=S.players[S.winner];
+  const ch=charOf(w);
+  return `<div class="screen">
+    <div class="spacer"></div>
+    <div style="text-align:center;display:flex;flex-direction:column;gap:14px">
+      <div class="seal" style="width:70px;height:70px;font-size:28px">⚖</div>
+      <div>
+        <div class="eyebrow">Caso resuelto${S.winBy==='last'?' por descarte':''}</div>
+        <div class="winner-name">${esc(w.name)}</div>
+        <div class="eyebrow dim" style="margin-top:6px">${ch.n} · gana la partida</div>
+      </div>
+      <hr class="rule-line">
+      <div class="eyebrow dim">El sobre contenía</div>
+      <div class="reveal-cards">${S.envelope.map(id=>cardHTML(id)).join('')}</div>
+      <p class="serif-note" style="max-width:34ch;margin:0 auto">${esc(CARD[S.envelope[0]].n)}, con ${esc(CARD[S.envelope[1]].n).toLowerCase()}, en ${esc(CARD[S.envelope[2]].n).toLowerCase()}. Caso cerrado.</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="btn-col">
+      <button class="btn primary" data-a="rematch">🩸 Otra partida, mismos jugadores</button>
+      <button class="btn ghost" data-a="to-home-clear">Volver a la portada</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------- Reglas ---------------- */
+function rulesScreen(){
+  const back = UI.rulesFrom==='game' ? 'rules-back-game' : 'to-home';
+  const rc=(n,title,body)=>`<div class="rule-card"><div class="rn">${n}</div><div class="rtxt"><span class="rt-title">${title}</span>${body}</div></div>`;
+  return `<div class="screen">
+    <div>
+      <div class="eyebrow">El manual del detective</div>
+      <h2 class="screen-title">Cómo se juega</h2>
+    </div>
+    ${rc('I','El caso', `El Dr. Black ha sido asesinado. En el <b>sobre del caso</b> (centro del tablero) hay tres cartas boca abajo: <b>un culpable, un arma y una sala</b>. El resto de cartas se reparte entre los jugadores. Gana quien primero descubra las tres.`)}
+    ${rc('II','Tu turno', `<b>Tira los dados</b> y muévete por la mansión: entra en una sala iluminada, o acércate a una lejana (llegarás en próximos turnos). Desde las salas de las esquinas puedes usar un <b>pasadizo secreto 🕳️</b> en vez de tirar.`)}
+    ${rc('III','La sugerencia', `Al entrar en una sala, di en voz alta: «Sospecho que fue <b>X</b>, con <b>Y</b>, aquí en <b>esta sala</b>». El sospechoso y el arma nombrados se trasladan a tu sala.`)}
+    ${rc('IV','La refutación', `En sentido horario, el <b>primer</b> jugador que tenga alguna de las tres cartas nombradas debe enseñarte <b>una</b> (solo a ti, pasándose el móvil). Si nadie puede refutar… anótalo bien: es una pista de oro.`)}
+    ${rc('V','El cuaderno', `Tacha lo que sepas: cada carta que veas en una mano <b>no está en el sobre</b>. La app anota sola tus cartas, las que te enseñen y quién pasó sin refutar; el resto de deducciones son cosa tuya.`)}
+    ${rc('VI','La acusación final', `Cuando creas tener el caso resuelto, haz tu <b>acusación</b> (en tu turno, desde cualquier lugar). Se abre el sobre: si aciertas, ganas; si fallas, quedas eliminado, aunque seguirás enseñando cartas a los demás.`)}
+    ${rc('VII','El móvil es sagrado', `Este Cluedo se juega con un solo móvil que va pasando de mano en mano. Cuando aparezca la pantalla <b style="color:var(--blood)">CONFIDENCIAL</b>, entrega el teléfono a quien indique — y nada de mirar por encima del hombro.`)}
+    <p class="serif-note" style="text-align:center">Farol clásico: sugiere una carta que tengas tú para ver quién se pone nervioso.</p>
+    <div class="btn-col"><button class="btn primary" data-a="${back}">Entendido</button></div>
+  </div>`;
+}
+
+/* ---------------- Modales ---------------- */
+function modalHTML(){
+  const m=UI.modal;
+  let inner='';
+  if(m.kind==='arrived'){
+    inner=`<div style="text-align:center">
+      <div class="eyebrow">Has llegado</div>
+      <h2 class="screen-title">${CARD[m.room].ico} ${esc(CARD[m.room].n)}</h2>
+      <p class="serif-note" style="margin-top:8px">${m.passage?'El pasadizo cruje a tu espalda. ':''}Puedes hacer una sugerencia en esta sala, o guardar silencio.</p>
+    </div>
+    <button class="btn primary" data-a="modal-suggest">🔍 Hacer una sugerencia</button>
+    <button class="btn ghost" data-a="modal-close">No sugerir</button>`;
+  }
+  if(m.kind==='corridor'){
+    inner=`<div style="text-align:center">
+      <div class="eyebrow dim">Por los pasillos</div>
+      <h2 class="screen-title">Camino de ${esc(CARD[m.room].n)}</h2>
+      <p class="serif-note" style="margin-top:8px">No te llegaba la tirada. Avanzas todo lo posible: te quedan <b class="num" style="color:var(--gold)">${m.left}</b> paso${m.left===1?'':'s'} para entrar. Si el próximo turno cambias de destino, empezarás el camino de nuevo.</p>
+    </div>
+    <button class="btn primary" data-a="modal-close">Seguir</button>`;
+  }
+  if(m.kind==='norefute'){
+    inner=`<div style="text-align:center">
+      <div class="eyebrow" style="color:var(--blood)">Silencio en la mansión</div>
+      <h2 class="screen-title">Nadie pudo refutar</h2>
+      <p class="serif-note" style="margin-top:8px">Ningún otro jugador tiene esas cartas. O están en el sobre… o en tu propia mano. Anótalo: pocas pistas valen tanto.</p>
+    </div>
+    <button class="btn primary" data-a="modal-close">Anotado</button>`;
+  }
+  return `<div class="overlay"><div class="modal" role="dialog" aria-modal="true">${inner}</div></div>`;
+}
+
+/* ==================================================================
+   EVENTOS
+   ================================================================== */
+app.addEventListener('click', e=>{
+  const el=e.target.closest('[data-a]');
+  if(!el) return;
+  const a=el.dataset.a;
+
+  /* portada / setup */
+  if(a==='to-setup'){
+    UI.setup={count:6, names:['','','','','',''], chars:SUSPECTS.map(s=>s.id)};
+    render(); return;
+  }
+  if(a==='to-home'){ UI.setup=null; S=null; render(); return; }
+  if(a==='to-home-clear'){ clearSave(); UI.setup=null; S=null; render(); return; }
+  if(a==='resume'){
+    S=loadSave();
+    if(S){
+      if(['turn','suggest','accuse'].includes(S.screen)){ S.screen='handoff'; S.handoff={to:S.turn, next:'turn'}; S.phase = S.phase==='rolled' ? 'idle' : S.phase; S.dice = S.phase==='idle' ? null : S.dice; }
+      else if(S.screen==='refute' && S.pending){ S.screen='handoff'; S.handoff={to:S.pending.responder, next:'refute'}; }
+      else if(S.screen==='reveal' && S.shown){ S.screen='handoff'; S.handoff={to:S.turn, next:'reveal'}; }
+      else if(S.screen==='rules'){ S.screen='handoff'; S.handoff={to:S.turn, next:'turn'}; }
+      UI.modal=null; UI.tab='board';
+      render();
+    }
+    return;
+  }
+  if(a==='rules-home'){ S={screen:'rules', fake:true}; UI.rulesFrom='home'; renderRulesOnly(); return; }
+  if(a==='count'){ UI.setup.count=+el.dataset.n; render(); return; }
+  if(a==='cycle-char'){
+    const i=+el.dataset.i;
+    const used=UI.setup.chars.slice(0,UI.setup.count);
+    let idx=SUSPECTS.findIndex(s=>s.id===UI.setup.chars[i]);
+    for(let k=0;k<6;k++){
+      idx=(idx+1)%6;
+      const cand=SUSPECTS[idx].id;
+      if(!used.includes(cand) || cand===UI.setup.chars[i]){ UI.setup.chars[i]=cand; break; }
+    }
+    render(); return;
+  }
+  if(a==='start'){
+    const st=UI.setup;
+    const names=st.names.slice(0,st.count).map((n,i)=>n.trim()||('Jugador '+(i+1)));
+    newGame(names, st.chars.slice(0,st.count));
+    UI.setup=null;
+    render(); return;
+  }
+
+  /* reglas */
+  if(a==='rules-game'){ UI.rulesFrom='game'; UI.prevScreen=S.screen; S.screen='rules'; render(); return; }
+  if(a==='rules-back-game'){ S.screen=UI.prevScreen||'turn'; render(); return; }
+
+  if(!S || S.fake) return;
+
+  /* handoff */
+  if(a==='handoff-go'){
+    S.screen={turn:'turn', refute:'refute', reveal:'reveal'}[S.handoff.next];
+    save(); render(); return;
+  }
+
+  /* turno */
+  if(a==='tab'){ UI.tab=el.dataset.t; render(); return; }
+  if(a==='roll'){ rollDice(); return; }
+  if(a==='passage'){ usePassage(); return; }
+  if(a==='stay-suggest'){ staySuggest(); return; }
+  if(a==='room'){ chooseRoom(el.dataset.r); return; }
+  if(a==='suggest'){ openSuggest(); return; }
+  if(a==='skip-suggest'){ S.phase='done'; save(); render(); return; }
+  if(a==='end-turn'){
+    if(S.winner!==null){ S.screen='gameover'; save(); render(); return; }
+    nextTurn(); return;
+  }
+
+  /* modales */
+  if(a==='modal-close'){ UI.modal=null; render(); return; }
+  if(a==='modal-suggest'){ UI.modal=null; openSuggest(); return; }
+
+  /* sugerencia */
+  if(a==='pick-sug'){ UI.suggestPick[el.dataset.k]=el.dataset.id; render(); return; }
+  if(a==='confirm-sug'){ confirmSuggest(); return; }
+  if(a==='cancel-sug'){ S.screen='turn'; S.phase='moved'; save(); render(); return; }
+
+  /* refutación */
+  if(a==='pick-refute'){ pickRefuteCard(el.dataset.id); return; }
+  if(a==='reveal-done'){ S.shown=null; S.screen='turn'; S.phase='done'; save(); render(); return; }
+
+  /* cuaderno */
+  if(a==='nb'){ cycleCell(S.turn, el.dataset.c, +el.dataset.col); return; }
+
+  /* acusación */
+  if(a==='accuse'){ openAccuse(); return; }
+  if(a==='pick-acc'){ UI.accusePick[el.dataset.k]=el.dataset.id; render(); return; }
+  if(a==='cancel-acc'){ S.screen='turn'; save(); render(); return; }
+  if(a==='confirm-acc'){ confirmAccuse(); return; }
+  if(a==='fail-done'){
+    if(S.winner!==null){ S.screen='gameover'; save(); render(); }
+    else nextTurn();
+    return;
+  }
+
+  /* fin */
+  if(a==='rematch'){
+    const names=S.players.map(p=>p.name);
+    const chars=S.players.map(p=>p.charId);
+    newGame(names, chars);
+    render(); return;
+  }
+});
+
+app.addEventListener('input', e=>{
+  const el=e.target.closest('[data-a="name"]');
+  if(el && UI.setup) UI.setup.names[+el.dataset.i]=el.value;
+});
+
+function renderRulesOnly(){ app.innerHTML=rulesScreen(); }
+
+/* arranque */
+render();
+</script>
+</body>
+</html>
