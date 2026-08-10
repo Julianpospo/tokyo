@@ -1,0 +1,599 @@
+<title>Programa semanal · 12 semanas de entrenamiento y comida</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ground:#F1F3F1; --surface:#FBFCFB; --surface-2:#E9ECEA; --surface-3:#DFE4E1;
+  --ink:#131917; --ink-2:#4E5B57; --ink-3:#7C8985;
+  --line:#D6DCD8; --line-strong:#B9C2BD;
+  --accent:#A63A1C; --accent-soft:#F2E2DB;
+  --good:#2C6E56; --good-soft:#E0EBE5;
+  --warn:#8A5D0C; --warn-soft:#F2E9D6;
+  --cool:#2B5C74; --cool-soft:#DEE9EE;
+  --shadow:0 1px 2px rgba(19,25,23,.05),0 8px 24px rgba(19,25,23,.04);
+  --f-display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321; --surface-3:#252C29;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --cool:#6FA8C0; --cool-soft:#13212A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321; --surface-3:#252C29;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --cool:#6FA8C0; --cool-soft:#13212A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:1160px;margin:0 auto;padding:0 20px 100px}
+
+/* HEADER */
+.masthead{padding:44px 0 0}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.masthead h1{font-family:var(--f-display);font-weight:750;letter-spacing:-.028em;line-height:1.04;font-size:clamp(30px,5.4vw,50px);text-wrap:balance;max-width:17ch}
+.masthead .sub{font-size:clamp(16px,2vw,19px);color:var(--ink-2);max-width:58ch;margin-top:16px;line-height:1.5}
+.ruler{height:18px;margin:28px 0 26px;position:relative;border-bottom:1px solid var(--line-strong)}
+.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:8px;background-image:repeating-linear-gradient(to right,var(--line-strong) 0 1px,transparent 1px 24px)}
+.ruler::after{content:"";position:absolute;left:0;bottom:0;width:2px;height:18px;background:var(--accent)}
+
+/* WEEK NAV */
+.navwrap{position:sticky;top:0;z-index:20;background:var(--ground);padding:12px 0 12px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.navlabel{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:9px}
+.weeks{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px}
+.wk{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums;padding:8px 12px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);cursor:pointer;position:relative;white-space:nowrap;transition:all .12s}
+.wk::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+.wk[data-ph="F0"]::before{background:var(--ink-3)}
+.wk[data-ph="F1"]::before{background:var(--accent)}
+.wk[data-ph="DL"]::before{background:var(--warn)}
+.wk[data-ph="F2"]::before{background:var(--good)}
+.wk:hover{border-color:var(--accent);color:var(--accent)}
+.wk[aria-current="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink);font-weight:700}
+.wk .dn{display:block;font-size:9px;opacity:.65;letter-spacing:.04em;margin-top:2px}
+.wk.done::after{content:"✓";position:absolute;bottom:2px;right:4px;font-size:9px;color:var(--good)}
+
+/* PANELS */
+.panel{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:22px}
+.panel-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.panel-head h2{font-family:var(--f-display);font-size:17px;font-weight:720;letter-spacing:-.015em;margin:0}
+.panel-head .hint{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:auto}
+.panel-body{padding:20px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stats div{background:var(--surface);padding:13px 15px}
+.stats dt{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px;line-height:1.3}
+.stats dd{font-family:var(--f-mono);font-size:21px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stats dd small{font-size:11px;font-weight:400;color:var(--ink-3)}
+.stats dd.acc{color:var(--accent)}
+
+/* WEEK STRIP */
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0;overflow:hidden}
+@media (max-width:700px){.strip{grid-template-columns:repeat(4,1fr)}}
+.sd{background:var(--surface);padding:11px 8px;text-align:center;position:relative}
+.sd::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--line-strong)}
+.sd[data-t="fuerza"]::before{background:var(--accent)}
+.sd[data-t="bici"]::before{background:var(--cool)}
+.sd[data-t="tenis"]::before{background:var(--good)}
+.sd[data-t="descanso"]::before{background:var(--line-strong)}
+.sd .d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.sd .t{font-family:var(--f-display);font-size:12.5px;font-weight:700;margin:4px 0 3px;letter-spacing:-.01em}
+.sd .k{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sd.today{background:var(--accent-soft)}
+.sd.today .t{color:var(--accent)}
+
+/* DAY DETAIL */
+details.day{border:1px solid var(--line);background:var(--surface);margin-bottom:8px;box-shadow:var(--shadow)}
+details.day summary{list-style:none;cursor:pointer;padding:13px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+details.day summary::-webkit-details-marker{display:none}
+details.day summary::after{content:"+";font-family:var(--f-mono);font-size:15px;color:var(--ink-3);margin-left:auto;flex-shrink:0}
+details.day[open] summary::after{content:"−"}
+details.day[open] summary{border-bottom:1px solid var(--line);background:var(--surface-2)}
+.dbadge{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;padding:3px 8px;border:1px solid;flex-shrink:0}
+.dbadge.fuerza{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.dbadge.bici{color:var(--cool);border-color:var(--cool);background:var(--cool-soft)}
+.dbadge.tenis{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+.dbadge.descanso{color:var(--ink-3);border-color:var(--line-strong)}
+.dname{font-family:var(--f-display);font-size:15.5px;font-weight:700;letter-spacing:-.012em}
+.ddate{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.dkcal{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;border-left:1px solid var(--line-strong);padding-left:12px}
+.dbody{padding:0}
+.dsplit{display:grid;grid-template-columns:1fr}
+@media (min-width:900px){.dsplit{grid-template-columns:1.15fr 1fr}}
+.dcol{padding:16px 18px}
+.dcol + .dcol{border-top:1px solid var(--line)}
+@media (min-width:900px){.dcol + .dcol{border-top:none;border-left:1px solid var(--line)}}
+.dcol h4{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 11px}
+
+table{border-collapse:collapse;width:100%;font-family:var(--f-display);font-size:13px}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+thead th{font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px}
+td.ex{font-weight:600;line-height:1.35}
+td.ex a{color:inherit;text-decoration:none;border-bottom:1px dotted var(--line-strong)}
+td.ex a:hover{color:var(--accent);border-color:var(--accent)}
+input.load{width:56px;font-family:var(--f-mono);font-size:12px;padding:3px 5px;border:1px solid var(--line-strong);background:var(--ground);color:var(--ink);text-align:right}
+input.load:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+ul.meals{list-style:none;padding:0;margin:0}
+ul.meals li{display:grid;grid-template-columns:78px 1fr auto;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-family:var(--f-display);font-size:13px;line-height:1.4;align-items:baseline}
+ul.meals li:last-child{border-bottom:none}
+ul.meals .mt{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+ul.meals .mk{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+.doneline{display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid var(--line);background:var(--surface-2);flex-wrap:wrap}
+.doneline label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);display:flex;align-items:center;gap:8px;cursor:pointer}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+input.wgt{width:76px;font-family:var(--f-mono);font-size:12px;padding:4px 6px;border:1px solid var(--line-strong);background:var(--ground);color:var(--ink);text-align:right}
+
+/* CARDS + MISC */
+.card{border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);padding:16px 18px;margin:16px 0}
+.card.good{border-left-color:var(--good)}
+.card.warn{border-left-color:var(--warn)}
+.card.cool{border-left-color:var(--cool)}
+.card .tag{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.card.good .tag{color:var(--good)} .card.warn .tag{color:var(--warn)} .card.cool .tag{color:var(--cool)}
+.card p{font-family:var(--f-display);font-size:14px;line-height:1.5;margin-bottom:9px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card ul{font-family:var(--f-display);font-size:14px;padding-left:20px;margin-bottom:0}
+.card li{margin-bottom:5px;line-height:1.45}
+.grid2{display:grid;gap:16px;margin:16px 0}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{padding-left:24px;position:relative;font-family:var(--f-display);font-size:14px;line-height:1.5;margin-bottom:7px}
+.checklist li::before{content:"";position:absolute;left:0;top:.4em;width:11px;height:11px;border:1.5px solid var(--line-strong)}
+p.lead{font-family:var(--f-body);font-size:17px;color:var(--ink-2);margin-bottom:14px;line-height:1.55}
+h3.sec{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.02em;margin:38px 0 6px}
+p.deck{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+button.ctl{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 15px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+button.ctl:hover{border-color:var(--accent);color:var(--accent)}
+button.ctl.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+button.ctl.pri:hover{opacity:.88;color:#fff}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);margin:0}
+.prog{height:6px;background:var(--surface-3);border:1px solid var(--line);overflow:hidden;margin:10px 0 0}
+.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+footer{border-top:1px solid var(--line);margin-top:60px;padding-top:24px}
+footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-width:70ch;margin-bottom:8px}
+</style>
+
+<div class="shell">
+
+<header class="masthead">
+  <p class="eyebrow">Programa dirigido · 12 semanas · 10 ago – 1 nov 2026</p>
+  <h1>Tu semana, día a día</h1>
+  <p class="sub">Cada domingo tienes el briefing de la semana: calorías, comidas y reparto de entrenamientos. Cada día, la sesión exacta con series, repeticiones y RIR. La página recuerda lo que marcas.</p>
+  <div class="ruler"></div>
+</header>
+
+<div class="navwrap">
+  <p class="navlabel">Semana · <span id="phaselbl">Fase 0 · Calibración</span></p>
+  <div class="weeks" id="weeks" role="tablist" aria-label="Selector de semana"></div>
+</div>
+
+<main id="view"></main>
+
+<h3 class="sec">Cómo usar esto</h3>
+<p class="deck">Tres minutos de lectura, una vez</p>
+<div class="grid2">
+  <div class="card cool">
+    <span class="tag">El ritual del domingo · 20 min</span>
+    <ul>
+      <li>Abre la semana que empieza y lee el briefing.</li>
+      <li>Calcula tu media de peso de los 7 días y compárala con la anterior.</li>
+      <li>Mide la cintura y anótala.</li>
+      <li>Haz la compra con la lista de la semana.</li>
+      <li>Batch cooking: 90 minutos y tienes tres días resueltos.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="tag">Durante la semana</span>
+    <ul>
+      <li>Abre el día, haz la sesión, apunta los pesos en las casillas.</li>
+      <li>Marca la sesión como hecha. Los pesos se guardan y aparecen la próxima vez.</li>
+      <li>Pésate cada mañana y mete el número en la casilla del día.</li>
+      <li>Si un día se tuerce, haz la sesión mínima. No falles dos seguidos.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card warn">
+  <span class="tag">Dónde se guardan tus datos</span>
+  <p>Todo lo que escribes —pesos levantados, peso corporal, sesiones marcadas— se guarda <strong>en este navegador y solo aquí</strong>. No sale a ningún servidor. Eso significa que si cambias de dispositivo o borras los datos de navegación, se pierde. Por eso está el botón de exportar: <strong>descarga tu registro cada 2–3 semanas</strong> y tendrás una copia en un archivo.</p>
+  <div class="tools" style="margin-top:12px">
+    <button class="ctl pri" id="export" type="button">Descargar registro</button>
+    <button class="ctl" id="reset" type="button">Borrar todo</button>
+    <p id="msg"></p>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Programa semanal</strong> · Documento operativo. La técnica de cada ejercicio está en el <a href="https://claude.ai/code/artifact/c04478cf-3ce8-4b61-b9e7-3945819c5432">manual de entrenamiento</a>; la teoría y la nutrición, en el <a href="https://claude.ai/code/artifact/f92483ef-3c9d-4026-a157-c1f30ad791d7">estudio físico</a>.</p>
+  <p>Plan de nutrición y entrenamiento de orientación general. No sustituye la valoración de un médico, dietista-nutricionista o fisioterapeuta.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var MANUAL = "https://claude.ai/code/artifact/c04478cf-3ce8-4b61-b9e7-3945819c5432";
+
+/* ---------- EJERCICIOS ---------- */
+var EX = {
+  goblet:{n:"Sentadilla goblet", r:"8–12", a:"e1", rest:"90 s"},
+  press:{n:"Press con mancuernas", r:"8–12", a:"e8", rest:"90 s", note:"En el suelo hasta la semana 4"},
+  remo:{n:"Remo a una mano", r:"10–12 / lado", a:"e5", rest:"75 s"},
+  rdl:{n:"Peso muerto rumano", r:"10–12", a:"e2", rest:"90 s"},
+  militar:{n:"Press militar sentado", r:"10–12", a:"e10", rest:"75 s"},
+  lateral:{n:"Elevaciones laterales", r:"12–15", a:"e11", rest:"60 s", acc:2},
+  plancha:{n:"Plancha frontal", r:"30–45 s", a:"e13", rest:"45 s", acc:3, nw:true},
+  bulgara:{n:"Sentadilla búlgara", r:"10 / pierna", a:"e3", rest:"90 s"},
+  pullover:{n:"Pullover con mancuerna", r:"12–15", a:"e6", rest:"75 s"},
+  flex:{n:"Flexiones", r:"máximas", a:"e9", rest:"75 s", nw:true},
+  hip:{n:"Hip thrust", r:"12–15", a:"e4", rest:"75 s"},
+  pajaro:{n:"Pájaro", r:"15", a:"e7", rest:"60 s", acc:3},
+  curl:{n:"Curl de bíceps", r:"10–12", a:"e12", rest:"60 s", acc:2},
+  deadbug:{n:"Dead bug", r:"10 / lado", a:"e14", rest:"45 s", acc:3, nw:true}
+};
+var A1 = ["goblet","press","remo","rdl","militar","lateral","plancha"];
+var A2 = ["bulgara","pullover","flex","hip","pajaro","curl","deadbug"];
+
+/* ---------- MENÚS (base ~2.150 kcal) ---------- */
+var MENUS = {
+  A:[
+   [["Desayuno","Porridge: 80 g avena + 250 ml leche + 25 g whey + plátano",625],["Comida","Pollo al ajillo 200 g + 80 g arroz + pisto + 10 g AOVE",660],["Merienda","250 g yogur griego + 20 g nueces + manzana",330],["Cena","Salmón 160 g + 250 g patata asada + ensalada",590]],
+   [["Desayuno","80 g pan integral + 3 huevos revueltos + tomate + café",545],["Comida","Lentejas 350 g + 1 lata de atún + 10 g AOVE",610],["Merienda","250 g requesón + miel + 150 g fresas",315],["Cena","Merluza 220 g + 200 g patata + judías verdes",500]],
+   [["Desayuno","Tortilla de 3 huevos + 60 g pan + 50 g aguacate",600],["Comida","Ternera 180 g + 80 g pasta integral + tomate y verduras",700],["Merienda","Batido: 30 g whey + plátano",230],["Cena","Ensalada con 150 g pavo + 2 huevos + 200 g boniato",630]],
+   [["Desayuno","250 g yogur griego + 50 g avena + frutos rojos + nueces",570],["Comida","Garbanzos con espinacas 350 g + bacalao 150 g",660],["Merienda","60 g pan + 100 g queso fresco + tomate + fruta",330],["Cena","Pollo 200 g + 300 g verduras asadas + 150 g patata",620]],
+   [["Desayuno","Porridge: 80 g avena + leche + 25 g whey + arándanos",600],["Comida","Salmón 150 g + 80 g quinoa + brócoli y zanahoria",680],["Merienda","Bocadillo: 70 g pan + 100 g pavo + tomate",330],["Cena","Wok: 180 g pollo + 60 g arroz + 250 g verduras",600]],
+   [["Desayuno","300 g yogur griego + fruta + café",280],["Comida fuera","Proteína a la plancha + guarnición de verdura + 1 pan + 1 caña",950],["Merienda","Fruta + 25 g almendras",230],["Cena","Revuelto de 3 huevos con gambas + ensalada + 60 g pan",545]],
+   [["Desayuno","80 g pan + 2 huevos + 1 lata de atún + tomate",570],["Comida","Arroz con pollo: 200 g pollo + 80 g arroz + verduras",680],["Merienda","250 g yogur griego + plátano + miel",290],["Cena","Crema de verduras + tortilla de 2 huevos con gambas",560]]
+  ],
+  B:[
+   [["Desayuno","Tortilla de 3 huevos + 70 g pan + tomate + café",560],["Comida","Pollo al curry 200 g + 80 g arroz basmati + verduras",690],["Merienda","250 g yogur griego + 20 g nueces",270],["Cena","Dorada al horno 220 g + 250 g patata + ensalada",620]],
+   [["Desayuno","70 g avena + 250 ml leche + 25 g whey + manzana",600],["Comida","Alubias con verduras 350 g + 2 huevos cocidos",650],["Merienda","250 g requesón + fruta de temporada",300],["Cena","Pavo 200 g + 250 g boniato + brócoli + 10 g AOVE",610]],
+   [["Desayuno","80 g pan + 50 g aguacate + 3 huevos revueltos",620],["Comida","Merluza en salsa verde 220 g + 250 g patata + guisantes",620],["Merienda","Batido: 30 g whey + plátano + 15 g almendras",320],["Cena","Ensalada de garbanzos 300 g con atún y huevo",600]],
+   [["Desayuno","250 g yogur griego + 50 g avena + frutos rojos + nueces",570],["Comida","Ternera salteada 180 g + 80 g noodles de arroz + verduras",700],["Merienda","60 g pan + 70 g jamón serrano + tomate",300],["Cena","Tortilla de patata ligera (3 huevos, 200 g patata) + ensalada",590]],
+   [["Desayuno","Porridge: 80 g avena + leche + 25 g whey + canela",590],["Comida","Salmón 160 g + 80 g arroz integral + espárragos",700],["Merienda","250 g yogur griego + 20 g almendras",290],["Cena","Pollo al horno 200 g + calabacín + 200 g patata",600]],
+   [["Desayuno","300 g yogur griego + fruta + café",280],["Comida fuera","Entrante de verdura + carne o pescado a la plancha + 1 caña",950],["Merienda","Fruta + 25 g nueces",240],["Cena","Sopa de verduras + revuelto de setas y gambas + 60 g pan",530]],
+   [["Desayuno","80 g pan + 2 huevos + 1 lata de atún + tomate",570],["Comida","Lentejas estofadas 350 g + 40 g arroz",640],["Merienda","250 g yogur griego + miel + plátano",290],["Cena","Crema de calabaza + pollo a la plancha 180 g + 40 g pan",600]]
+  ],
+  C:[
+   [["Desayuno","250 g yogur griego + 60 g avena + plátano",580],["Comida","Pollo teriyaki 200 g + 80 g arroz + edamame",700],["Merienda","Tostada 50 g + 100 g queso fresco + tomate",280],["Cena","Bacalao 220 g + pisto + 200 g patata + 10 g AOVE",600]],
+   [["Desayuno","3 huevos revueltos + 70 g pan + 50 g aguacate",640],["Comida","Garbanzos con espinacas 350 g + 2 huevos + 10 g AOVE",660],["Merienda","Batido: 30 g whey + fruta",230],["Cena","Salmón 160 g + 80 g quinoa + brócoli",680]],
+   [["Desayuno","Porridge: 80 g avena + leche + 25 g whey + frutos rojos",610],["Comida","Ternera 180 g + 250 g patata asada + ensalada grande",670],["Merienda","250 g yogur griego + 20 g nueces",270],["Cena","Pavo 200 g + 80 g pasta integral + tomate y verduras",640]],
+   [["Desayuno","Tortilla francesa de 3 huevos + 70 g pan + tomate",560],["Comida","Arroz con verduras 80 g + pollo 200 g + 10 g AOVE",690],["Merienda","250 g requesón + fruta",300],["Cena","Merluza 220 g + judías verdes + 250 g patata",590]],
+   [["Desayuno","70 g avena + 250 ml leche + 25 g whey + manzana",600],["Comida","Pasta 80 g con 2 latas de atún + tomate y verduras",680],["Merienda","Bocadillo: 70 g pan + 100 g pavo",320],["Cena","Solomillo de cerdo 200 g + 250 g boniato + ensalada",620]],
+   [["Desayuno","300 g yogur griego + fruta + café",280],["Comida fuera","Ensalada + pescado o carne al horno + 1 pan + 1 copa de vino",950],["Merienda","Fruta + 25 g almendras",230],["Cena","Tortilla de 3 huevos + ensalada grande + 60 g pan",550]],
+   [["Desayuno","80 g pan + 2 huevos + 60 g jamón + tomate",590],["Comida","Paella de pollo y verduras: 80 g arroz + 200 g pollo",690],["Merienda","250 g yogur griego + plátano",280],["Cena","Crema de verduras + gambas 150 g + tortilla de 2 huevos",560]]
+  ]
+};
+
+/* ---------- SEMANAS ---------- */
+var W = [
+ {n:1, ph:"F0", phn:"Fase 0 · Calibración", kcal:2450, ser:2, rir:"4–5", menu:"A", start:"A1",
+  focus:"Aprender los movimientos. Registrar todo lo que comes, incluido el aceite y el fin de semana.",
+  note:"Vas a terminar cada sesión con la sensación de no haber entrenado. Es intencionado: las agujetas incapacitantes de la primera semana son la razón número uno de que no exista la segunda.",
+  todo:["Hacer los 4 tests de movimiento del manual","Medir cintura, cuello y hacer las 3 fotos","Grabar en vídeo el goblet, el peso muerto rumano y el remo","Pesarse cada mañana sin excepción"]},
+ {n:2, ph:"F0", phn:"Fase 0 · Calibración", kcal:2450, ser:2, rir:"4–5", menu:"B", start:"A2",
+  focus:"Consolidar el hábito y cerrar la calibración. Sigues sin déficit.",
+  note:"Al terminar la semana calcula: media de peso de los días 1–7 frente a la de los días 8–14. Esa diferencia te da tu gasto real y fija las calorías de la Fase 1.",
+  todo:["Calcular las dos medias de peso y ajustar el objetivo calórico","Fijar los pesos de trabajo de cada ejercicio","Decidir sobre la barra de dominadas"]},
+ {n:3, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"3", menu:"C", start:"A1",
+  focus:"Empieza el déficit. Tercera serie en todos los ejercicios principales.",
+  note:"Primera semana con menos comida y más trabajo a la vez. Si notas hambre, sube verdura y proteína antes que calorías.",
+  todo:["Empezar el registro serio de cargas","Subir a 9.000 pasos diarios"]},
+ {n:4, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"3", menu:"A", start:"A2",
+  focus:"Vuelve el tenis. Los días que juegues, suma 150 kcal.",
+  note:"Con el tenis de vuelta tienes cuatro días activos. Vigila que no se coma el descanso: el jueves es descanso de verdad.",
+  todo:["Reintroducir el tenis","Primera revisión de fotos frente a las del día 1"]},
+ {n:5, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"2–3", menu:"B", start:"A1",
+  focus:"Semana de riesgo. Progresión limitada al 5 %, aunque te sobre fuerza.",
+  note:"Aquí es donde tus tendones van por detrás de tus músculos. Si aparece cualquier molestia articular, aplica el semáforo del dolor ese mismo día: sustituye el ejercicio, no canceles la sesión.",
+  todo:["Limitar cualquier subida de peso al 5 %","Revisar técnica en vídeo otra vez"]},
+ {n:6, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"2–3", menu:"C", start:"A2",
+  focus:"Segunda semana de riesgo. Pasas el ecuador del bloque.",
+  note:"Es probable que la báscula se quede plana esta semana o la siguiente. Es normal y no significa nada: mira la cintura.",
+  todo:["Medir cintura y comparar con la del día 1","Sube el press del suelo al banco si no ha habido molestias"]},
+ {n:7, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"2", menu:"A", start:"A1",
+  focus:"Semana fuerte. RIR 2 en todo. Deberías estar batiendo tus registros del inicio.",
+  note:"Compara la hoja de esta semana con la de la semana 3. La diferencia de cargas es tu resultado real, mucho más que la báscula.",
+  todo:["Comparar cargas con la semana 3","Preparar la descarga de la semana que viene"]},
+ {n:8, ph:"DL", phn:"Fase 1 · Descarga", kcal:2200, ser:2, rir:"4", menu:"B", start:"A2",
+  focus:"Descarga programada. Mitad de series, mismo peso. No es opcional.",
+  note:"Vas a sentir que pierdes el ritmo. No lo pierdes: la descarga es lo que permite que las semanas 9 y 10 sean productivas y no las primeras de una lesión.",
+  todo:["Reducir a 2 series manteniendo el peso","Dormir 8 h esta semana como prioridad"]},
+ {n:9, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"2", menu:"C", start:"A1",
+  focus:"Vuelta al volumen completo, ahora descansado. Semana de récords.",
+  note:"Después de una descarga bien hecha casi siempre se superan los mejores registros. Aprovéchala.",
+  todo:["Intentar batir todos los registros de la semana 7"]},
+ {n:10, ph:"F1", phn:"Fase 1 · Déficit", kcal:2200, ser:3, rir:"2", menu:"A", start:"A2",
+  focus:"Cierre del bloque de déficit. Objetivo: 79,5 kg.",
+  note:"Al terminar la semana repite todas las mediciones del día 1: peso, cintura, cuello, fotos y tests de fuerza. Ese es tu antes y después real.",
+  todo:["Repetir todas las mediciones del día 1","Rehacer las 3 fotos en las mismas condiciones","Recalcular el porcentaje de grasa con la fórmula"]},
+ {n:11, ph:"F2", phn:"Fase 2 · Estabilización", kcal:2300, ser:3, rir:"2", menu:"B", start:"A1",
+  focus:"Subes 100 kcal. El objetivo ya no es perder, es mantener el peso nuevo.",
+  note:"La báscula va a subir 0,3–0,5 kg esta semana. Es glucógeno y agua por comer más carbohidrato, no grasa. Estaba previsto.",
+  todo:["Subir a 2.300 kcal","Confirmar que el peso se estabiliza, no que sigue bajando"]},
+ {n:12, ph:"F2", phn:"Fase 2 · Estabilización", kcal:2400, ser:3, rir:"1–2", menu:"C", start:"A2",
+  focus:"Segunda subida. Con más energía deberías ver los mayores saltos de fuerza del programa.",
+  note:"Aquí empieza de verdad la fase de construir. A partir de la semana 13 pasas al programa de cuatro días del estudio.",
+  todo:["Subir a 2.400 kcal","Planificar el paso al programa torso/pierna"]}
+];
+
+var DAYS = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+var BASE = new Date(2026,7,10);
+
+/* Estructura del microciclo: 3 fuerza, 2 bici, tenis, descanso */
+function weekPlan(w){
+  var s1 = w.start, s2 = (w.start==="A1"?"A2":"A1"), s3 = s1;
+  var tenis = w.n>=4;
+  return [
+    {t:"fuerza", s:s1, name:"Fuerza "+s1},
+    {t:"bici", name:"Bici Z2 · 30 min", detail:"Ritmo conversacional. Al terminar, 3 series de plancha y 2 de dead bug."},
+    {t:"fuerza", s:s2, name:"Fuerza "+s2},
+    {t:"descanso", name:"Descanso", detail:"Descanso real. Camina, estira si te apetece, nada más. Es cuando se construye el músculo."},
+    {t:"fuerza", s:s3, name:"Fuerza "+s3},
+    tenis ? {t:"tenis", name:"Tenis · 1 h", detail:"Calienta 10 minutos antes. Suma 150 kcal a la comida de ese día."}
+          : {t:"bici", name:"Bici Z2 · 35 min", detail:"Hasta que vuelva el tenis en septiembre. Ritmo suave y sostenido."},
+    {t:"descanso", name:"Descanso + planificación", detail:"El ritual del domingo: medias de peso, cintura, compra y batch cooking."}
+  ];
+}
+
+function extras(kcal){
+  if(kcal>=2450) return "Extra del día: bocadillo de 70 g de pan con 80 g de pavo (+300 kcal).";
+  if(kcal>=2400) return "Extra del día: 250 g de yogur griego + 40 g de avena (+250 kcal).";
+  if(kcal>=2300) return "Extra del día: 1 pieza de fruta + 25 g de frutos secos (+150 kcal).";
+  return null;
+}
+
+function fmtDate(w,d){
+  var dt = new Date(BASE.getTime());
+  dt.setDate(dt.getDate() + (w-1)*7 + d);
+  return dt.getDate()+" "+["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"][dt.getMonth()];
+}
+function isToday(w,d){
+  var dt = new Date(BASE.getTime());
+  dt.setDate(dt.getDate() + (w-1)*7 + d);
+  var t = new Date();
+  return dt.getDate()===t.getDate() && dt.getMonth()===t.getMonth() && dt.getFullYear()===t.getFullYear();
+}
+function currentWeek(){
+  var t = new Date();
+  var diff = Math.floor((t - BASE)/86400000);
+  var w = Math.floor(diff/7)+1;
+  return (w>=1 && w<=12) ? w : 1;
+}
+
+/* ---------- ESTADO ---------- */
+var KEY="programa-semanal-v1";
+var S = {sel:currentWeek(), done:{}, wgt:{}, loads:{}};
+try{ var raw=localStorage.getItem(KEY); if(raw){ var p=JSON.parse(raw); S.done=p.done||{}; S.wgt=p.wgt||{}; S.loads=p.loads||{}; } }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({done:S.done,wgt:S.wgt,loads:S.loads})); }catch(e){} }
+
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+/* ---------- RENDER ---------- */
+function renderNav(){
+  var h="";
+  for(var i=0;i<W.length;i++){
+    var w=W[i];
+    var alldone = weekPlan(w).every(function(d,di){ return d.t==="descanso" || S.done["w"+w.n+"d"+di]; });
+    h+='<button class="wk'+(alldone?" done":"")+'" data-ph="'+w.ph+'" data-w="'+w.n+'" role="tab" aria-current="'+(w.n===S.sel)+'">'+
+       'S'+w.n+'<span class="dn">'+fmtDate(w.n,0)+'</span></button>';
+  }
+  document.getElementById("weeks").innerHTML=h;
+  document.getElementById("phaselbl").textContent = W[S.sel-1].phn;
+}
+
+function sessionTable(code, w){
+  var list = code==="A1"?A1:A2;
+  var h='<table><thead><tr><th>Ejercicio</th><th class="n">Ser</th><th class="n">Reps</th><th class="n">RIR</th><th class="n">Peso</th></tr></thead><tbody>';
+  for(var i=0;i<list.length;i++){
+    var e=EX[list[i]];
+    var ser = e.acc || w.ser;
+    var rir = e.nw ? "—" : w.rir;
+    var lk = list[i];
+    var val = S.loads[lk]!=null ? S.loads[lk] : "";
+    h+='<tr><td class="ex"><a href="'+MANUAL+'#'+e.a+'" target="_blank" rel="noopener">'+esc(e.n)+'</a>'+
+       (e.note?'<br><span style="font-weight:400;font-size:11.5px;color:var(--ink-3)">'+esc(e.note)+'</span>':'')+
+       '</td><td class="n">'+ser+'</td><td class="n">'+esc(e.r)+'</td><td class="n">'+rir+'</td>'+
+       '<td class="n">'+(e.nw?'<span style="color:var(--ink-3)">—</span>':'<input class="load" type="text" inputmode="decimal" data-ex="'+lk+'" value="'+esc(val)+'" aria-label="Peso en '+esc(e.n)+'" placeholder="kg">')+'</td></tr>';
+  }
+  h+='</tbody></table><p style="font-family:var(--f-display);font-size:12.5px;color:var(--ink-3);margin-top:10px">Calentamiento: 4 min de bici + movilidad + 1 serie de aproximación en el primer empuje y la primera pierna. Los nombres llevan al manual de técnica.</p>';
+  return h;
+}
+
+function mealsList(w, dayIdx){
+  var menu = MENUS[w.menu][dayIdx];
+  var ex = extras(w.kcal);
+  var h='<ul class="meals">';
+  for(var i=0;i<menu.length;i++){
+    h+='<li><span class="mt">'+esc(menu[i][0])+'</span><span>'+esc(menu[i][1])+'</span><span class="mk">'+menu[i][2]+'</span></li>';
+  }
+  if(ex) h+='<li><span class="mt">Extra</span><span>'+esc(ex.replace("Extra del día: ",""))+'</span><span class="mk">—</span></li>';
+  h+='</ul>';
+  return h;
+}
+
+function render(){
+  var w = W[S.sel-1];
+  var plan = weekPlan(w);
+  var kcalTenis = w.kcal+150;
+  var h="";
+
+  /* BRIEFING DOMINGO */
+  h+='<div class="panel"><div class="panel-head"><h2>Briefing de la semana '+w.n+'</h2>'+
+     '<span class="hint">'+esc(w.phn)+' · '+fmtDate(w.n,0)+' – '+fmtDate(w.n,6)+'</span></div><div class="panel-body">';
+  h+='<p class="lead">'+esc(w.focus)+'</p>';
+  h+='<dl class="stats">'+
+     '<div><dt>Calorías/día</dt><dd class="acc">'+w.kcal.toLocaleString("es-ES")+'</dd></div>'+
+     '<div><dt>Proteína</dt><dd>165<small> g</small></dd></div>'+
+     '<div><dt>Grasa</dt><dd>70<small> g</small></dd></div>'+
+     '<div><dt>Sesiones fuerza</dt><dd>3</dd></div>'+
+     '<div><dt>Series principales</dt><dd>'+w.ser+'</dd></div>'+
+     '<div><dt>RIR objetivo</dt><dd>'+esc(w.rir)+'</dd></div>'+
+     '<div><dt>Pasos/día</dt><dd>'+(w.n<3?"7.000":"9.000")+'</dd></div>'+
+     '</dl>';
+  h+='<div class="card'+(w.ph==="DL"?" warn":"")+'"><span class="tag">Nota del entrenador</span><p>'+esc(w.note)+'</p></div>';
+  h+='<div class="grid2">';
+  h+='<div class="card good"><span class="tag">Tareas de esta semana</span><ul class="checklist">';
+  for(var i=0;i<w.todo.length;i++) h+='<li>'+esc(w.todo[i])+'</li>';
+  h+='</ul></div>';
+  h+='<div class="card cool"><span class="tag">Compra y cocina del domingo</span>'+
+     '<p>Menú <strong>'+w.menu+'</strong> esta semana. Lista base: 1,2 kg de pollo o pavo, 500 g de pescado blanco, 350 g de pescado azul, 24 huevos, 1,5 kg de yogur griego 0 %, avena, arroz, pasta, pan integral, 2 kg de patata, 4 botes de legumbre, AOVE, frutos secos, verdura variada y fruta para siete días.</p>'+
+     '<p style="margin-bottom:0"><strong>Batch cooking, 90 min:</strong> horno con 1 kg de pollo y bandeja de verduras + patata · arroz y legumbre en olla · 8 huevos cocidos · sofrito base · ensalada lavada y cortada. Pesa cada ración al guardarla y apunta el peso en la tapa.</p></div>';
+  h+='</div>';
+  h+='</div></div>';
+
+  /* STRIP */
+  h+='<div class="strip">';
+  for(var d=0;d<7;d++){
+    var p=plan[d];
+    var k = p.t==="tenis" ? kcalTenis : w.kcal;
+    h+='<div class="sd'+(isToday(w.n,d)?" today":"")+'" data-t="'+p.t+'"><div class="d">'+DAYS[d].slice(0,3)+' '+fmtDate(w.n,d)+'</div>'+
+       '<div class="t">'+esc(p.s?p.s:p.name.split(" ·")[0].split(" ")[0])+'</div>'+
+       '<div class="k">'+k.toLocaleString("es-ES")+'</div></div>';
+  }
+  h+='</div>';
+
+  /* DÍAS */
+  h+='<div class="panel"><div class="panel-head"><h2>Día a día</h2><span class="hint">Toca un día para abrirlo</span></div><div class="panel-body" style="padding:14px">';
+  for(var d=0;d<7;d++){
+    var p=plan[d];
+    var key="w"+w.n+"d"+d;
+    var kc = p.t==="tenis" ? kcalTenis : w.kcal;
+    var open = isToday(w.n,d) ? " open" : "";
+    h+='<details class="day"'+open+'><summary>'+
+       '<span class="dbadge '+p.t+'">'+p.t+'</span>'+
+       '<span class="dname">'+DAYS[d]+'</span>'+
+       '<span class="ddate">'+fmtDate(w.n,d)+'</span>'+
+       '<span class="dkcal">'+kc.toLocaleString("es-ES")+' kcal · '+esc(p.name)+'</span>'+
+       '</summary><div class="dbody"><div class="dsplit">';
+    h+='<div class="dcol"><h4>Entrenamiento</h4>';
+    if(p.t==="fuerza") h+=sessionTable(p.s,w);
+    else h+='<p style="font-family:var(--f-display);font-size:14px;line-height:1.5;margin:0"><strong>'+esc(p.name)+'.</strong> '+esc(p.detail)+'</p>';
+    h+='</div>';
+    h+='<div class="dcol"><h4>Comidas · objetivo '+kc.toLocaleString("es-ES")+' kcal</h4>'+mealsList(w,d);
+    if(p.t==="tenis") h+='<p style="font-family:var(--f-display);font-size:12.5px;color:var(--ink-3);margin-top:10px">Día de tenis: +150 kcal. Añade una pieza de fruta y 25 g de frutos secos.</p>';
+    h+='</div>';
+    h+='</div><div class="doneline">'+
+       '<label><input type="checkbox" data-done="'+key+'"'+(S.done[key]?" checked":"")+'> Día completado</label>'+
+       '<label style="margin-left:auto">Peso de hoy <input class="wgt" type="text" inputmode="decimal" data-wgt="'+key+'" value="'+esc(S.wgt[key]!=null?S.wgt[key]:"")+'" placeholder="kg"></label>'+
+       '</div></div></details>';
+  }
+  h+='</div></div>';
+
+  /* MEDIA SEMANAL */
+  var vals=[];
+  for(var d=0;d<7;d++){ var v=parseFloat(String(S.wgt["w"+w.n+"d"+d]).replace(",",".")); if(!isNaN(v)) vals.push(v); }
+  var avg = vals.length ? (vals.reduce(function(a,b){return a+b;},0)/vals.length) : null;
+  var prevVals=[];
+  if(w.n>1){ for(var d2=0;d2<7;d2++){ var v2=parseFloat(String(S.wgt["w"+(w.n-1)+"d"+d2]).replace(",",".")); if(!isNaN(v2)) prevVals.push(v2); } }
+  var pavg = prevVals.length ? (prevVals.reduce(function(a,b){return a+b;},0)/prevVals.length) : null;
+  var doneCount=0, totalS=0;
+  for(var d3=0;d3<7;d3++){ if(plan[d3].t!=="descanso"){ totalS++; if(S.done["w"+w.n+"d"+d3]) doneCount++; } }
+
+  h+='<div class="panel"><div class="panel-head"><h2>Cierre de la semana</h2><span class="hint">Domingo · 10 min</span></div><div class="panel-body">';
+  h+='<dl class="stats">'+
+     '<div><dt>Días registrados</dt><dd>'+vals.length+'<small>/7</small></dd></div>'+
+     '<div><dt>Media de peso</dt><dd>'+(avg!==null?avg.toFixed(2).replace(".",","):"—")+'<small> kg</small></dd></div>'+
+     '<div><dt>Frente a S'+(w.n>1?w.n-1:"—")+'</dt><dd class="'+(avg!==null&&pavg!==null&&(avg-pavg)<0?"acc":"")+'">'+
+       (avg!==null&&pavg!==null?((avg-pavg)>=0?"+":"−")+Math.abs(avg-pavg).toFixed(2).replace(".",","):"—")+'<small> kg</small></dd></div>'+
+     '<div><dt>Sesiones hechas</dt><dd>'+doneCount+'<small>/'+totalS+'</small></dd></div>'+
+     '</dl>';
+  h+='<div class="prog"><i style="width:'+(totalS?Math.round(doneCount/totalS*100):0)+'%"></i></div>';
+  if(avg!==null && pavg!==null){
+    var diff = avg-pavg;
+    var verdict, cls;
+    if(w.ph==="F0"){ verdict="Estás en calibración: no busques bajada. Lo que importa es que el registro esté completo."; cls="cool"; }
+    else if(w.ph==="F2"){ verdict = Math.abs(diff)<=0.5 ? "Peso estable, que es exactamente el objetivo de esta fase. Vas bien." : (diff>0.5 ? "Sube más de lo previsto. Quédate en las calorías actuales una semana más antes de subir otra vez." : "Sigues bajando: aún estás en déficit. Sube 100 kcal más de lo planificado."); cls = Math.abs(diff)<=0.5?"good":"warn"; }
+    else if(diff<=-0.6){ verdict="Bajas demasiado rápido. Suma 150 kcal esta semana: a este ritmo estás perdiendo músculo además de grasa."; cls="warn"; }
+    else if(diff<=-0.2){ verdict="En zona. No toques nada."; cls="good"; }
+    else if(diff<=0){ verdict="Bajada muy pequeña. Si se repite la semana que viene, revisa el registro antes de recortar calorías: el aceite y el fin de semana son los sospechosos habituales."; cls="warn"; }
+    else { verdict="Ha subido. Una semana suelta no significa nada — mira sal, carbohidrato y sueño. Si se repite, revisa el registro."; cls="warn"; }
+    h+='<div class="card '+cls+'" style="margin-bottom:0"><span class="tag">Lectura de la semana</span><p style="margin-bottom:0">'+esc(verdict)+'</p></div>';
+  } else {
+    h+='<div class="card cool" style="margin-bottom:0"><span class="tag">Sin datos suficientes</span><p style="margin-bottom:0">Mete el peso de cada mañana en la casilla de cada día. Con la media de siete días el ruido diario se cancela y aparece la señal real.</p></div>';
+  }
+  h+='</div></div>';
+
+  document.getElementById("view").innerHTML=h;
+  renderNav();
+}
+
+/* ---------- EVENTOS ---------- */
+document.getElementById("weeks").addEventListener("click", function(e){
+  var b=e.target.closest(".wk"); if(!b) return;
+  S.sel=parseInt(b.getAttribute("data-w"),10); render();
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+document.getElementById("view").addEventListener("change", function(e){
+  var t=e.target;
+  if(t.hasAttribute("data-done")){ S.done[t.getAttribute("data-done")]=t.checked; save(); renderNav();
+    var w=W[S.sel-1], plan=weekPlan(w), dc=0, ts=0;
+    for(var i=0;i<7;i++){ if(plan[i].t!=="descanso"){ ts++; if(S.done["w"+w.n+"d"+i]) dc++; } }
+    var bar=document.querySelector(".prog i"); if(bar) bar.style.width=(ts?Math.round(dc/ts*100):0)+"%";
+  }
+  if(t.hasAttribute("data-wgt")){ S.wgt[t.getAttribute("data-wgt")]=t.value.trim(); save(); }
+  if(t.hasAttribute("data-ex")){ S.loads[t.getAttribute("data-ex")]=t.value.trim(); save(); }
+});
+
+/* ---------- EXPORTAR ---------- */
+function buildLog(){
+  var out=["Registro de entrenamiento y peso","Generado desde el programa de 12 semanas","",""];
+  out.push("PESOS DE TRABAJO ACTUALES");
+  Object.keys(EX).forEach(function(k){ if(S.loads[k]) out.push("  "+EX[k].n+": "+S.loads[k]+" kg"); });
+  out.push("","SEMANA A SEMANA","");
+  W.forEach(function(w){
+    var plan=weekPlan(w), vals=[], lines=[];
+    for(var d=0;d<7;d++){
+      var key="w"+w.n+"d"+d;
+      var v=parseFloat(String(S.wgt[key]).replace(",","."));
+      if(!isNaN(v)) vals.push(v);
+      var mark=S.done[key]?"[x]":"[ ]";
+      lines.push("  "+mark+" "+DAYS[d]+" "+fmtDate(w.n,d)+" · "+plan[d].name+" · "+(S.wgt[key]?S.wgt[key]+" kg":"—"));
+    }
+    var avg=vals.length?(vals.reduce(function(a,b){return a+b;},0)/vals.length):null;
+    out.push("Semana "+w.n+" · "+w.phn+" · "+w.kcal+" kcal/día");
+    out.push("  Media de peso: "+(avg!==null?avg.toFixed(2)+" kg ("+vals.length+"/7 días)":"sin datos"));
+    out=out.concat(lines);
+    out.push("");
+  });
+  return out.join("\n");
+}
+document.getElementById("export").addEventListener("click", function(){
+  var msg=document.getElementById("msg");
+  var data=buildLog();
+  if(window.claude && window.claude.downloads && window.claude.downloads.save){
+    window.claude.downloads.save({filename:"registro-entrenamiento.txt", data:data})
+      .then(function(){ msg.textContent="Registro descargado."; })
+      .catch(function(err){ msg.textContent="No se ha descargado: "+(err && err.code ? err.code : "cancelado")+"."; });
+  } else {
+    msg.textContent="La descarga no está disponible aquí. Copia el registro desde la consola.";
+    try{ console.log(data); }catch(e){}
+  }
+});
+document.getElementById("reset").addEventListener("click", function(){
+  if(!confirm("Esto borra todos los pesos, marcas y registros guardados. ¿Seguro?")) return;
+  S.done={}; S.wgt={}; S.loads={}; save(); render();
+  document.getElementById("msg").textContent="Registro borrado.";
+});
+
+render();
+})();
+</script>

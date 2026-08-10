@@ -117,8 +117,22 @@ button.ctl:hover{border-color:var(--accent);color:var(--accent)}
 @media (min-width:820px){.ex-body{grid-template-columns:300px minmax(0,1fr)}}
 .ex-fig{background:var(--figbg);padding:18px 16px 14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
 @media (min-width:820px){.ex-fig{border-bottom:none;border-right:1px solid var(--line)}}
-.ex-fig svg{width:100%;max-width:280px;height:auto;margin:0 auto;display:block;color:var(--ink)}
-.ex-fig figcaption{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);text-align:center;margin-top:10px;line-height:1.5}
+.ex-fig svg{width:100%;max-width:300px;height:auto;margin:0 auto;display:block;color:var(--ink)}
+.ex-fig figcaption{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);text-align:center;margin-top:12px;line-height:1.5}
+
+/* tempo indicator — injected under every figure */
+.tempo{max-width:300px;margin:14px auto 0;width:100%}
+.tempo .bar{height:3px;background:var(--surface-2);position:relative;overflow:hidden}
+.tempo .bar i{position:absolute;inset:0;background:var(--accent);transform-origin:left center;transform:scaleX(0);animation:tsweep 4.2s linear infinite}
+.tempo .lbls{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tempo .lbls span{transition:none}
+.tempo .down{animation:tdown 4.2s steps(1,end) infinite}
+.tempo .up{animation:tup 4.2s steps(1,end) infinite}
+@keyframes tsweep{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tdown{0%,55.9%{color:var(--accent);opacity:1}56%,100%{color:var(--ink-3);opacity:.4}}
+@keyframes tup{0%,55.9%{color:var(--ink-3);opacity:.4}56%,100%{color:var(--accent);opacity:1}}
+.animpaused .tempo .bar i,.animpaused .tempo .down,.animpaused .tempo .up{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.tempo .bar i,.tempo .down,.tempo .up{animation:none}.tempo .bar i{transform:scaleX(1);opacity:.3}}
 .ex-txt{padding:20px 22px;font-family:var(--f-display);font-size:14.5px;line-height:1.55}
 .ex-txt h5{margin:20px 0 8px}
 .ex-txt h5:first-child{margin-top:0}
@@ -181,7 +195,7 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
 </header>
 
 <div class="animbar">
-  <p><strong>Las figuras están animadas.</strong> Cada una repite el movimiento en bucle a velocidad de ejecución real.</p>
+  <p><strong>Las figuras están animadas al tempo real de ejecución:</strong> la bajada dura más que la subida y hay una desaceleración en el punto de estiramiento. La barra bajo cada figura te marca el ritmo — cópialo, porque el tempo forma parte de la técnica tanto como la postura.</p>
   <button class="ctl" id="toggle" type="button">Pausar animaciones</button>
 </div>
 
@@ -195,7 +209,7 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
   <h3 class="ch" data-n="01">Los principios que aplico</h3>
   <p class="deck">Qué separa a un buen entrenador de una lista de ejercicios</p>
   <div class="prose">
-    <p class="lead">Un programa es solo el 30 % del trabajo. El otro 70 % es cómo se enseña, cómo se corrige y cómo se consigue que sigas ahí dentro de seis meses. Estos son los ocho principios con los que voy a trabajar contigo, y de dónde salen.</p>
+    <p class="lead">Un programa es solo el 30 % del trabajo. El otro 70 % es cómo se enseña, cómo se corrige y cómo se consigue que sigas ahí dentro de seis meses. Estos son los nueve principios con los que voy a trabajar contigo, y de dónde salen.</p>
 
     <h4>1 · Los cues son externos, no internos</h4>
     <p>Hay dos formas de decir lo mismo. «Contrae el glúteo al subir» dirige tu atención <em>hacia dentro</em> del cuerpo. «Empuja el suelo para separarte de él» la dirige <em>hacia fuera</em>, hacia el efecto del movimiento. La segunda funciona mejor: décadas de investigación sobre foco atencional —el cuerpo de trabajo de Gabriele Wulf es el más citado— muestran que el foco externo produce más fuerza, mejor economía de movimiento y un aprendizaje que se retiene más tiempo.</p>
@@ -215,13 +229,17 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
     <p>La hoja dice «12 repeticiones». Tu cuerpo, un martes de noviembre con cinco horas de sueño, dice otra cosa. El <strong>RIR</strong> (repeticiones en reserva) es el mecanismo que reconcilia ambos: si la hoja pide RIR 2 y llegas a la 9 sintiendo que solo te quedan dos, <em>paras en 9</em>. Y si en la 12 aún te sobran cuatro, subes peso la próxima vez.</p>
     <p>Es la diferencia entre seguir un programa y entrenar. Un programa rígido te obliga a elegir entre fallar o mentirte; la autorregulación absorbe los días malos sin romper nada.</p>
 
-    <h4>6 · El feedback se retira, no se acumula</h4>
+    <h4>6 · El tempo es parte de la técnica</h4>
+    <p>Una repetición tiene dos mitades y no valen lo mismo. La <strong>fase excéntrica</strong> —cuando el peso baja y el músculo se alarga bajo tensión— genera al menos tanto estímulo de crecimiento como la subida, y es la que casi todo el mundo desperdicia dejando caer el peso. La <strong>fase concéntrica</strong> es donde produces fuerza y donde debes ser decidido.</p>
+    <p>El tempo por defecto de este programa es <strong>2 segundos bajando, una pausa breve abajo, y subida controlada pero firme</strong>. Es el ritmo al que van todas las animaciones de las fichas: la barra de debajo de cada figura te lo marca. Bajar despacio tiene además un efecto que te interesa especialmente — te obliga a usar un peso que puedes controlar, que es la mejor protección que existe contra los tirones y las tendinopatías.</p>
+
+    <h4>7 · El feedback se retira, no se acumula</h4>
     <p>Al principio necesitas mucha corrección. Después, cada vez menos: si dependes de que alguien te diga cómo se hace cada repetición, no has aprendido el movimiento, has aprendido a obedecer. Este manual está escrito para que en dos meses no lo necesites abierto durante la sesión.</p>
 
-    <h4>7 · Lo que no se registra no progresa</h4>
+    <h4>8 · Lo que no se registra no progresa</h4>
     <p>Tienes que apuntar peso, series, repeticiones y RIR de cada ejercicio. No por burocracia: porque la sobrecarga progresiva es literalmente imposible de aplicar si no sabes qué hiciste la semana pasada. Es el hábito que más correlaciona con progresar, y cuesta noventa segundos por sesión.</p>
 
-    <h4>8 · Nunca dos seguidas</h4>
+    <h4>9 · Nunca dos seguidas</h4>
     <p>La regla de adherencia más útil que conozco: <strong>puedes saltarte una sesión; no puedes saltarte dos seguidas.</strong> Una sesión perdida es ruido estadístico. Dos son el principio de un patrón, y tu historial dice que los patrones se te consolidan rápido. Si el problema es tiempo o ganas, existe la sesión mínima del capítulo 4 — quince minutos que cuentan como sesión.</p>
 
     <div class="card">
@@ -373,21 +391,21 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
       <svg viewBox="0 0 200 175" role="img" aria-label="Figura de perfil bajando a sentadilla con una mancuerna sujeta contra el pecho">
         <line class="fig-ground" x1="20" y1="160" x2="180" y2="160"/>
         <circle class="fig-head" r="9">
-          <animate attributeName="cx" values="100;94;100" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          <animate attributeName="cy" values="40;68;40" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="cx" values="100;94;100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="40;68;40" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </circle>
         <polyline class="fig-body" points="100,52 100,96">
-          <animate attributeName="points" values="100,52 100,96; 92,80 86,128; 100,52 100,96" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="100,52 100,96; 92,80 86,128; 100,52 100,96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="100,96 100,128 100,157 114,160">
-          <animate attributeName="points" values="100,96 100,128 100,157 114,160; 86,128 110,132 100,157 114,160; 100,96 100,128 100,157 114,160" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="100,96 100,128 100,157 114,160; 86,128 110,132 100,157 114,160; 100,96 100,128 100,157 114,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="100,58 90,78 104,70">
-          <animate attributeName="points" values="100,58 90,78 104,70; 92,86 82,106 96,98; 100,58 90,78 104,70" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="100,58 90,78 104,70; 92,86 82,106 96,98; 100,58 90,78 104,70" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-4" y="-11" width="8" height="22" rx="2"/><rect x="-9" y="-13" width="18" height="5" rx="2"/><rect x="-9" y="8" width="18" height="5" rx="2"/>
-          <animateTransform attributeName="transform" type="translate" values="110,68; 102,96; 110,68" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="110,68; 102,96; 110,68" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
       </svg>
       <figcaption>El peso delante actúa de contrapeso:<br>te deja bajar más recto</figcaption>
@@ -431,21 +449,21 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
       <svg viewBox="0 0 200 175" role="img" aria-label="Figura de perfil realizando una bisagra de cadera con mancuernas, bajando el torso mientras la cadera va hacia atrás">
         <line class="fig-ground" x1="20" y1="160" x2="180" y2="160"/>
         <circle class="fig-head" r="9">
-          <animate attributeName="cx" values="96;138;96" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          <animate attributeName="cy" values="38;70;38" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="cx" values="96;138;96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="38;70;38" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </circle>
         <polyline class="fig-body" points="96,50 96,94">
-          <animate attributeName="points" values="96,50 96,94; 128,76 84,94; 96,50 96,94" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="96,50 96,94; 128,76 84,94; 96,50 96,94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="96,94 96,126 96,157 110,160">
-          <animate attributeName="points" values="96,94 96,126 96,157 110,160; 84,94 92,126 96,157 110,160; 96,94 96,126 96,157 110,160" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="96,94 96,126 96,157 110,160; 84,94 92,126 96,157 110,160; 96,94 96,126 96,157 110,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="96,56 96,78 96,100">
-          <animate attributeName="points" values="96,56 96,78 96,100; 128,80 128,102 128,124; 96,56 96,78 96,100" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="96,56 96,78 96,100; 128,80 128,102 128,124; 96,56 96,78 96,100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="96,106; 128,130; 96,106" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="96,106; 128,130; 96,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M108,92 Q124,92 130,80"/>
         <text class="fig-note" x="112" y="105">cadera atrás</text>
@@ -492,24 +510,24 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <line class="fig-ground" x1="15" y1="160" x2="195" y2="160"/>
         <g class="fig-gear"><rect x="146" y="118" width="52" height="7" rx="2"/><line x1="152" y1="125" x2="152" y2="160"/><line x1="192" y1="125" x2="192" y2="160"/></g>
         <circle class="fig-head" r="9">
-          <animate attributeName="cx" values="94;90;94" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          <animate attributeName="cy" values="38;60;38" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="cx" values="94;90;94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="38;60;38" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </circle>
         <polyline class="fig-body" points="94,50 94,94">
-          <animate attributeName="points" values="94,50 94,94; 90,72 86,116; 94,50 94,94" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="94,50 94,94; 90,72 86,116; 94,50 94,94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="94,94 94,126 94,157 108,160">
-          <animate attributeName="points" values="94,94 94,126 94,157 108,160; 86,116 100,136 94,157 108,160; 94,94 94,126 94,157 108,160" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="94,94 94,126 94,157 108,160; 86,116 100,136 94,157 108,160; 94,94 94,126 94,157 108,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="94,94 126,112 150,116" opacity=".6">
-          <animate attributeName="points" values="94,94 126,112 150,116; 86,116 122,140 150,118; 94,94 126,112 150,116" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="94,94 126,112 150,116; 86,116 122,140 150,118; 94,94 126,112 150,116" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="94,56 92,78 92,100">
-          <animate attributeName="points" values="94,56 92,78 92,100; 90,78 88,100 88,122; 94,56 92,78 92,100" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="94,56 92,78 92,100; 90,78 88,100 88,122; 94,56 92,78 92,100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="92,106; 88,128; 92,106" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="92,106; 88,128; 92,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
       </svg>
       <figcaption>El pie de atrás solo estabiliza.<br>El trabajo lo hace la pierna de delante</figcaption>
@@ -553,18 +571,18 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <line class="fig-ground" x1="15" y1="160" x2="195" y2="160"/>
         <g class="fig-gear"><rect x="30" y="106" width="66" height="8" rx="2"/><line x1="36" y1="114" x2="36" y2="160"/><line x1="90" y1="114" x2="90" y2="160"/></g>
         <circle class="fig-head" r="9">
-          <animate attributeName="cx" values="46;44;46" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          <animate attributeName="cy" values="98;92;98" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="cx" values="46;44;46" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="98;92;98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </circle>
         <polyline class="fig-body" points="62,104 118,140">
-          <animate attributeName="points" values="62,104 118,140; 60,100 116,112; 62,104 118,140" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="62,104 118,140; 60,100 116,112; 62,104 118,140" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="118,140 152,128 152,157 166,160">
-          <animate attributeName="points" values="118,140 152,128 152,157 166,160; 116,112 152,128 152,157 166,160; 118,140 152,128 152,157 166,160" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="118,140 152,128 152,157 166,160; 116,112 152,128 152,157 166,160; 118,140 152,128 152,157 166,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-16" y="-4" width="32" height="8" rx="2"/><rect x="-20" y="-9" width="6" height="18" rx="2"/><rect x="14" y="-9" width="6" height="18" rx="2"/>
-          <animateTransform attributeName="transform" type="translate" values="118,130; 116,102; 118,130" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="118,130; 116,102; 118,130" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M132,136 L132,112"/>
         <text class="fig-note" x="136" y="126">sube</text>
@@ -616,11 +634,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-limb" points="100,98 100,112"/>
         <polyline class="fig-limb" points="100,98 80,128 66,157 52,160"/>
         <polyline class="fig-limb" points="172,94 178,118 180,140">
-          <animate attributeName="points" values="172,94 178,118 180,140; 156,90 172,108 176,116; 172,94 178,118 180,140" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="172,94 178,118 180,140; 156,90 172,108 176,116; 172,94 178,118 180,140" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="180,146; 176,122; 180,146" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="180,146; 176,122; 180,146" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M192,142 L192,118"/>
         <text class="fig-note" x="150" y="76">codo atrás</text>
@@ -670,11 +688,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-body" points="86,108 144,108"/>
         <polyline class="fig-limb" points="144,108 168,120 168,157 180,160"/>
         <polyline class="fig-limb" points="86,108 88,86 92,64">
-          <animate attributeName="points" values="86,108 88,86 92,64; 86,108 70,90 50,80; 86,108 88,86 92,64" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="86,108 88,86 92,64; 86,108 70,90 50,80; 86,108 88,86 92,64" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-4" y="-10" width="8" height="20" rx="2"/><rect x="-9" y="-13" width="18" height="5" rx="2"/><rect x="-9" y="8" width="18" height="5" rx="2"/>
-          <animateTransform attributeName="transform" type="translate" values="93,58; 45,78; 93,58" dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="93,58; 45,78; 93,58" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M93,46 Q66,50 44,66"/>
       </svg>
@@ -722,11 +740,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-body" points="152,80 96,98"/>
         <polyline class="fig-limb" points="96,98 92,128 92,157 78,160"/>
         <polyline class="fig-limb" points="152,82 152,106 152,130">
-          <animate attributeName="points" values="152,82 152,106 152,130; 152,82 138,96 118,82; 152,82 152,106 152,130" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="152,82 152,106 152,130; 152,82 138,96 118,82; 152,82 152,106 152,130" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="152,136; 114,80; 152,136" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="152,136; 114,80; 152,136" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M162,132 Q150,102 126,84"/>
         <text class="fig-note" x="98" y="66">escápulas juntas</text>
@@ -776,11 +794,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-body" points="86,108 144,108"/>
         <polyline class="fig-limb" points="144,108 168,120 168,157 180,160"/>
         <polyline class="fig-limb" points="86,108 88,86 92,64">
-          <animate attributeName="points" values="86,108 88,86 92,64; 72,98 94,96 96,96; 86,108 88,86 92,64" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="86,108 88,86 92,64; 72,98 94,96 96,96; 86,108 88,86 92,64" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="93,60; 99,94; 93,60" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="93,60; 99,94; 93,60" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M108,92 L108,62"/>
       </svg>
@@ -826,17 +844,17 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
       <svg viewBox="0 0 215 175" role="img" aria-label="Figura en posición de flexión bajando el cuerpo en línea recta hacia el suelo">
         <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
         <circle class="fig-head" r="9">
-          <animate attributeName="cx" values="48;46;48" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          <animate attributeName="cy" values="98;120;98" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="cx" values="48;46;48" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="98;120;98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </circle>
         <polyline class="fig-body" points="62,104 124,120">
-          <animate attributeName="points" values="62,104 124,120; 62,126 124,134; 62,104 124,120" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="62,104 124,120; 62,126 124,134; 62,104 124,120" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="124,120 154,138 180,156 192,158">
-          <animate attributeName="points" values="124,120 154,138 180,156 192,158; 124,134 154,144 180,156 192,158; 124,120 154,138 180,156 192,158" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="124,120 154,138 180,156 192,158; 124,134 154,144 180,156 192,158; 124,120 154,138 180,156 192,158" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="62,104 64,132 68,157">
-          <animate attributeName="points" values="62,104 64,132 68,157; 62,126 46,146 68,157; 62,104 64,132 68,157" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="62,104 64,132 68,157; 62,126 46,146 68,157; 62,104 64,132 68,157" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
       </svg>
       <figcaption>El cuerpo baja entero, en bloque.<br>La cadera no se adelanta</figcaption>
@@ -883,11 +901,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-body" points="126,70 134,118"/>
         <polyline class="fig-limb" points="134,118 106,134 106,157 92,160"/>
         <polyline class="fig-limb" points="126,74 112,92 118,72">
-          <animate attributeName="points" values="126,74 112,92 118,72; 126,74 122,68 124,42; 126,74 112,92 118,72" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="126,74 112,92 118,72; 126,74 122,68 124,42; 126,74 112,92 118,72" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="117,68; 124,38; 117,68" dur="3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="117,68; 124,38; 117,68" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <path class="fig-path" d="M100,66 L100,40"/>
       </svg>
@@ -937,18 +955,18 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-limb" points="108,102 94,130 94,157"/>
         <polyline class="fig-limb" points="108,102 122,130 122,157"/>
         <polyline class="fig-limb" points="108,56 90,78 86,98">
-          <animate attributeName="points" values="108,56 90,78 86,98; 108,56 84,60 58,58; 108,56 90,78 86,98" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="108,56 90,78 86,98; 108,56 84,60 58,58; 108,56 90,78 86,98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="108,56 126,78 130,98">
-          <animate attributeName="points" values="108,56 126,78 130,98; 108,56 132,60 158,58; 108,56 126,78 130,98" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="108,56 126,78 130,98; 108,56 132,60 158,58; 108,56 126,78 130,98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="85,104; 53,58; 85,104" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="85,104; 53,58; 85,104" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <g class="fig-load">
           <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="131,104; 163,58; 131,104" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="131,104; 163,58; 131,104" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <line class="fig-path" x1="40" y1="58" x2="176" y2="58"/>
         <text class="fig-note" x="76" y="50">altura del hombro</text>
@@ -997,11 +1015,11 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <polyline class="fig-body" points="100,48 100,94"/>
         <polyline class="fig-limb" points="100,94 100,126 100,157 114,160"/>
         <polyline class="fig-limb" points="100,54 100,80 100,106">
-          <animate attributeName="points" values="100,54 100,80 100,106; 100,54 100,80 84,62; 100,54 100,80 100,106" dur="2.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="100,54 100,80 100,106; 100,54 100,80 84,62; 100,54 100,80 100,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <g class="fig-load">
           <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
-          <animateTransform attributeName="transform" type="translate" values="100,112; 82,58; 100,112" dur="2.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animateTransform attributeName="transform" type="translate" values="100,112; 82,58; 100,112" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </g>
         <circle cx="100" cy="80" r="5" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
         <text class="fig-note" x="110" y="84">codo fijo</text>
@@ -1101,10 +1119,10 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
         <circle class="fig-head" cx="56" cy="138" r="9"/>
         <polyline class="fig-body" points="70,144 128,144"/>
         <polyline class="fig-limb" points="70,142 70,118 70,96">
-          <animate attributeName="points" values="70,142 70,118 70,96; 70,142 58,124 38,116; 70,142 70,118 70,96" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="70,142 70,118 70,96; 70,142 58,124 38,116; 70,142 70,118 70,96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="128,144 128,112 154,112">
-          <animate attributeName="points" values="128,144 128,112 154,112; 128,144 154,132 184,138; 128,144 128,112 154,112" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>
+          <animate attributeName="points" values="128,144 128,112 154,112; 128,144 154,132 184,138; 128,144 128,112 154,112" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
         </polyline>
         <polyline class="fig-limb" points="128,144 126,114 150,116" opacity=".45"/>
         <polyline class="fig-limb" points="70,142 74,118 74,98" opacity=".45"/>
@@ -1283,10 +1301,25 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
 <script>
 (function(){
   var btn = document.getElementById('toggle');
-  var svgs = Array.prototype.slice.call(document.querySelectorAll('.ex-fig svg'));
+  var figs = Array.prototype.slice.call(document.querySelectorAll('.ex-fig'));
+  var svgs = [];
+
+  // Barra de tempo bajo cada figura: excéntrica lenta, concéntrica rápida.
+  figs.forEach(function(fig){
+    var svg = fig.querySelector('svg');
+    if (svg) svgs.push(svg);
+    var t = document.createElement('div');
+    t.className = 'tempo';
+    t.setAttribute('aria-hidden', 'true');
+    t.innerHTML = '<div class="bar"><i></i></div>' +
+                  '<div class="lbls"><span class="down">baja · 2,3 s</span><span class="up">sube · 1,9 s</span></div>';
+    fig.appendChild(t);
+  });
+
   var paused = false;
   function apply(){
     svgs.forEach(function(s){ paused ? s.pauseAnimations() : s.unpauseAnimations(); });
+    document.body.classList.toggle('animpaused', paused);
     btn.textContent = paused ? 'Reanudar animaciones' : 'Pausar animaciones';
     btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
   }
