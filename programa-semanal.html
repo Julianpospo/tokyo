@@ -219,7 +219,7 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
 <div class="shell">
 
 <header class="masthead">
-  <p class="eyebrow">Programa dirigido · 12 semanas · 17 ago – 8 nov 2026</p>
+  <p class="eyebrow">Programa dirigido · 12 semanas · 10 ago – 1 nov 2026</p>
   <h1>Tu semana, día a día</h1>
   <p class="sub">Briefing cada domingo, sesión exacta cada día, con la animación de cada ejercicio en la propia ficha. Todo lo que escribes queda guardado en este navegador y se puede exportar e importar.</p>
   <div class="ruler"></div>
@@ -234,7 +234,7 @@ footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-widt
   <div class="weeks" id="weeks" aria-label="Selector de semana"></div>
 </div>
 
-<div class="card warn" style="margin:0 0 20px"><span class="tag">Aviso · 10 de agosto</span><p><strong>El inicio se ha desplazado al 17 de agosto</strong> por una incidencia de dolor en el muslo izquierdo. La semana del 10 al 16 es de evaluación: tren superior, bici suave si no molesta, mediciones de línea base y arranque del desayuno nuevo. El protocolo está en el capítulo 1 del expediente.</p><p style="margin-bottom:0">Las <strong>2.200 kcal de la Fase 1 son provisionales</strong>. El número definitivo sale de los catorce días de calibración, no de una estimación por ecuación.</p></div>
+<div class="card warn" style="margin:0 0 20px"><span class="tag">Aviso · 10 de agosto</span><p><strong>Arranque el 11 de agosto.</strong> La calibración nutricional empieza ya porque no depende de la pierna. El <strong>tren inferior queda suspendido</strong> hasta superar las tres puertas de reingreso del expediente: la sobrecarga del muslo izquierdo manda sobre el calendario.</p><p style="margin-bottom:0">Fase 0 baja a <strong>2.300 kcal</strong> tras confirmarse el teletrabajo y el bajo recuento de pasos. Las <strong>2.200 de la Fase 1 siguen siendo provisionales</strong>: el número definitivo sale de los catorce días de calibración, no de una ecuación.</p></div>
 <main id="view"></main>
 
 <h3 class="sec">Cómo funciona la distribución de macronutrientes</h3>
@@ -377,13 +377,13 @@ var AJUSTES=[["1 pieza de fruta",80],["1 plátano",105],["30 g de frutos secos",
 
 /* ---------------- SEMANAS ---------------- */
 var W=[
- {n:1,ph:"F0",phn:"Fase 0 · Calibración",kcal:2450,fat:78,ser:2,rir:"4–5",menu:"A",start:"A1",pasos:"7.000",
+ {n:1,ph:"F0",phn:"Fase 0 · Calibración",kcal:2300,fat:73,ser:2,rir:"4–5",menu:"A",start:"A1",pasos:"7.000",
   focus:"Aprender los movimientos. Registrar todo lo que comes, incluido el aceite y el fin de semana.",
-  note:"Vas a terminar cada sesión con la sensación de no haber entrenado. Es intencionado: las agujetas incapacitantes de la primera semana son la razón número uno de que no exista la segunda.",
+  note:"Sobrecarga activa en el muslo izquierdo: esta semana SOLO tren superior, sentado o tumbado, más bici suave si no molesta. Nada de sentadilla, zancada, búlgara ni hip thrust hasta pasar las tres puertas de reingreso. La calibración nutricional sí arranca ya: no depende de la pierna.",
   todo:["Hacer los 4 tests de movimiento del manual","Medir cintura y cuello y hacer las 3 fotos","Grabar en vídeo el goblet, el peso muerto rumano y el remo","Pesarse cada mañana sin excepción"]},
- {n:2,ph:"F0",phn:"Fase 0 · Calibración",kcal:2450,fat:78,ser:2,rir:"4–5",menu:"B",start:"A2",pasos:"7.000",
+ {n:2,ph:"F0",phn:"Fase 0 · Calibración",kcal:2300,fat:73,ser:2,rir:"4–5",menu:"B",start:"A2",pasos:"7.000",
   focus:"Consolidar el hábito y cerrar la calibración. Sigues sin déficit.",
-  note:"Al terminar la semana calcula: media de peso de los días 1–7 frente a la de los días 8–14. Un kilo de diferencia en catorce días equivale a 550 kcal al día. Eso te da tu gasto real.",
+  note:"Reintroduce el tren inferior solo si has pasado las tres puertas: sin dolor en escaleras, sin dolor a la palpación y sentadilla sin peso indolora. Empieza con dos series sin carga. Al cerrar la semana: media de los días 1–7 frente a la de los días 8–14; un kilo de diferencia en catorce días equivale a 550 kcal al día.",
   todo:["Calcular las dos medias de peso y ajustar el objetivo calórico","Fijar los pesos de trabajo de cada ejercicio","Decidir sobre la barra de dominadas"]},
  {n:3,ph:"F1",phn:"Fase 1 · Déficit",kcal:2200,fat:70,ser:3,rir:"3",menu:"C",start:"A1",pasos:"9.000",
   focus:"Empieza el déficit. Tercera serie en todos los ejercicios principales.",
@@ -427,7 +427,7 @@ var W=[
   todo:["Subir a 2.400 kcal","Planificar el paso al programa torso/pierna"]}
 ];
 var DAYS=["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
-var BASE=new Date(2026,7,17);
+var BASE=new Date(2026,7,10);
 var PROT=165;
 function macros(w){ return {p:PROT, f:w.fat, hc:Math.round((w.kcal-PROT*4-w.fat*9)/4)}; }
 
