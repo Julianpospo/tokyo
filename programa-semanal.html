@@ -309,22 +309,22 @@ var FIGS={"goblet":{"svg":"<svg viewBox=\"0 0 200 175\" role=\"img\" aria-label=
 
 /* ---------------- EJERCICIOS ---------------- */
 var EX={
- goblet  :{n:"Sentadilla goblet",           r:"8–12",        a:"e1", rest:90, fig:"goblet",  tip:"Baja llevando la cadera atrás y abajo. Codos por dentro de las rodillas."},
+ goblet  :{n:"Sentadilla goblet",           r:"8–12",        a:"e1", rest:90, fig:"goblet",  lower:true,  tip:"Baja llevando la cadera atrás y abajo. Codos por dentro de las rodillas."},
  press   :{n:"Press con mancuernas",        r:"8–12",        a:"e8", rest:90, fig:"press",   tip:"Codos a 45°, nunca abiertos a 90°.", sub:"En el suelo hasta la semana 4"},
  remo    :{n:"Remo a una mano",             r:"10–12 / lado",a:"e5", rest:75, fig:"remo",    tip:"El codo va a la cadera y pasa por detrás del torso. Tu ejercicio prioritario."},
- rdl     :{n:"Peso muerto rumano",          r:"10–12",       a:"e2", rest:90, fig:"rdl",     tip:"Cadera atrás, rodilla fija. Si la espalda se redondea, para la serie."},
+ rdl     :{n:"Peso muerto rumano",          r:"10–12",       a:"e2", rest:90, fig:"rdl",     lower:true,     tip:"Cadera atrás, rodilla fija. Si la espalda se redondea, para la serie."},
  militar :{n:"Press militar sentado",       r:"10–12",       a:"e10",rest:75, fig:"militar", tip:"Costillas hacia abajo. Si arqueas la espalda, sobra peso."},
  lateral :{n:"Elevaciones laterales",       r:"12–15",       a:"e11",rest:60, fig:"lateral", tip:"Para a la altura del hombro. Con 3–5 kg vas bien.", acc:2},
- plancha :{n:"Plancha frontal",             r:"30–45 s",     a:"e13",rest:45, fig:"plancha", tip:"Aprieta el glúteo: eso es lo que quita la curva lumbar.", acc:3, nw:true},
- bulgara :{n:"Sentadilla búlgara",          r:"10 / pierna", a:"e3", rest:90, fig:"bulgara", tip:"Baja como un ascensor. El pie de atrás solo estabiliza."},
+ plancha :{n:"Plancha frontal",             r:"30–45 s",     a:"e13",rest:45, fig:"plancha", legIso:true, tip:"Aprieta el glúteo: eso es lo que quita la curva lumbar.", acc:3, nw:true},
+ bulgara :{n:"Sentadilla búlgara",          r:"10 / pierna", a:"e3", rest:90, fig:"bulgara", lower:true, tip:"Baja como un ascensor. El pie de atrás solo estabiliza."},
  pullover:{n:"Pullover con mancuerna",      r:"12–15",       a:"e6", rest:75, fig:"pullover",tip:"Arco amplio, codos casi fijos. Lumbar pegada al banco."},
  flex    :{n:"Flexiones",                   r:"máximas",     a:"e9", rest:75, fig:"flex",    tip:"Cuerpo en bloque. Aprieta el glúteo para no hundir la cadera.", nw:true},
- hip     :{n:"Hip thrust",                  r:"12–15",       a:"e4", rest:75, fig:"hip",     tip:"Para cuando el cuerpo haga una mesa. Ni un grado más."},
+ hip     :{n:"Hip thrust",                  r:"12–15",       a:"e4", rest:75, fig:"hip",     lower:true,     tip:"Para cuando el cuerpo haga una mesa. Ni un grado más."},
  pajaro  :{n:"Pájaro",                      r:"15",          a:"e7", rest:60, fig:"pajaro",  tip:"Abre las alas. Peso ridículamente ligero, a propósito.", acc:3},
  curl    :{n:"Curl de bíceps",              r:"10–12",       a:"e12",rest:60, fig:"curl",    tip:"El codo está clavado al costado.", acc:2},
- deadbug :{n:"Dead bug",                    r:"10 / lado",   a:"e14",rest:45, fig:"deadbug", tip:"Lumbar aplastada contra el suelo todo el rato.", acc:3, nw:true},
+ deadbug :{n:"Dead bug",                    r:"10 / lado",   a:"e14",rest:45, fig:"deadbug", legIso:true, tip:"Lumbar aplastada contra el suelo todo el rato.", acc:3, nw:true},
  /* incorporaciones programadas */
- gemelo  :{n:"Elevación de talones",        r:"15–20",       rest:45, acc:3,
+ gemelo  :{n:"Elevación de talones",        r:"15–20",       rest:45, acc:3, lower:true,
            tip:"De pie con una mancuerna en cada mano, sube sobre las puntas y baja despacio hasta estirar del todo. Prepara el tobillo y el Aquiles para volver a correr."},
  rotext  :{n:"Rotación externa tumbado",    r:"15 / lado",   rest:45, acc:2,
            tip:"Tumbado de lado, codo pegado al costado a 90°, gira el antebrazo hacia el techo. 1–3 kg. Trabajo preventivo del manguito rotador."},
@@ -337,11 +337,16 @@ var A1=["goblet","press","remo","rdl","militar","lateral","plancha"];
 var A2=["bulgara","pullover","flex","hip","pajaro","curl","deadbug"];
 /* progresión: qué se añade y cuándo */
 var ADD={5:{A1:"gemelo", A2:"rotext"}, 9:{A1:"vertical", A2:"elevp"}};
-function sessionList(code,wn){
+/* variantes de solo tren superior mientras la pierna esté en pausa */
+var U1=["press","remo","pullover","militar","lateral","pajaro"];
+var U2=["flex","remo","pullover","militar","curl","lateral"];
+function sessionList(code,wn,legOK){
+  if(legOK===false){ return {list:(code==="A1"?U1:U2).slice(), isNew:[], upper:true}; }
   var base=(code==="A1"?A1:A2).slice(), added=[];
   Object.keys(ADD).forEach(function(k){ if(wn>=+k && ADD[k][code]){ base.splice(base.length-1,0,ADD[k][code]); if(wn<+k+2) added.push(ADD[k][code]); } });
-  return {list:base, isNew:added};
+  return {list:base, isNew:added, upper:false};
 }
+function sessLabel(code,legOK){ return (legOK?"Fuerza ":"Torso ")+code; }
 
 /* ---------------- MENÚS ---------------- */
 var MENUS={
@@ -455,16 +460,16 @@ function currentWeek(){ var diff=Math.round((utc(new Date())-utc(BASE))/86400000
 
 /* ---------------- ESTADO ---------------- */
 var KEY="programa-semanal-v2", OLD="programa-semanal-v1";
-var S={sel:currentWeek(),done:{},wgt:{},loads:{},notes:{}};
+var S={sel:currentWeek(),done:{},wgt:{},loads:{},notes:{},legOK:false};
 (function load(){
   var raw=null;
   try{ raw=localStorage.getItem(KEY)||localStorage.getItem(OLD); }catch(e){}
   if(!raw) return;
-  try{ var p=JSON.parse(raw); S.done=p.done||{}; S.wgt=p.wgt||{}; S.loads=p.loads||{}; S.notes=p.notes||{}; }catch(e){}
+  try{ var p=JSON.parse(raw); S.done=p.done||{}; S.wgt=p.wgt||{}; S.loads=p.loads||{}; S.notes=p.notes||{}; S.legOK=p.legOK===true; }catch(e){}
 })();
 var saveMark=document.getElementById("savemark"), markT=null;
 function save(){
-  try{ localStorage.setItem(KEY,JSON.stringify({v:2,done:S.done,wgt:S.wgt,loads:S.loads,notes:S.notes})); }catch(e){ return; }
+  try{ localStorage.setItem(KEY,JSON.stringify({v:2,done:S.done,wgt:S.wgt,loads:S.loads,notes:S.notes,legOK:S.legOK})); }catch(e){ return; }
   saveMark.classList.add("on"); clearTimeout(markT); markT=setTimeout(function(){saveMark.classList.remove("on");},1400);
 }
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
@@ -505,8 +510,10 @@ function figBlock(id,ex){
 }
 
 function sessionBlock(code,w){
-  var sl=sessionList(code,w.n), list=sl.list;
-  var h='<div class="exlist">';
+  var sl=sessionList(code,w.n,S.legOK), list=sl.list;
+  var h="";
+  if(sl.upper) h+='<div class="gap" style="margin:0 0 12px"><div class="hd">Sesión adaptada · pierna en pausa</div>Tren inferior retirado por la sobrecarga del muslo izquierdo. Esta es la sesión de torso completa. En cuanto pases las tres puertas de reingreso, activa la pierna arriba y vuelven la sentadilla, el peso muerto rumano y el hip thrust.</div>';
+  h+='<div class="exlist">';
   for(var i=0;i<list.length;i++){
     var k=list[i], e=EX[k], ser=e.acc||w.ser, rir=e.nw?"—":w.rir;
     var val=S.loads[k]!=null?S.loads[k]:"";
@@ -559,6 +566,12 @@ function render(){
      '<div><dt>Pasos/día</dt><dd>'+w.pasos+'</dd></div>'+
      '<div><dt>Menú</dt><dd>'+w.menu+'</dd></div>'+
      '</dl>';
+  h+='<div class="card'+(S.legOK?" cool":" warn")+'" style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">'+
+     '<div style="flex:1;min-width:220px"><span class="tag">Estado del tren inferior</span>'+
+     '<p style="margin-bottom:0">'+(S.legOK
+       ? 'Pierna <strong>activa</strong>. Las sesiones incluyen sentadilla, peso muerto rumano, búlgara y hip thrust.'
+       : 'Pierna <strong>en pausa</strong> por la sobrecarga del muslo izquierdo. Las sesiones de fuerza son de torso. Actívala solo cuando pases las tres puertas: vida diaria indolora, sentadilla sin peso indolora y goblet a rango completo indolora.')+'</p></div>'+
+     '<button class="ctl'+(S.legOK?'':' pri')+'" id="legtoggle" type="button" style="flex-shrink:0">'+(S.legOK?'Poner en pausa':'Activar pierna')+'</button></div>';
   h+='<div class="card'+(w.ph==="DL"?" warn":"")+'"><span class="tag">Nota del entrenador</span><p>'+esc(w.note)+'</p></div>';
   h+='<div class="grid2"><div class="card good"><span class="tag">Tareas de esta semana</span><ul class="checklist">';
   w.todo.forEach(function(t){ h+='<li>'+esc(t)+'</li>'; });
@@ -571,7 +584,7 @@ function render(){
   for(var d=0;d<7;d++){ var p=plan[d], k=(p.t==="tenis")?kcalT:w.kcal;
     h+='<div class="sd'+(isToday(w.n,d)?" today":"")+(S.done["w"+w.n+"d"+d]?" ok":"")+'" data-t="'+p.t+'" data-jump="'+d+'">'+
        '<div class="d">'+DAYS[d].slice(0,3)+' '+fmtDate(w.n,d)+'</div>'+
-       '<div class="t">'+esc(p.s?p.s:p.name.split(" ·")[0].split(" ")[0])+'</div><div class="k">'+nf(k)+'</div></div>';
+       '<div class="t">'+esc(p.s?(S.legOK?p.s:"T"+p.s.slice(1)):p.name.split(" ·")[0].split(" ")[0])+'</div><div class="k">'+nf(k)+'</div></div>';
   }
   h+='</div>';
 
@@ -581,7 +594,7 @@ function render(){
     h+='<details class="day" id="day'+d2+'"'+(isToday(w.n,d2)?" open":"")+'><summary>'+
        '<span class="dbadge '+p2.t+'">'+p2.t+'</span><span class="dname">'+DAYS[d2]+'</span>'+
        '<span class="ddate">'+fmtDate(w.n,d2)+'</span>'+
-       '<span class="dkcal">'+nf(kc)+' kcal · '+esc(p2.name)+'</span></summary><div class="dsplit">'+
+       '<span class="dkcal">'+nf(kc)+' kcal · '+esc(p2.t==="fuerza"?sessLabel(p2.s,S.legOK):p2.name)+'</span></summary><div class="dsplit">'+
        '<div class="dcol"><h4>Entrenamiento</h4>';
     if(p2.t==="fuerza") h+=sessionBlock(p2.s,w);
     else h+='<p style="font-family:var(--f-display);font-size:14px;line-height:1.5;margin:0"><strong>'+esc(p2.name)+'.</strong> '+esc(p2.detail)+'</p>';
@@ -631,6 +644,9 @@ function render(){
 document.getElementById("weeks").addEventListener("click",function(e){
   var b=e.target.closest(".wk"); if(!b) return;
   S.sel=+b.getAttribute("data-w"); render(); window.scrollTo({top:0,behavior:"smooth"});
+});
+document.addEventListener("click",function(e){
+  if(e.target && e.target.id==="legtoggle"){ S.legOK=!S.legOK; save(); render(); }
 });
 document.getElementById("gotoday").addEventListener("click",function(){
   S.sel=currentWeek(); render();
@@ -705,7 +721,7 @@ document.getElementById("explog").addEventListener("click",function(){
   W.forEach(function(w){ var pl=weekPlan(w),v=[],ln=[];
     for(var d=0;d<7;d++){ var key="w"+w.n+"d"+d,x=parseFloat(String(S.wgt[key]).replace(",","."));
       if(!isNaN(x)) v.push(x);
-      ln.push("  "+(S.done[key]?"[x]":"[ ]")+" "+DAYS[d]+" "+fmtDate(w.n,d)+" · "+pl[d].name+" · "+(S.wgt[key]?S.wgt[key]+" kg":"—"));
+      ln.push("  "+(S.done[key]?"[x]":"[ ]")+" "+DAYS[d]+" "+fmtDate(w.n,d)+" · "+(pl[d].t==="fuerza"?sessLabel(pl[d].s,S.legOK):pl[d].name)+" · "+(S.wgt[key]?S.wgt[key]+" kg":"—"));
       if(S.notes[key]) ln.push("       nota: "+S.notes[key].replace(/\n/g," "));
     }
     var m=macros(w);
