@@ -23,7 +23,7 @@ Pendiente: salsa de la ensalada, si hubo pan, peso de la mañana.
 |---|---|---:|---:|---|
 | Desayuno | 3 trozos de pollo relleno La Carloteña (~90 g) · yogur griego 125 g · 4 nueces | **290** | **25 g** | Alta — etiquetas verificadas. Solo estimo los gramos de pollo |
 | Comida | Pasta de garbanzo 100 g · pollo Mercadona 160 g · zanahoria · plátano | 681 | 60 g | Alta — pesado. **Falta confirmar el aceite** |
-| Merienda | | | | |
+| Merienda | 1 yogur +Proteínas natural · 25 g nueces · tajada de sandía | 302 | 17 g | Media — la sandía estimada en 250 g |
 | Cena | | | | |
 | **Total parcial** | Desayuno + comida | **970** | **86 g** | Sin contar aceite de cocinado |
 
@@ -43,7 +43,8 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 
 | Producto | por 100 g | kcal | Prot | Nota |
 |---|---|---:|---:|---|
-| Yogur +Proteínas Hacendado, frutos silvestres | 100 g | 40 | 10 g | **Mejor ratio hasta ahora.** 0 % azúcar |
+| Yogur +Proteínas Hacendado, frutos silvestres | 100 g | 40 | 10 g | 0 % azúcar · 25,0 g prot/100 kcal |
+| Yogur +Proteínas Hacendado, natural | tarrina | 62 | 12 g | 0 % materia grasa · 19,4 g prot/100 kcal · más proteína absoluta por tarrina |
 | Pasta de garbanzo (seco) | 100 g | 370 | 21 g | Fibra 9,8 g · hierro 6,4 mg (46 % VRN) |
 | Bistec de llata, vedella (Bonpreu) | 100 g | 120 | 20 g | Muy magro, 4 g grasa. Bandeja 311 g / 6 uds |
 | Alpro mango (soja) | 100 g | ~78 | 3 g | **No es yogur**: alternativa vegetal, poca proteína |
