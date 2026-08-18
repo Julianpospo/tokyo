@@ -22,10 +22,10 @@ Pendiente: salsa de la ensalada, si hubo pan, peso de la mañana.
 | Toma | Contenido | kcal | Prot | Fiabilidad |
 |---|---|---:|---:|---|
 | Desayuno | 3 trozos de pollo relleno La Carloteña (~90 g) · yogur griego 125 g · 4 nueces | **290** | **25 g** | Alta — etiquetas verificadas. Solo estimo los gramos de pollo |
-| Comida | | | | |
+| Comida | Pasta de garbanzo 100 g · pollo Mercadona 160 g · zanahoria · plátano | 681 | 60 g | Alta — pesado. **Falta confirmar el aceite** |
 | Merienda | | | | |
 | Cena | | | | |
-| **Total** | | | | |
+| **Total parcial** | Desayuno + comida | **970** | **86 g** | Sin contar aceite de cocinado |
 
 Peso de la mañana: —
 
@@ -33,7 +33,7 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 
 ### Dudas abiertas del día
 - ¿Cuántos gramos de pollo relleno? El envase son 150 g; «3 trozos» podría ser de 60 a 110 g
-- Peso corporal de la mañana
+- Peso corporal de la mañana — **sin registrar los días 17 y 18**
 - Sesión del lunes: pesos y repeticiones
 - Muslo izquierdo: 0–10 y tendencia
 
