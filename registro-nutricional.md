@@ -24,10 +24,17 @@ Pendiente: salsa de la ensalada, si hubo pan, peso de la mañana.
 | Desayuno | 3 trozos de pollo relleno La Carloteña (~90 g) · yogur griego 125 g · 4 nueces | **290** | **25 g** | Alta — etiquetas verificadas. Solo estimo los gramos de pollo |
 | Comida | Pasta de garbanzo 100 g · pollo Mercadona 160 g · zanahoria · plátano | 681 | 60 g | Alta — pesado. **Falta confirmar el aceite** |
 | Merienda | 1 yogur +Proteínas natural · 25 g nueces · tajada de sandía | 302 | 17 g | Media — la sandía estimada en 250 g |
-| Cena | | | | |
-| **Total parcial** | Desayuno + comida | **970** | **86 g** | Sin contar aceite de cocinado |
+| Cena | Atún ~180 g · brócoli ~200 g · queso ~40 g · AOVE | 525 | 53 g | Media — atún y queso estimados de foto |
+| Postre | Gelatina proteica · plátano | 175 | 12 g | Media — falta etiqueta de la gelatina |
+| **TOTAL** | | **2.050** | **168 g** | **Primer día completo registrado** |
 
-Peso de la mañana: —
+Peso de la mañana: — **sin pesar**
+
+### Cierre del día 18
+- **2.050 kcal** frente a 2.300 → −250
+- **168 g de proteína** frente a 165 → **objetivo cumplido**
+- Grasa 82 g (+9) · HC 167 g (−79) · fibra ~40 g · sal ~5 g
+- Patrón: cena sin ningún carbohidrato, de ahí el déficit de HC y de calorías
 
 Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 
