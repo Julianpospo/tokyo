@@ -49,12 +49,15 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Alpro mango (soja) | 100 g | ~78 | 3 g | **No es yogur**: alternativa vegetal, poca proteína |
 | Pollo relleno Carloteña asado | 100 g | 166 | 18,5 g | 97 % pollo · grasa 9,5 g · **sal 1,5 g** · nitrito y polifosfatos. Envase 150 g |
 | Yogur griego (tarrina azul 125 g) | 100 g | 60 | 5,8 g | Grasa 2,0 g · azúcares 4,7 g (lactosa) · calcio 150 mg |
+| Filete de pechuga extra-tierna (Mercadona) | 100 g | 108 | 23,4 g | Grasa 1,3 g · **sal 1,0 g** · 95 % pollo, resto agua, sal y fibras vegetales. Envase 581 g |
 
 ### Ranking por proteína cada 100 kcal
 
 | Producto | prot/100 kcal |
 |---|---:|
 | Yogur +Proteínas Hacendado | **25,0** |
+| Pechuga extra-tierna Mercadona | **21,7** |
+| Merluza | 20,9 |
 | Bistec de llata | 16,7 |
 | Pechuga de pollo | 20,9 |
 | Pollo relleno Carloteña | 11,1 |
