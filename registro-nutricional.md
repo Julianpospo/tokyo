@@ -71,3 +71,22 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Pollo relleno Carloteña | 11,1 |
 | Yogur griego 125 g | 9,7 |
 | Pasta de garbanzo | 5,7 |
+
+---
+
+## Serie de peso corporal · Fase 0
+
+Condiciones: en ayunas, tras orinar, sin ropa.
+La media de 7 días es el único dato que se interpreta. Las lecturas sueltas son ruido.
+
+| Día | Fecha | Peso | Media móvil 7 d |
+|---|---|---:|---|
+| 1 | mié 19 ago | **80,8 kg** | — |
+| 2 | jue 20 ago | | |
+| 3 | vie 21 ago | | |
+| 4 | sáb 22 ago | | |
+| 5 | dom 23 ago | | |
+| 6 | lun 24 ago | | |
+| 7 | mar 25 ago | | *primera media* |
+
+**Nota:** los 81,5 kg de partida fueron una cifra declarada, de un día y unas condiciones desconocidas. **No sirve como punto de comparación.** La serie real empieza el 19 de agosto.
