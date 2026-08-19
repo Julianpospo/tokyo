@@ -52,10 +52,10 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 |---|---|---:|---:|---|
 | Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
 | Comida | Entrecot 163 g · lentejas 250 g · AOVE ~15 g | 635 | 61 g | Alta. Sin ensalada ni queso. **Aceite estimado en 15 g, sin confirmar** |
-| Postre | Yogur +Proteínas natural 150 g · 25 g de nueces | 256 | 22 g | Media — cantidad de nueces estimada |
-| Merienda | *propuesta ajustada:* pan integral 80 g · plátano | 305 | 7 g | Propuesta. Sin grasa: solo quedan 17 g |
-| Cena | *propuesta ajustada:* pasta de garbanzo 80 g · 2 latas atún natural · setas, tomate y calabacín · AOVE **5 g** | 500 | 45 g | Propuesta. Aceite recortado a la mitad por el techo de grasa |
-| **TOTAL previsto** | | **2.127** | **164 g** | HC ~184 (−62) · Grasa 69 g |
+| Postre | Yogur +Proteínas natural 150 g · **1 nuez** (~5 g) | 123 | 19 g | Alta — confirmado por Julián |
+| Merienda | *propuesta:* pan integral 80 g · 3 lonchas Carloteña · plátano | 388 | 17 g | Propuesta. Opcional: si no le apetece, se salta y se anota |
+| Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas, tomate y calabacín · AOVE 10 g | 546 | 45 g | Propuesta, sin confirmar |
+| **TOTAL previsto** | | **2.120** | **171 g** | HC ~181 (−65) · Grasa 66 g |
 
 Peso de la mañana: **80,8 kg** — primer dato estandarizado de la serie.
 
@@ -79,23 +79,23 @@ Rechazó la ensalada, el queso y el aceite: comió solo entrecot, lentejas y pos
 - Cocinó con AOVE de Jaén sin filtrar. **Mismas 9 kcal/g que cualquier aceite**: la calidad aporta polifenoles y sabor, no menos calorías. El entrecot no necesita aceite (13 g de grasa propia)
 - Método acordado: aceite a la cuchara y de la cuchara a la sartén, nunca de la botella directa
 
-### El postre del día 19: nueces en lugar de plátano
-Yogur +Proteínas + 25 g de nueces en vez de + plátano. Coste real del cambio:
-- **−25 g de hidrato** en un día que ya iba corto
-- **+6 g de grasa**, consumiendo 16 de los 33 g que quedaban de presupuesto
-- Proteína prácticamente igual
+### Corrección: el postre fueron 25 g de nueces, no. Fue 1
+Estimé 25 g de nueces (16 g de grasa) y construí sobre eso un recorte del aceite de la cena y de la merienda.
+Julián confirmó **1 nuez, ~5 g**. Aviso retirado y ajustes revertidos.
+Lección repetida: **no estimar cantidades habituales sin preguntar.** Ya había pasado con el pollo relleno.
 
-Consecuencia: hubo que recortar el aceite de la cena de 10 a 5 g y quitar el embutido de la merienda.
-**Regla derivada: el yogur pide plátano, no nueces.** Las nueces encajan en desayuno o día de descanso.
+### Hallazgo de calibración: la ingesta espontánea está en ~2.100 kcal
 
-### Déficit de hidrato: tercer día consecutivo
-| Día | HC reales | Objetivo | Desvío |
-|---|---:|---:|---:|
-| 18 ago | 167 | 246 | −79 |
-| 19 ago | ~184 previsto | 246 | −62 |
+| Día | kcal reales | Objetivo | HC reales | Objetivo HC |
+|---|---:|---:|---:|---:|
+| 18 ago | 2.050 | 2.300 | 167 | 246 |
+| 19 ago | ~2.120 previsto | 2.300 | ~181 | 246 |
 
-Causa estructural, no de voluntad: el hidrato se intenta rescatar por la noche en vez de entrar en el desayuno y la comida.
-**Corrección para el día 20: pan o arroz dentro de la comida desde el principio, no como añadido de última hora.**
+Durante dos días interpreté esto como «falta hidrato» y traté de rellenar el hueco con pan y plátano.
+**Reinterpretación:** no falla el cumplimiento, es que su ingesta natural ronda las 2.100 kcal. Ese es justamente el dato que la calibración busca.
+
+**Decisión: no forzar volumen.** Se registra lo que come de verdad durante los 5 días. Si el patrón se confirma, se revisa a la baja la estimación de gasto (2.300 podría estar sobreestimada) en lugar de exigirle comer más.
+**La proteína sí se mantiene en 165 g** — es la que protege masa magra durante la pérdida de grasa y no depende del apetito.
 
 ### Patrón corregido
 El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy se cierra el día completo por adelantado para evitar la repetición. Previsión: ~219 g HC frente a 246 (−27, dentro del ruido).
