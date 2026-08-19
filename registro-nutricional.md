@@ -25,14 +25,14 @@ Pendiente: salsa de la ensalada, si hubo pan, peso de la mañana.
 | Comida | Pasta de garbanzo 100 g · pollo Mercadona 160 g · zanahoria · plátano | 681 | 60 g | Alta — pesado. **Falta confirmar el aceite** |
 | Merienda | 1 yogur +Proteínas natural · 25 g nueces · tajada de sandía | 302 | 17 g | Media — la sandía estimada en 250 g |
 | Cena | Atún ~180 g · brócoli ~200 g · queso ~40 g · AOVE | 525 | 53 g | Media — atún y queso estimados de foto |
-| Postre | Gelatina proteica · plátano | 175 | 12 g | Media — falta etiqueta de la gelatina |
-| **TOTAL** | | **2.050** | **168 g** | **Primer día completo registrado** |
+| Postre | Gelatina +Proteínas 100 g · plátano | **145** | 11 g | Alta — etiqueta verificada el 19 ago |
+| **TOTAL** | | **2.020** | **167 g** | **Primer día completo registrado** (corregido el 19 ago) |
 
 Peso de la mañana: — **sin pesar**
 
 ### Cierre del día 18
-- **2.050 kcal** frente a 2.300 → −250
-- **168 g de proteína** frente a 165 → **objetivo cumplido**
+- **2.020 kcal** frente a 2.300 → −280 *(corregido: la gelatina son 40 kcal, no las ~70 que estimé)*
+- **167 g de proteína** frente a 165 → **objetivo cumplido**
 - Grasa 82 g (+9) · HC 167 g (−79) · fibra ~40 g · sal ~5 g
 - Patrón: cena sin ningún carbohidrato, de ahí el déficit de HC y de calorías
 
@@ -53,9 +53,9 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
 | Comida | Entrecot 163 g · lentejas 250 g · AOVE ~15 g | 635 | 61 g | Alta. Sin ensalada ni queso. **Aceite estimado en 15 g, sin confirmar** |
 | Postre | Yogur +Proteínas natural 150 g · **1 nuez** (~5 g) | 123 | 19 g | Alta — confirmado por Julián |
-| Merienda | *propuesta:* pan integral 80 g · 3 lonchas Carloteña · plátano | 388 | 17 g | Propuesta. Opcional: si no le apetece, se salta y se anota |
+| Merienda | Tostada pan integral 60 g · muslitos de pollo Carloteña ~100 g | ~335 | ~26 g | **Media — sin etiqueta de los muslitos.** Falta nº de piezas y si llevan hueso |
 | Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas, tomate y calabacín · AOVE 10 g | 546 | 45 g | Propuesta, sin confirmar |
-| **TOTAL previsto** | | **2.120** | **171 g** | HC ~181 (−65) · Grasa 66 g |
+| **TOTAL previsto** | | **2.070** | **180 g** | HC ~146 · Grasa ~72 g |
 
 Peso de la mañana: **80,8 kg** — primer dato estandarizado de la serie.
 
@@ -84,11 +84,18 @@ Estimé 25 g de nueces (16 g de grasa) y construí sobre eso un recorte del acei
 Julián confirmó **1 nuez, ~5 g**. Aviso retirado y ajustes revertidos.
 Lección repetida: **no estimar cantidades habituales sin preguntar.** Ya había pasado con el pollo relleno.
 
+### Corrección del 19 ago: la gelatina proteica llevaba 3 días mal contada
+Estimé ~70 kcal y 11 g de proteína. La etiqueta real: **40 kcal y 10 g por tarrina de 100 g**.
+Además la tenía duplicada en la tabla de verificados como «yogur +Proteínas frutos silvestres» — es el mismo producto. Corregido.
+Impacto: el día 18 baja de 2.050 a **2.020 kcal**.
+
+**Pendiente crítico:** lista de ingredientes. Si la proteína procede de colágeno o gelatina es incompleta (leucina muy baja) y **no debe contar entera** hacia los 165 g diarios. Si es proteína láctea, cuenta al 100 %.
+
 ### Hallazgo de calibración: la ingesta espontánea está en ~2.100 kcal
 
 | Día | kcal reales | Objetivo | HC reales | Objetivo HC |
 |---|---:|---:|---:|---:|
-| 18 ago | 2.050 | 2.300 | 167 | 246 |
+| 18 ago | 2.020 | 2.300 | 167 | 246 |
 | 19 ago | ~2.120 previsto | 2.300 | ~181 | 246 |
 
 Durante dos días interpreté esto como «falta hidrato» y traté de rellenar el hueco con pan y plátano.
@@ -111,7 +118,7 @@ El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy
 
 | Producto | por 100 g | kcal | Prot | Nota |
 |---|---|---:|---:|---|
-| Yogur +Proteínas Hacendado, frutos silvestres | 100 g | 40 | 10 g | 0 % azúcar · 25,0 g prot/100 kcal |
+| **Gelatina +Proteínas Hacendado, frutos silvestres** | tarrina 100 g | 40 | 10 g | 0 % azúcar · **25,0 g prot/100 kcal — el mejor ratio de la despensa**. ⚠ Falta lista de ingredientes: si la proteína es colágeno/gelatina es incompleta y no cuenta entera |
 | Yogur +Proteínas Hacendado, natural | tarrina | 62 | 12 g | 0 % materia grasa · 19,4 g prot/100 kcal · más proteína absoluta por tarrina |
 | Pasta de garbanzo (seco) | 100 g | 370 | 21 g | Fibra 9,8 g · hierro 6,4 mg (46 % VRN) |
 | Bistec de llata, vedella (Bonpreu) | 100 g | 120 | 20 g | Muy magro, 4 g grasa. Bandeja 311 g / 6 uds |
@@ -127,7 +134,7 @@ El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy
 
 | Producto | prot/100 kcal |
 |---|---:|
-| Yogur +Proteínas Hacendado | **25,0** |
+| Gelatina +Proteínas frutos silvestres | **25,0** |
 | Pechuga extra-tierna Mercadona | **21,7** |
 | Merluza | 20,9 |
 | Bistec de llata | 16,7 |
