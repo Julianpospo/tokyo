@@ -51,7 +51,7 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Toma | Contenido | kcal | Prot | Fiabilidad |
 |---|---|---:|---:|---|
 | Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
-| Comida | Entrecot 163 g · lentejas 250 g · postre (yogur +Proteínas + plátano) | 700 | 80 g | Alta — etiquetas verificadas. **Comió sin ensalada ni queso ni aceite** |
+| Comida | Entrecot 163 g · lentejas 250 g · AOVE ~15 g · postre pendiente | 635 | 61 g | Alta. Sin ensalada ni queso. **Aceite estimado en 15 g, sin confirmar** |
 | Merienda | *propuesta:* pan integral 60 g · 3 lonchas Carloteña · plátano | 355 | 22 g | Propuesta, sin confirmar |
 | Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas y tomate · AOVE 10 g | 540 | 46 g | Propuesta, sin confirmar |
 | Postre | *propuesta:* gelatina proteica · plátano | 150 | 8 g | Propuesta, sin confirmar |
@@ -76,6 +76,8 @@ Rechazó la ensalada, el queso y el aceite: comió solo entrecot, lentejas y pos
 - **Cero verdura en todo el día** hasta la cena. La cena debe traerla obligatoriamente
 - Se desplazan ~300 kcal a la noche. Ese es exactamente el punto donde se rompió el día 18
 - Suelo operativo de las lentejas: **200 g**. Por debajo dejan de aportar proteína e hidrato útiles
+- Cocinó con AOVE de Jaén sin filtrar. **Mismas 9 kcal/g que cualquier aceite**: la calidad aporta polifenoles y sabor, no menos calorías. El entrecot no necesita aceite (13 g de grasa propia)
+- Método acordado: aceite a la cuchara y de la cuchara a la sartén, nunca de la botella directa
 
 ### Patrón corregido
 El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy se cierra el día completo por adelantado para evitar la repetición. Previsión: ~219 g HC frente a 246 (−27, dentro del ruido).
