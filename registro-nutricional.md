@@ -46,6 +46,41 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 
 ---
 
+## Día 2 · miércoles 19 ago
+
+| Toma | Contenido | kcal | Prot | Fiabilidad |
+|---|---|---:|---:|---|
+| Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
+| Comida | Entrecot 163 g · lentejas 250 g · ensalada (pepino, remolacha, zanahoria) · queso de cabra blanco 30 g · AOVE 10 g | 748 | 68 g | Alta salvo el queso (estimado, sin etiqueta) |
+| Merienda | *propuesta:* pan integral 60 g · 3 lonchas Carloteña · plátano | 355 | 22 g | Propuesta, sin confirmar |
+| Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas y tomate · AOVE 10 g | 540 | 46 g | Propuesta, sin confirmar |
+| Postre | *propuesta:* gelatina proteica · plátano | 150 | 8 g | Propuesta, sin confirmar |
+| **TOTAL previsto** | | **2.223** | **173 g** | |
+
+Peso de la mañana: **80,8 kg** — primer dato estandarizado de la serie.
+
+### Decisión del día: boniato rebozado descartado
+Tenía boniato congelado **rebozado y prefrito** (163 kcal/100 g) frente a lentejas en bote (95 kcal, 10,0 g prot/100 g).
+- Boniato 175 g → 285 kcal · ~2 g prot · ~35 g HC · ~6 g grasa
+- Lentejas 250 g → 238 kcal · 25 g prot · 30 g HC · 1,8 g grasa
+
+Mismo hidrato, menos calorías, **+23 g de proteína**, −4 g de grasa. Con 93 g de proteína pendientes y techo calórico fijo, el boniato era el peor cambio disponible. **Recomendación firme: lentejas.**
+Sal a vigilar: 0,70 g/100 g → 1,75 g en 250 g. Enjuagar bajo el grifo y no salar la ensalada.
+
+### Corrección registrada
+Estimé el entrecot en 245 kcal / 20 P / 18 G por 100 g desde base de datos genérica. La etiqueta real: **161 kcal / 22 P / 8 G / 0,12 g sal**. Se retira por completo el consejo previo de «1-2 veces por semana, es caro en calorías».
+Orden de fiabilidad, sin excepciones: **etiqueta > base de datos > foto**.
+
+### Patrón corregido
+El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy se cierra el día completo por adelantado para evitar la repetición. Previsión: ~219 g HC frente a 246 (−27, dentro del ruido).
+
+### Dudas abiertas del día
+- **Sesión de torso del miércoles: ¿hecha o no?** — preguntado 4 veces, sin respuesta. Bloquea la programación del viernes
+- Etiqueta del queso de cabra blanco
+- ¿Aceite en la tostada del desayuno?
+
+---
+
 ## Productos verificados por etiqueta
 
 | Producto | por 100 g | kcal | Prot | Nota |
@@ -58,6 +93,9 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Pollo relleno Carloteña asado | 100 g | 166 | 18,5 g | 97 % pollo · grasa 9,5 g · **sal 1,5 g** · nitrito y polifosfatos. Envase 150 g |
 | Yogur griego (tarrina azul 125 g) | 100 g | 60 | 5,8 g | Grasa 2,0 g · azúcares 4,7 g (lactosa) · calcio 150 mg |
 | Filete de pechuga extra-tierna (Mercadona) | 100 g | 108 | 23,4 g | Grasa 1,3 g · **sal 1,0 g** · 95 % pollo, resto agua, sal y fibras vegetales. Envase 581 g |
+| Entrecot de vacuno | 100 g | 161 | 22 g | Grasa 8 g · **sal 0,12 g**. Pack 489 g / 3 uds → 163 g por pieza. Mucho más magro de lo estimado |
+| Lentejas caviar en bote | 100 g | 95 | 10,0 g | Grasa 0,70 g · HC 12,2 g · **sal 0,70 g** (enjuagar). Ingredientes: llenties caviar i sal. Bote 400 g neto |
+| Boniato congelado rebozado | 100 g | 163 | ~1,5 g | Rebozado y prefrito. ~35 g HC · ~5 g grasa. **Descartado**: 0,9 g prot/100 kcal |
 
 ### Ranking por proteína cada 100 kcal
 
@@ -67,10 +105,13 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Pechuga extra-tierna Mercadona | **21,7** |
 | Merluza | 20,9 |
 | Bistec de llata | 16,7 |
+| Entrecot | 13,7 |
+| Lentejas caviar en bote | **10,5** |
 | Pechuga de pollo | 20,9 |
 | Pollo relleno Carloteña | 11,1 |
 | Yogur griego 125 g | 9,7 |
 | Pasta de garbanzo | 5,7 |
+| Boniato rebozado congelado | **0,9** |
 
 ---
 
