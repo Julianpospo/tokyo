@@ -51,11 +51,11 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Toma | Contenido | kcal | Prot | Fiabilidad |
 |---|---|---:|---:|---|
 | Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
-| Comida | Entrecot 163 g · lentejas 250 g · ensalada (pepino, remolacha, zanahoria) · queso de cabra blanco 30 g · AOVE 10 g | 748 | 68 g | Alta salvo el queso (estimado, sin etiqueta) |
+| Comida | Entrecot 163 g · lentejas 250 g · postre (yogur +Proteínas + plátano) | 700 | 80 g | Alta — etiquetas verificadas. **Comió sin ensalada ni queso ni aceite** |
 | Merienda | *propuesta:* pan integral 60 g · 3 lonchas Carloteña · plátano | 355 | 22 g | Propuesta, sin confirmar |
 | Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas y tomate · AOVE 10 g | 540 | 46 g | Propuesta, sin confirmar |
 | Postre | *propuesta:* gelatina proteica · plátano | 150 | 8 g | Propuesta, sin confirmar |
-| **TOTAL previsto** | | **2.223** | **173 g** | |
+| **TOTAL previsto** | | **2.175** | **185 g** | |
 
 Peso de la mañana: **80,8 kg** — primer dato estandarizado de la serie.
 
@@ -70,6 +70,12 @@ Sal a vigilar: 0,70 g/100 g → 1,75 g en 250 g. Enjuagar bajo el grifo y no sal
 ### Corrección registrada
 Estimé el entrecot en 245 kcal / 20 P / 18 G por 100 g desde base de datos genérica. La etiqueta real: **161 kcal / 22 P / 8 G / 0,12 g sal**. Se retira por completo el consejo previo de «1-2 veces por semana, es caro en calorías».
 Orden de fiabilidad, sin excepciones: **etiqueta > base de datos > foto**.
+
+### Aviso del día 19
+Rechazó la ensalada, el queso y el aceite: comió solo entrecot, lentejas y postre.
+- **Cero verdura en todo el día** hasta la cena. La cena debe traerla obligatoriamente
+- Se desplazan ~300 kcal a la noche. Ese es exactamente el punto donde se rompió el día 18
+- Suelo operativo de las lentejas: **200 g**. Por debajo dejan de aportar proteína e hidrato útiles
 
 ### Patrón corregido
 El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy se cierra el día completo por adelantado para evitar la repetición. Previsión: ~219 g HC frente a 246 (−27, dentro del ruido).
