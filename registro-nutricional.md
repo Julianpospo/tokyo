@@ -121,9 +121,9 @@ El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy
 | Desayuno | Café · trozo pequeño de coca (~60 g) | 220 | **3 g** | 10 g | Media — tipo y peso de la coca sin confirmar |
 | Comida | Cuixa de pollastre al horno 350 g con hueso, **con piel** · poca zanahoria (~60 g) · plátano · AOVE 5 g | 675 | 46 g | 38 g | Media-alta — 350 g pesados, reparto hueso/carne estimado |
 | Merienda | Tostada pan integral 60 g · 3 lonchas Carloteña · 1 gelatina +Proteínas · café | 273 | 24 g | 6 g | Alta |
-| Cena | **Arroz 140 g en crudo** · pollo 260 g · salsa de soja · AOVE ~5 g | 831 | 71 g | 9 g | Alta — pesado en crudo, confirmado |
+| Cena | **Arroz 140 g en crudo** · pollo 260 g · **1 huevo revuelto** · salsa de soja · AOVE ~5 g | 901 | 77 g | 14 g | Alta — pesado en crudo, confirmado |
 | Postre | Yogur griego ligero ~125 g | 74 | 7 g | 1,5 g | Media — sin etiqueta |
-| **TOTAL** | | **2.073** | **151 g** | **64 g** | **HC 205** |
+| **TOTAL** | | **2.143** | **157 g** | **69 g** | **HC 205** |
 | *Objetivo* | | *2.300* | *165* | *73* | *246* |
 
 Peso de la mañana: **sin registrar** — segundo día perdido de la serie.
@@ -135,9 +135,10 @@ Se pesó a las 20:00 y marcó 80,0 kg. **No entra en la serie:** el peso de la t
 |---|---:|---:|---:|
 | Martes 18 | 2.020 | 167 | 167 |
 | Miércoles 19 | 1.889 | 162 | **97** |
-| **Jueves 20** | **2.073** | 151 | **205** |
+| **Jueves 20** | **2.143** | 157 | **205** |
 
-El hidrato sube de 97 a 205 comiendo solo **184 kcal más** que el día anterior.
+El hidrato sube de 97 a 205 comiendo solo **254 kcal más** que el día anterior.
+**Primer día con los cuatro macros dentro de margen:** −157 kcal, −8 g proteína, −4 g grasa, −41 g hidrato.
 **No fue comer más: fue recolocar el plato.** Una sola decisión — 140 g de arroz en crudo en la cena en vez de los 80 g propuestos — movió 108 g de hidrato.
 La grasa además baja de 79 a 64 pese a comerse la piel de la cuixa, porque la cena fue magra.
 
