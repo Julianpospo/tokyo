@@ -120,12 +120,28 @@ El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy
 |---|---|---:|---:|---:|---|
 | Desayuno | Café · trozo pequeño de coca (~60 g) | 220 | **3 g** | 10 g | Media — tipo y peso de la coca sin confirmar |
 | Comida | Cuixa de pollastre al horno 350 g con hueso, **con piel** · poca zanahoria (~60 g) · plátano · AOVE 5 g | 675 | 46 g | 38 g | Media-alta — 350 g pesados, reparto hueso/carne estimado |
-| Merienda | *propuesta:* 2 gelatinas +Proteínas · plátano · 3 lonchas Carloteña | 268 | 29 g | 5 g | Propuesta |
-| Cena | *propuesta:* arroz 80 g seco · 250 g pollo · 2 huevos · AOVE 10 g | 785 | 77 g | 20 g | Propuesta |
-| Postre | *propuesta:* 1 gelatina | 40 | 10 g | 0 | Propuesta |
-| **TOTAL previsto** | | **1.988** | **165 g** | **73 g** | HC ~153 |
+| Merienda | Tostada pan integral 60 g · 3 lonchas Carloteña · 1 gelatina +Proteínas · café | 273 | 24 g | 6 g | Alta |
+| Cena | **Arroz 140 g en crudo** · pollo 260 g · salsa de soja · AOVE ~5 g | 831 | 71 g | 9 g | Alta — pesado en crudo, confirmado |
+| Postre | Yogur griego ligero ~125 g | 74 | 7 g | 1,5 g | Media — sin etiqueta |
+| **TOTAL** | | **2.073** | **151 g** | **64 g** | **HC 205** |
+| *Objetivo* | | *2.300* | *165* | *73* | *246* |
 
 Peso de la mañana: **sin registrar** — segundo día perdido de la serie.
+Se pesó a las 20:00 y marcó 80,0 kg. **No entra en la serie:** el peso de la tarde suele ser 0,5-1,5 kg más alto que el de la mañana, no más bajo, y ese día había entrenado y sudado. No es comparable con los 80,8 en ayunas del día 19.
+
+### El día que se arregló el hidrato — y cómo
+
+| | kcal | Prot | HC |
+|---|---:|---:|---:|
+| Martes 18 | 2.020 | 167 | 167 |
+| Miércoles 19 | 1.889 | 162 | **97** |
+| **Jueves 20** | **2.073** | 151 | **205** |
+
+El hidrato sube de 97 a 205 comiendo solo **184 kcal más** que el día anterior.
+**No fue comer más: fue recolocar el plato.** Una sola decisión — 140 g de arroz en crudo en la cena en vez de los 80 g propuestos — movió 108 g de hidrato.
+La grasa además baja de 79 a 64 pese a comerse la piel de la cuixa, porque la cena fue magra.
+
+**Conclusión operativa: el problema del hidrato se resuelve en la ración de la guarnición, no en el apetito.** Para adelante: arroz y pasta pesados **en crudo**, 100-140 g.
 
 ### El desayuno de 3 g de proteína
 Café y coca aportan 3 g. Los días 18 y 19 arrancó con 25 y 29 g y las cuentas salían solas.
@@ -185,7 +201,7 @@ La media de 7 días es el único dato que se interpreta. Las lecturas sueltas so
 | Día | Fecha | Peso | Media móvil 7 d |
 |---|---|---:|---|
 | 1 | mié 19 ago | **80,8 kg** | — |
-| 2 | jue 20 ago | *sin registrar* | |
+| 2 | jue 20 ago | *perdido* | |
 | 3 | vie 21 ago | | |
 | 4 | sáb 22 ago | | |
 | 5 | dom 23 ago | | |

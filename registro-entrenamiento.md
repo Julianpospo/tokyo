@@ -78,11 +78,25 @@ Ofrecida una regresión: solo brazos, piernas quietas con los pies en el suelo, 
 
 ---
 
+## Estado del muslo izquierdo
+
+| Fecha | Estado |
+|---|---|
+| ~10 ago | Aparece la molestia. Duele al subir escaleras y agacharse |
+| 18 ago | «Un poco mejor. Ayer haciendo ejercicio no me dolió, solo en gestos puntuales, durmiendo hacia ese lado y agachándome» |
+| **20 ago** | **«Sigo mejorando, estoy en 6,5»** — leído como 6,5/10 de recuperación. *Pendiente de confirmar la dirección de la escala: la pedí sin especificarla, error mío* |
+
+**Sigue sin diagnóstico.** El tren inferior está suspendido por precaución, no por criterio clínico. Podría ser cintilla iliotibial, sobrecarga de glúteo medio o del tensor de la fascia lata — tratamientos distintos, indistinguibles por chat.
+
+**Las tres puertas para volver a tren inferior** (las tres a la vez, dos días seguidos):
+1. Subir escaleras sin dolor
+2. Agacharse sin dolor
+3. Dormir de ese lado sin dolor
+
 ## Datos que faltan
 
-- **Muslo izquierdo del 0 al 10** — pedido los días 18, 19 y 20, sin respuesta. Es el dato que decide el reingreso de tren inferior
 - Detalle de la sesión del martes 18
-- Cita con el fisioterapeuta — **recomendada sin condiciones esta semana**
+- **Cita con el fisioterapeuta — última ventana el viernes 21 o el sábado 22.** A partir del lunes, con la extracción, no va a ir a ningún sitio en toda la semana. Si no va antes, llega a septiembre con tres semanas de molestia sin que nadie le haya explorado
 
 ---
 
