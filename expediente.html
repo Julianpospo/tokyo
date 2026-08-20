@@ -1,0 +1,958 @@
+<title>Expediente · Base de datos y estudio revisado</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ground:#F1F3F1; --surface:#FBFCFB; --surface-2:#E9ECEA; --surface-3:#DFE4E1;
+  --ink:#131917; --ink-2:#4E5B57; --ink-3:#7C8985;
+  --line:#D6DCD8; --line-strong:#B9C2BD;
+  --accent:#A63A1C; --accent-soft:#F2E2DB;
+  --good:#2C6E56; --good-soft:#E0EBE5;
+  --warn:#8A5D0C; --warn-soft:#F2E9D6;
+  --cool:#2B5C74; --cool-soft:#DEE9EE;
+  --shadow:0 1px 2px rgba(19,25,23,.05),0 8px 24px rgba(19,25,23,.04);
+  --f-display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321; --surface-3:#252C29;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --cool:#6FA8C0; --cool-soft:#13212A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321; --surface-3:#252C29;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --cool:#6FA8C0; --cool-soft:#13212A;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.shell{max-width:1220px;margin:0 auto;padding:0 22px 110px}
+.cols{display:grid;grid-template-columns:1fr;gap:44px}
+@media (min-width:1080px){.cols{grid-template-columns:212px minmax(0,1fr);gap:54px;align-items:start}}
+
+.masthead{padding:50px 0 0}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.masthead h1{font-family:var(--f-display);font-weight:750;letter-spacing:-.028em;line-height:1.03;font-size:clamp(31px,5.6vw,54px);text-wrap:balance;max-width:16ch}
+.masthead .sub{font-size:clamp(16px,2vw,19.5px);color:var(--ink-2);max-width:60ch;margin-top:17px;line-height:1.5}
+.ruler{height:20px;margin:32px 0 0;position:relative;border-bottom:1px solid var(--line-strong)}
+.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:9px;background-image:repeating-linear-gradient(to right,var(--line-strong) 0 1px,transparent 1px 24px)}
+.ruler::after{content:"";position:absolute;left:0;bottom:0;width:2px;height:20px;background:var(--accent)}
+.subject{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 36px}
+.subject div{background:var(--ground);padding:13px 15px}
+.subject dt{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.subject dd{font-family:var(--f-mono);font-size:18px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.subject dd span{font-size:11px;font-weight:400;color:var(--ink-3);margin-left:2px}
+.subject dd.acc{color:var(--accent)}
+
+.rail{display:none}
+@media (min-width:1080px){.rail{display:block;position:sticky;top:22px;max-height:calc(100vh - 44px);overflow-y:auto;padding-right:6px}}
+.rail h2{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:13px}
+.rail ol{list-style:none}
+.rail .part{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:16px 0 7px}
+.rail .part:first-child{margin-top:0}
+.rail a{display:block;font-family:var(--f-display);font-size:12.5px;line-height:1.35;color:var(--ink-2);text-decoration:none;padding:5px 0 5px 22px;position:relative}
+.rail a::before{content:attr(data-n);position:absolute;left:0;top:5px;font-family:var(--f-mono);font-size:9.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.rail a:hover{color:var(--accent)}
+
+main{min-width:0}
+.prose{max-width:70ch}
+section{margin-bottom:58px;scroll-margin-top:22px}
+.part-head{margin:80px 0 34px;padding-top:20px;border-top:2px solid var(--ink)}
+.part-head:first-of-type{margin-top:0}
+.part-head .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.part-head h2{font-family:var(--f-display);font-weight:720;letter-spacing:-.024em;font-size:clamp(23px,3.3vw,33px);line-height:1.1;text-wrap:balance}
+h3.ch{font-family:var(--f-display);font-weight:680;letter-spacing:-.02em;line-height:1.16;font-size:clamp(20px,2.6vw,26px);text-wrap:balance;margin-bottom:6px;padding-left:50px;position:relative}
+h3.ch::before{content:attr(data-n);position:absolute;left:0;top:.1em;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--accent);letter-spacing:0;border-bottom:2px solid var(--accent);padding-bottom:2px}
+h3.ch + .deck{padding-left:50px;color:var(--ink-3);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px}
+h4{font-family:var(--f-display);font-weight:660;font-size:16.5px;letter-spacing:-.008em;margin:30px 0 12px}
+h5{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 10px}
+p{margin-bottom:16px}
+p.lead{font-size:19px;line-height:1.55;color:var(--ink-2)}
+strong{font-weight:700;color:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+ul,ol{margin:0 0 18px 0;padding-left:22px}
+li{margin-bottom:8px}
+li::marker{color:var(--ink-3)}
+ul.tight li,ol.tight li{margin-bottom:5px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.94em}
+
+.card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);padding:19px 21px;margin:24px 0;box-shadow:var(--shadow)}
+.card.good{border-left-color:var(--good)} .card.warn{border-left-color:var(--warn)} .card.cool{border-left-color:var(--cool)}
+.card.big{border-left-width:5px}
+.card .tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+.card.good .tag{color:var(--good)} .card.warn .tag{color:var(--warn)} .card.cool .tag{color:var(--cool)}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+.stats div{background:var(--surface);padding:15px 17px}
+.stats dt{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;line-height:1.3}
+.stats dd{font-family:var(--f-mono);font-size:23px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stats dd small{font-size:11px;font-weight:400;color:var(--ink-3)}
+.stats dd.acc{color:var(--accent)} .stats dd.gd{color:var(--good)} .stats dd.wn{color:var(--warn)}
+
+.scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--f-display);font-size:13.5px;min-width:520px}
+caption{caption-side:top;text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2)}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+thead th{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{font-weight:600;white-space:nowrap}
+tbody tr.total td{background:var(--surface-2);font-weight:700}
+tbody tr.total td.n{color:var(--accent)}
+td .mini{display:block;font-weight:400;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+
+.pill{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line-strong);color:var(--ink-2);margin:0 3px 3px 0;white-space:nowrap}
+.pill.acc{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pill.good{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+.pill.warn{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.pill.cool{border-color:var(--cool);color:var(--cool);background:var(--cool-soft)}
+
+.tl{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+@media (min-width:700px){.tl{grid-template-columns:repeat(3,1fr)}}
+.tl > div{background:var(--surface);padding:17px}
+.tl .dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:8px}
+.tl .g .dot{background:var(--good)} .tl .a .dot{background:var(--warn)} .tl .r .dot{background:var(--accent)}
+.tl h4{margin:0 0 8px;font-size:14.5px}
+.tl p{font-family:var(--f-display);font-size:13.5px;line-height:1.45;color:var(--ink-2);margin-bottom:8px}
+.tl p:last-child{margin-bottom:0}
+
+.checklist{list-style:none;padding-left:0}
+.checklist li{padding-left:26px;position:relative;font-family:var(--f-display);font-size:14.5px;line-height:1.5;margin-bottom:9px}
+.checklist li::before{content:"";position:absolute;left:0;top:.42em;width:11px;height:11px;border:1.5px solid var(--line-strong)}
+.qlist{list-style:none;padding-left:0;counter-reset:q}
+.qlist li{counter-increment:q;padding-left:34px;position:relative;font-family:var(--f-display);font-size:14.5px;line-height:1.5;margin-bottom:11px}
+.qlist li::before{content:counter(q);position:absolute;left:0;top:1px;font-family:var(--f-mono);font-size:11px;color:var(--accent);border:1px solid var(--accent);width:21px;height:21px;display:flex;align-items:center;justify-content:center}
+.qlist strong{display:block}
+.qlist .why{color:var(--ink-3);font-size:13px;display:block;margin-top:2px}
+
+.know{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+@media (min-width:820px){.know{grid-template-columns:repeat(3,1fr)}}
+.know > div{background:var(--surface);padding:17px 19px}
+.know h4{margin:0 0 10px;font-size:14.5px;display:flex;align-items:center;gap:8px}
+.know h4 .b{width:9px;height:9px;display:inline-block}
+.know .k1 .b{background:var(--good)} .know .k2 .b{background:var(--warn)} .know .k3 .b{background:var(--accent)}
+.know ul{padding-left:18px;margin:0;font-family:var(--f-display);font-size:13px;line-height:1.45}
+.know li{margin-bottom:6px}
+hr.tick{border:none;height:1px;background:var(--line);margin:42px 0;position:relative}
+hr.tick::after{content:"";position:absolute;left:50%;top:-3px;width:1px;height:7px;background:var(--line-strong)}
+footer{border-top:1px solid var(--line);margin-top:70px;padding-top:26px}
+footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-width:72ch;margin-bottom:9px}
+.refs{font-family:var(--f-display);font-size:13.5px;line-height:1.5;padding-left:0;list-style:none}
+.refs li{padding-left:28px;position:relative;margin-bottom:9px;color:var(--ink-2)}
+.refs li::before{content:attr(data-n);position:absolute;left:0;top:0;font-family:var(--f-mono);font-size:11px;color:var(--accent);font-variant-numeric:tabular-nums}
+</style>
+
+<div class="shell">
+
+<header class="masthead">
+  <p class="eyebrow">Expediente personal · Base de datos y estudio revisado · v4</p>
+  <h1>Todo lo que sé de ti, y lo que todavía no</h1>
+  <p class="sub">Documento maestro. Consolida el diagnóstico, el historial, el registro nutricional real, la incidencia activa de dolor y los protocolos con los que voy a tomar cada decisión. Aquí está la copia de seguridad de nuestro trabajo.</p>
+  <div class="ruler"></div>
+</header>
+
+<dl class="subject">
+  <div><dt>Edad</dt><dd>25</dd></div>
+  <div><dt>Altura</dt><dd>185<span>cm</span></dd></div>
+  <div><dt>Peso</dt><dd>81,5<span>kg</span></dd></div>
+  <div><dt>IMC</dt><dd>23,8</dd></div>
+  <div><dt>Grasa est.</dt><dd>~22<span>%</span></dd></div>
+  <div><dt>FFMI</dt><dd>18,6</dd></div>
+  <div><dt>Estado</dt><dd class="acc">Pausa<span>lesión</span></dd></div>
+  <div><dt>Inicio</dt><dd class="acc">17·08</dd></div>
+</dl>
+
+<div class="cols">
+
+<nav class="rail" aria-label="Índice">
+  <h2>Expediente</h2>
+  <p class="part">Urgente</p>
+  <ol><li><a href="#s1" data-n="01">Incidencia activa: muslo izquierdo</a></li></ol>
+  <p class="part">I · Base de datos</p>
+  <ol>
+    <li><a href="#s2" data-n="02">Ficha del sujeto</a></li>
+    <li><a href="#s3" data-n="03">Historial y patrón de abandono</a></li>
+    <li><a href="#s4" data-n="04">Material e instalaciones</a></li>
+    <li><a href="#s4b" data-n="4B">Analítica</a></li>
+    <li><a href="#s5" data-n="05">Registro nutricional real</a></li>
+  </ol>
+  <p class="part">II · Estudio revisado</p>
+  <ol>
+    <li><a href="#s6" data-n="06">La hipótesis que lo cambia todo</a></li>
+    <li><a href="#s7" data-n="07">Perfil de conducta alimentaria</a></li>
+    <li><a href="#s8" data-n="08">Diagnóstico consolidado</a></li>
+  </ol>
+  <p class="part">III · Honestidad</p>
+  <ol>
+    <li><a href="#s9" data-n="09">Lo que sé, asumo y no sé</a></li>
+    <li><a href="#s10" data-n="10">Cuestionario pendiente</a></li>
+  </ol>
+  <p class="part">IV · Operativa</p>
+  <ol>
+    <li><a href="#s11" data-n="11">Protocolos de decisión</a></li>
+    <li><a href="#s12" data-n="12">Semana 0 · qué haces ahora</a></li>
+    <li><a href="#s13" data-n="13">Calendario revisado</a></li>
+    <li><a href="#s14" data-n="14">Cómo trabajamos por el chat</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ URGENTE ============ -->
+<section id="s1">
+  <h3 class="ch" data-n="01">Incidencia activa · dolor en el muslo izquierdo</h3>
+  <p class="deck">Abierta hace ~2 semanas · persiste pese al reposo</p>
+  <div class="prose">
+    <p class="lead">Esto pasa por delante de todo lo demás. Has descrito dolor en el muslo izquierdo al subir escaleras y al agacharte. No voy a programarte una sola sentadilla hasta saber qué es, y no puedo saberlo sin más datos.</p>
+
+    <p><strong>Lo primero, por claridad: no puedo diagnosticarte.</strong> No soy médico, no puedo explorarte y un dolor unilateral de pierna tiene un abanico de causas que va desde una sobrecarga banal hasta cosas que requieren atención. Lo que sí puedo hacer es ayudarte a describirlo bien, decirte qué señales obligan a ir al médico, y adaptar el entrenamiento mientras tanto.</p>
+
+    <div class="card warn big">
+      <span class="tag">Señales de alarma · si aparece cualquiera de estas, médico hoy</span>
+      <ul class="tight">
+        <li><strong>Hinchazón, calor o enrojecimiento en la pantorrilla o el muslo</strong>, especialmente si el dolor es constante y no depende del movimiento. Sobre todo si has hecho un viaje largo, has estado inmovilizado o tomas alguna medicación. Esto se descarta el mismo día.</li>
+        <li><strong>Hormigueo, adormecimiento o pérdida de fuerza</strong> en la pierna, o dolor que baja desde la espalda.</li>
+        <li><strong>Dolor que te despierta por la noche</strong> o que no cede en reposo.</li>
+        <li><strong>Fiebre</strong>, malestar general o pérdida de peso que no buscabas.</li>
+        <li><strong>Incapacidad para apoyar el pie</strong> o cojera marcada.</li>
+      </ul>
+      <p style="margin-top:11px">Si nada de esto está presente y el dolor solo aparece al cargar la pierna, lo más probable es que sea mecánico y de manejo conservador. Pero necesito que me confirmes que has repasado esta lista.</p>
+    </div>
+
+    <h4>Autoexploración · siete respuestas que necesito</h4>
+    <p>Haz esto con calma y contéstame por el chat. Con estas respuestas puedo orientar bastante bien qué estructura está implicada y cómo adaptar el plan.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 1.1 · Autoexploración guiada</caption>
+        <thead><tr><th class="n">#</th><th>Prueba</th><th>Qué me dice</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Señálalo con un dedo.</strong> ¿Delante, dentro (ingle), fuera o detrás? ¿Arriba cerca de la cadera, en medio o cerca de la rodilla?<span class="mini">Si no puedes señalarlo con un dedo y es una zona difusa, dímelo también</span></td><td>La localización es el dato que más discrimina. Delante-arriba apunta a flexor de cadera o recto femoral; ingle profunda apunta a la articulación de la cadera; dentro, a aductor</td></tr>
+          <tr><td class="n">2</td><td><strong>¿Duele al tocarlo?</strong> Presiona con el pulgar la zona</td><td>Si duele a la palpación, hay una estructura superficial implicada (músculo o tendón). Si no duele al tocar pero sí al mover, apunta más a articulación o dolor referido</td></tr>
+          <tr><td class="n">3</td><td><strong>Sentado, estira la rodilla</strong> mientras alguien o tu propia mano hace resistencia</td><td>Si reproduce el dolor: cuádriceps o su tendón</td></tr>
+          <tr><td class="n">4</td><td><strong>Tumbado boca arriba, lleva la rodilla al pecho y gírala hacia dentro</strong></td><td>Si aparece un dolor profundo en la ingle, apunta a la cadera y no al músculo. Es una prueba orientativa, no diagnóstica</td></tr>
+          <tr><td class="n">5</td><td><strong>De pie, estira el cuádriceps</strong> llevando el talón al glúteo</td><td>Si el estiramiento pasivo duele, refuerza la sospecha muscular</td></tr>
+          <tr><td class="n">6</td><td><strong>¿Cuándo empezó y con qué?</strong> ¿Hubo un gesto concreto, un partido, un mal apoyo? ¿O apareció sin más?</td><td>Un inicio brusco con gesto identificable es una distensión. Un inicio progresivo sin causa es sobrecarga, cadera o referido</td></tr>
+          <tr><td class="n">7</td><td><strong>¿Mejora o empeora al calentar?</strong> Camina diez minutos y reevalúa</td><td>Mejorar con el calor es típico de tendinopatía y de sobrecarga. Empeorar progresivamente con el uso apunta a otra cosa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Además, para completar el cuadro</h4>
+    <ul class="tight">
+      <li>¿Cuántos días llevas con ello?</li>
+      <li>Del 0 al 10, ¿cuánto duele al subir escaleras? ¿Y en reposo?</li>
+      <li>¿Te limita para andar normal, o solo en escaleras y al agacharte?</li>
+      <li>¿Habías tenido antes algo parecido en esa pierna?</li>
+      <li>¿Hiciste algo distinto los días previos — caminar mucho, un partido, cargar peso, un viaje largo?</li>
+    </ul>
+
+    <div class="card cool">
+      <span class="tag">Qué hacer esta semana, con o sin respuestas</span>
+      <p><strong>Reposo relativo, no reposo absoluto.</strong> Parar del todo es tan mal consejo como forzar: el tejido se recupera mejor con carga controlada dentro del rango que no duele.</p>
+      <ul class="tight">
+        <li><strong>Evita:</strong> sentadillas, zancadas, búlgaras, subir escaleras a propósito, correr, y cualquier movimiento que reproduzca el dolor por encima de 3 sobre 10.</li>
+        <li><strong>Puedes hacer sin problema:</strong> todo el tren superior. Press, remo, pullover, press militar, elevaciones laterales, pájaro, curl. Esto es más de la mitad del programa y son <em>tus músculos prioritarios</em>.</li>
+        <li><strong>Bici estática:</strong> sí, siempre que no duela. Sin resistencia, sillín algo alto, 15–20 minutos. Si molesta, para. La bici suele tolerarse bien porque no hay impacto ni rango extremo.</li>
+        <li><strong>Camina</strong> lo que puedas sin dolor. Mantén los pasos.</li>
+        <li><strong>Frío o calor:</strong> el que te alivie. No cambia el desenlace, solo el confort.</li>
+        <li><strong>No estires con fuerza</strong> una zona que sospechas distendida. Estirar un músculo lesionado retrasa la recuperación.</li>
+      </ul>
+    </div>
+
+    <hr class="tick">
+
+    <div class="card good big">
+      <span class="tag">Actualización del 10 ago · lo que me has contado cambia el pronóstico</span>
+      <p>Me dices que es <strong>sobrecarga de la semana pasada</strong>, que hay un desencadenante identificable y que estás haciendo reposo. Eso mueve el cuadro de «dolor unilateral sin causa» —que era lo que me tenía cauto— a <strong>sobrecarga muscular con causa conocida</strong>, que es el escenario más benigno y el más frecuente. Pronóstico bueno: la mayoría se resuelve en una o dos semanas de reposo relativo.</p>
+      <p>Lo que sigo queriendo vigilar es la intensidad. Has dicho que <em>«cuando me da el dolor es fuerte»</em>. Un dolor fuerte, aunque sea puntual y de origen conocido, es <strong>ámbar tirando a rojo</strong> en el semáforo del capítulo 11: significa que hay tejido que aún no tolera esa carga. Necesito que me des un número del 0 al 10 en el peor momento, y que me lo repitas el viernes para ver la pendiente. Si va a menos, adelante. Si está igual que hace una semana, fisioterapeuta.</p>
+    </div>
+
+    <h4>Protocolo de reingreso · las tres puertas</h4>
+    <p>No voy a reintroducir el tren inferior por calendario, sino por criterios. Tienes que pasar las tres, en orden, y cada una sin dolor por encima de <strong>2 sobre 10</strong>:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 1.2 · Puertas de reingreso del tren inferior</caption>
+        <thead><tr><th class="n">Puerta</th><th>Criterio</th><th>Si la pasas</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><strong>Vida diaria indolora.</strong> Subes y bajas escaleras y te agachas a coger algo del suelo sin que aparezca el dolor fuerte</td><td>Añades <strong>isométricos</strong>: sentado, aprieta el cuádriceps con la pierna estirada 20 s × 5. Sin movimiento, sin carga</td></tr>
+          <tr><td class="n">2</td><td><strong>Sentadilla sin peso indolora</strong>, en el rango que puedas, con control</td><td>Añades <strong>sentadilla goblet ligera con rango parcial</strong>: 2 × 10, mancuerna de 6–8 kg, bajando solo hasta donde no molesta</td></tr>
+          <tr><td class="n">3</td><td><strong>Sentadilla goblet a rango completo indolora</strong>, y sin dolor al día siguiente</td><td>Entras en el programa normal, empezando con el <strong>60 % de la carga</strong> que hubieras usado, y subes durante dos semanas</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Regla en cada puerta:</strong> si el dolor sube por encima de 3 sobre 10 durante el ejercicio, o si al día siguiente estás peor que antes de hacerlo, retrocedes a la puerta anterior y esperas cinco días. No se salta ninguna, aunque te encuentres bien: la sobrecarga que no se ha resuelto del todo es exactamente la que reaparece en la semana 5.</p>
+    <p>El hip thrust y el peso muerto rumano los meteré <strong>antes</strong> que la sentadilla si el dolor es anterior de muslo, porque cargan cadena posterior y apenas piden cuádriceps. Dime dónde duele exactamente y adapto el orden.</p>
+
+    <div class="card warn">
+      <span class="tag">Mi recomendación clara</span>
+      <p>Si llevas <strong>más de dos semanas</strong> con esto, o si no mejora en los próximos <strong>siete a diez días</strong> de reposo relativo, <strong>ve a un fisioterapeuta.</strong> Una sesión de valoración cuesta 40–50 € y te ahorra semanas de incertidumbre — y en tu caso concreto vale doble, porque tu historial dice que las molestias sin resolver son exactamente lo que te ha hecho abandonar otras veces. Esta vez tenemos la oportunidad de romper ese ciclo tratándolo en lugar de esperando a ver.</p>
+      <p>Si vas, pídele explícitamente: <strong>un diagnóstico, qué puedo cargar mientras tanto, y qué ejercicios concretos hacer.</strong> Pásame lo que te diga y yo reconstruyo el programa alrededor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTE I ============ -->
+<div class="part-head">
+  <span class="lbl">Parte I</span>
+  <h2>Base de datos</h2>
+</div>
+
+<section id="s2">
+  <h3 class="ch" data-n="02">Ficha del sujeto</h3>
+  <p class="deck">Datos consolidados a 10 de agosto de 2026</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.1 · Antropometría y composición</caption>
+        <thead><tr><th>Variable</th><th class="n">Valor</th><th>Origen</th><th>Fiabilidad</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sexo / edad</td><td class="n">Varón · 25</td><td>Declarado</td><td><span class="pill good">Alta</span></td></tr>
+          <tr><td class="k">Altura</td><td class="n">185 cm</td><td>Declarado</td><td><span class="pill good">Alta</span></td></tr>
+          <tr><td class="k">Peso</td><td class="n">81,5 kg</td><td>Declarado, medición única</td><td><span class="pill warn">Media</span><span class="mini">Sin serie temporal ni condiciones estandarizadas</span></td></tr>
+          <tr><td class="k">IMC</td><td class="n">23,8</td><td>Calculado</td><td><span class="pill good">Alta</span></td></tr>
+          <tr><td class="k">Grasa corporal</td><td class="n">20–24 % <small>(22 %)</small></td><td>Estimación visual sobre 2 fotos</td><td><span class="pill warn">Media-baja</span><span class="mini">±4 puntos. Pendiente fórmula antropométrica</span></td></tr>
+          <tr><td class="k">Masa grasa</td><td class="n">17,9 kg</td><td>Derivado</td><td><span class="pill warn">Media-baja</span></td></tr>
+          <tr><td class="k">Masa magra</td><td class="n">63,6 kg</td><td>Derivado</td><td><span class="pill warn">Media-baja</span></td></tr>
+          <tr><td class="k">FFMI</td><td class="n">18,6</td><td>Derivado</td><td><span class="pill warn">Media-baja</span><span class="mini">Rango «sin entrenar». Techo natural ≈ 25</span></td></tr>
+          <tr><td class="k">Perímetro cintura</td><td class="n">— sin dato</td><td>—</td><td><span class="pill acc">Ausente</span><span class="mini">Es la métrica principal del plan y no la tengo</span></td></tr>
+          <tr><td class="k">Perímetro cuello</td><td class="n">— sin dato</td><td>—</td><td><span class="pill acc">Ausente</span><span class="mini">Necesario para la fórmula de % graso</span></td></tr>
+          <tr><td class="k">TMB (Mifflin)</td><td class="n">1.851 kcal</td><td>Calculado</td><td><span class="pill warn">Media</span><span class="mini">Error individual ±10–15 %</span></td></tr>
+          <tr><td class="k">Gasto total estimado</td><td class="n">2.250–2.650</td><td>Factor de actividad</td><td><span class="pill acc">Baja</span><span class="mini">Hipótesis alternativa en el capítulo 6</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.2 · Observaciones fenotípicas · fotografías del 10 ago</caption>
+        <thead><tr><th>Observación</th><th>Implicación</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Distribución de grasa central</td><td>Abdomen es el punto más ancho del torso; extremidades proporcionalmente delgadas. Patrón androide clásico en normopeso</td></tr>
+          <tr><td class="k">Deltoides pequeños, sin separación del brazo</td><td>Hombro es prioridad estética y funcional. Explica la ausencia de silueta en V</td></tr>
+          <tr><td class="k">Sin anchura dorsal apreciable</td><td>El tirón vertical es el patrón más deficitario. Agravado por no disponer de barra de dominadas</td></tr>
+          <tr><td class="k">Sin definición abdominal alguna</td><td>Confirma % graso por encima de 18</td></tr>
+          <tr><td class="k">Hombros adelantados, posible anteversión pélvica</td><td>Trabajo de espalda alta y core antiextensión con prioridad. Observación de baja certeza desde foto</td></tr>
+          <tr><td class="k">Piel muy pálida</td><td>Poca exposición solar. Refuerza sospecha de déficit de vitamina D</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <h3 class="ch" data-n="03">Historial y patrón de abandono</h3>
+  <p class="deck">El dato más predictivo del expediente</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 3.1 · Historial declarado</caption>
+        <thead><tr><th>Ámbito</th><th>Situación</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Entrenamiento de fuerza</td><td>Intermitente. Épocas de pesas en casa, siempre interrumpidas. Sin base acumulada relevante</td></tr>
+          <tr><td class="k">Carrera</td><td>Épocas de 20 minutos. Abandonadas</td></tr>
+          <tr><td class="k">Deporte</td><td>Tenis, 1 clase semanal. Parado en agosto</td></tr>
+          <tr><td class="k">Actividad diaria</td><td>Declarada «poca o nada». Sin recuento de pasos disponible</td></tr>
+          <tr><td class="k">Causa declarada de abandono</td><td>«Algún dolor o lo que sea»</td></tr>
+          <tr><td class="k">Episodio actual</td><td>Dolor de muslo izquierdo <em>antes</em> de empezar el programa. Ver capítulo 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card big">
+      <span class="tag">Lectura del patrón · y por qué el episodio de hoy es informativo</span>
+      <p>El ciclo que has repetido tiene una explicación fisiológica, no de voluntad: <strong>el músculo se adapta en 3–4 semanas, el tendón y el cartílago tardan dos o tres veces más.</strong> En la semana 4–5 te sientes fuerte, subes carga, y protesta el tejido que no ha tenido tiempo. Ahí abandonas.</p>
+      <p>Lo llamativo de esta vez es que <strong>el dolor ha aparecido sin haber empezado a entrenar</strong>. Eso apunta a dos posibilidades, y las dos son útiles:</p>
+      <ul class="tight">
+        <li><strong>Que haya algo estructural o postural de base</strong> que conviene resolver antes de cargar. Si es así, haberlo descubierto ahora es una suerte enorme: lo habríamos encontrado igual en la semana 5, pero con un programa en marcha y culpando al programa.</li>
+        <li><strong>Que sea una sobrecarga banal</strong> de la vida diaria, que se resolverá sola en días.</li>
+      </ul>
+      <p>En cualquiera de los dos casos, la decisión correcta es la que has tomado: retrasar el inicio una semana y averiguarlo. <strong>Esto no es perder una semana. Es la primera vez que rompes el ciclo en lugar de repetirlo.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <h3 class="ch" data-n="04">Material e instalaciones</h3>
+  <p class="deck">Inventario confirmado</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 4.1 · Equipamiento disponible</caption>
+        <thead><tr><th>Material</th><th>Estado</th><th>Cobertura</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Mancuernas de discos</td><td><span class="pill good">Confirmado</span></td><td>Los seis patrones básicos. <strong>Rango de peso sin confirmar</strong> — dato pendiente</td></tr>
+          <tr><td class="k">Banco Domyos regulable</td><td><span class="pill good">Confirmado</span></td><td>Press, remo con apoyo, hip thrust, búlgaras, pullover. <strong>¿Tiene respaldo regulable?</strong> — pendiente</td></tr>
+          <tr><td class="k">Bici estática <small>(Merach)</small></td><td><span class="pill good">Confirmado</span></td><td>Cardio sin impacto. Herramienta clave dada la incidencia actual</td></tr>
+          <tr><td class="k">Tobilleras / cinta</td><td><span class="pill good">Confirmado</span></td><td>Glúteo, femoral, core</td></tr>
+          <tr><td class="k">Esterilla</td><td><span class="pill good">Confirmado</span></td><td>Core, movilidad, press en suelo</td></tr>
+          <tr><td class="k">Mini bandas <small>(bucle corto, Decathlon, varias durezas)</small></td><td><span class="pill good">Confirmado 18 ago</span></td><td>Bucles cortos y densos, no bandas largas con anclaje. <strong>No sirven</strong> para Pallof, face pull anclado ni dominada asistida. <strong>Sí</strong> para pull-apart, rotación externa, remo sentado y todo el trabajo de glúteo medio</td></tr>
+          <tr><td class="k">Barras de flexiones</td><td><span class="pill good">Confirmado 18 ago</span></td><td>Muñeca en posición neutra y más rango en el pecho</td></tr>
+          <tr><td class="k">Soporte de piernas del banco</td><td><span class="pill good">Confirmado 18 ago</span></td><td>Dos pares de rodillos. Sirve para <strong>extensión de cuádriceps sentado, curl femoral tumbado y anclaje de pies</strong>. Es la vía de reingreso más segura para el muslo: carga controlada sin apoyar el peso del cuerpo</td></tr>
+          <tr><td class="k">Barra de conexión <small>(40–50 cm, sin estrenar)</small></td><td><span class="pill warn">Confirmado 18 ago</span></td><td>Admite los 18 kg en un implemento, pero es corta: <strong>no sirve para sentadilla, press militar de pie ni peso muerto rumano</strong>. Sí para hip thrust, press cerrado, remo estrecho, pullover y curl</td></tr>
+          <tr><td class="k">Mango convertidor a kettlebell <small>(sin estrenar)</small></td><td><span class="pill good">Confirmado 18 ago</span></td><td>Convierte la mancuerna en kettlebell. Mejor agarre para goblet squat; abre el swing más adelante</td></tr>
+          <tr><td class="k">Carga disponible</td><td><span class="pill good">24 kg</span></td><td><strong>18 kg de discos</strong> (4 de 2 kg + 8 de 1,25) + 2 mancuernas fijas de 3 kg. Máximos: <strong>10 kg por mano</strong>, <strong>20 kg</strong> con las dos, <strong>19,5 kg</strong> en la barra corta. Saltos de 2,5 kg. Techo del programa: <strong>meses, no semanas</strong></td></tr>
+          <tr><td class="k">Barra de dominadas</td><td><span class="pill acc">Ausente</span></td><td><strong>Única laguna real.</strong> Sin tirón vertical no hay anchura dorsal eficiente. 20–30 €</td></tr>
+          <tr><td class="k">Báscula de cocina</td><td><span class="pill acc">Ausente</span><span class="mini">Confirmado el 10 ago: pendiente de compra</span></td><td><strong>Bloquea la calibración.</strong> Ver capítulo 7</td></tr>
+          <tr><td class="k">Báscula corporal</td><td><span class="pill warn">Sin confirmar</span></td><td>Imprescindible para el bucle de control. Dato pendiente</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s4b">
+  <h3 class="ch" data-n="4B">Analítica</h3>
+  <p class="deck">CATLAB · extracción 5 de mayo de 2026 · CAP Rambla d'Ègara</p>
+  <div class="prose">
+    <p class="lead">Recibida el 10 de agosto. <strong>Todo lo que se midió está dentro de rango.</strong> Es una analítica limpia y elimina de golpe media docena de posibles frenos que había que descartar antes de empezar.</p>
+
+    <p>Un apunte de contexto que aparece en el propio informe: el estudio se pidió por <strong>sospecha de anemia</strong>, y el laboratorio concluye que no hay anemia ni macrocitosis ni microcitosis significativas. Es información relevante y volveré sobre ella al final del capítulo.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 4B.1 · Hemograma y coagulación</caption>
+        <thead><tr><th>Parámetro</th><th class="n">Resultado</th><th class="n">Referencia</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Hemoglobina</td><td class="n">15,2 g/dL</td><td class="n">13 – 17</td><td><span class="pill good">Normal</span> Sin anemia. Buena capacidad de transporte de oxígeno</td></tr>
+          <tr><td class="k">Hematocrito</td><td class="n">46,7 %</td><td class="n">40 – 50</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">Eritrocitos</td><td class="n">4,9 ×10¹²/L</td><td class="n">4,3 – 5,6</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">VCM</td><td class="n">95,3 fL</td><td class="n">83,6 – 97</td><td><span class="pill good">Normal</span> En la mitad alta. Descarta microcitosis por ferropenia franca</td></tr>
+          <tr><td class="k">HCM / CCMH</td><td class="n">31 pg / 32,5</td><td class="n">27–32 / 31,5–34,5</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">ADE (RDW)</td><td class="n">12,5 %</td><td class="n">11,6 – 14,3</td><td><span class="pill good">Normal</span> Población de hematíes homogénea</td></tr>
+          <tr><td class="k">Plaquetas</td><td class="n">225 ×10⁹/L</td><td class="n">149 – 303</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">Leucocitos</td><td class="n">6,47 ×10⁹/L</td><td class="n">3,9 – 9,5</td><td><span class="pill good">Normal</span> Fórmula sin alteraciones</td></tr>
+          <tr><td class="k">Coagulación <small>(TP, INR)</small></td><td class="n">101 % · INR 1</td><td class="n">70–120 · 0,8–1,25</td><td><span class="pill good">Normal</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 4B.2 · Bioquímica y hormonas</caption>
+        <thead><tr><th>Parámetro</th><th class="n">Resultado</th><th class="n">Referencia</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Glucosa</td><td class="n">89,2 mg/dL</td><td class="n">74 – 106</td><td><span class="pill good">Normal</span> Sin indicio de alteración del metabolismo de la glucosa</td></tr>
+          <tr><td class="k">Colesterol total</td><td class="n">157,7 mg/dL</td><td class="n">&lt; 200</td><td><span class="pill good">Riesgo bajo</span> Buen valor. Ver la limitación más abajo</td></tr>
+          <tr><td class="k">Creatinina</td><td class="n">0,76 mg/dL</td><td class="n">0,7 – 1,2</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">Filtrado glomerular</td><td class="n">127 mL/min</td><td class="n">&gt; 60</td><td><span class="pill good">Normal</span> Función renal excelente. Relevante: sin contraindicación para proteína alta ni creatina</td></tr>
+          <tr><td class="k">GOT / AST</td><td class="n">16,2 U/L</td><td class="n">0 – 51</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">GPT / ALT</td><td class="n">20,4 U/L</td><td class="n">0 – 49,8</td><td><span class="pill good">Normal</span> Sin sospecha de hígado graso</td></tr>
+          <tr><td class="k">GGT</td><td class="n">13,2 U/L</td><td class="n">10,2 – 71,4</td><td><span class="pill good">Normal</span> Muy bajo. Coherente con consumo de alcohol mínimo</td></tr>
+          <tr><td class="k">Bilirrubina</td><td class="n">0,65 mg/dL</td><td class="n">0 – 1,42</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">Fosfatasa alcalina</td><td class="n">82,2 U/L</td><td class="n">40,2 – 129</td><td><span class="pill good">Normal</span></td></tr>
+          <tr><td class="k">TSH</td><td class="n">4,18 mIU/L</td><td class="n">0,27 – 4,2</td><td><span class="pill warn">Normal alto</span> Dentro de rango, pero rozando el techo. Ver comentario</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>El único valor que merece comentario: la TSH</h4>
+    <p><strong>4,18 con un límite superior de 4,2 está dentro de rango.</strong> No es hipotiroidismo y no hay nada que tratar. Pero está tan pegado al techo que conviene decirlo en voz alta en lugar de dejarlo pasar, por tres motivos:</p>
+    <ul class="tight">
+      <li>Una TSH aislada no diagnostica nada. Fluctúa con la hora del día, el sueño, el estrés y una enfermedad reciente. Lo que orienta de verdad es <strong>repetirla junto con T4 libre</strong>.</li>
+      <li>Muchos laboratorios usan 4,0 o 4,5 como corte. El intervalo no es una frontera biológica.</li>
+      <li><strong>No explica tu composición corporal.</strong> Un hipotiroidismo real que afectara al peso daría otros valores y otros síntomas. Tu FFMI de 18,6 se explica por no haber entrenado y por comer poca proteína, no por la tiroides. No quiero que salgas de aquí con una causa cómoda que no es la causa.</li>
+    </ul>
+    <p><strong>Qué hacer:</strong> nada urgente. Cuando repitas analítica —y te voy a pedir que la repitas, por lo que viene ahora— añade <strong>T4 libre</strong> y lo miramos juntos. Si vuelve a salir en el techo con T4 normal, sigue sin significar nada preocupante.</p>
+
+    <h4>Lo que falta, y por qué importa</h4>
+    <p>Esta analítica cubre bien lo básico, pero <strong>no incluye tres cosas que yo había pedido explícitamente</strong>:</p>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 4B.3 · Parámetros ausentes</caption>
+        <thead><tr><th>Falta</th><th>Por qué lo quiero</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Ferritina</td><td>Es la más llamativa: <strong>se pidió el estudio por sospecha de anemia y no se midió el hierro de depósito.</strong> Se puede tener ferritina baja con hemoglobina y VCM perfectamente normales — es la ferropenia sin anemia, frecuente y con síntomas reales de fatiga y peor recuperación. Tu hemograma la hace poco probable, pero no la descarta</td><td><span class="pill acc">Alta</span></td></tr>
+          <tr><td class="k">Vitamina D <small>(25-OH)</small></td><td>El déficit es muy común, y tú sumas dos factores: teletrabajo y piel muy pálida en las fotos de agosto. Afecta a fuerza, recuperación y salud ósea, y es de lo poco que suplementar sí cambia algo cuando está bajo</td><td><span class="pill acc">Alta</span></td></tr>
+          <tr><td class="k">Perfil lipídico completo<small>HDL · LDL · triglicéridos</small></td><td>Solo hay colesterol total, y 157 es un buen número. Pero el total sin HDL ni triglicéridos no permite valorar riesgo metabólico, y los triglicéridos son justo lo que más informa en alguien con acumulación central de grasa como la tuya</td><td><span class="pill warn">Media</span></td></tr>
+          <tr><td class="k">B12 y folato</td><td>Los otros dos sospechosos habituales cuando se busca anemia. Con VCM 95,3 y ADE normal es poco probable que haya algo, pero cerraría el capítulo</td><td><span class="pill">Baja</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card good">
+      <span class="tag">Conclusión operativa</span>
+      <p><strong>No hay ningún freno médico para empezar.</strong> Función renal excelente, hígado impecable, glucosa normal, sin anemia, sin alteración de la coagulación, colesterol bajo. Con un filtrado glomerular de 127 no hay motivo alguno para preocuparse por comer 165 g de proteína ni por tomar creatina, que son las dos cosas que la gente pregunta.</p>
+      <p><strong>Petición concreta:</strong> pide a tu médico de familia una analítica con <strong>ferritina, vitamina D 25-OH, perfil lipídico completo y T4 libre</strong>. Son cuatro parámetros baratos, la justificación es razonable —revisión por cambio de dieta y ejercicio, más sospecha de anemia previa sin hierro medido— y con ellos cierro los últimos huecos del expediente.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s5">
+  <h3 class="ch" data-n="05">Registro nutricional real</h3>
+  <p class="deck">Día 1 · 10 de agosto de 2026 · datos observados, no declarados</p>
+  <div class="prose">
+    <p>Este es el primer dato duro de conducta alimentaria, y vale más que cualquier declaración general. Registro parcial: desayuno y comida.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 5.1 · Ingesta observada · 10 ago</caption>
+        <thead><tr><th>Toma</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot</th><th>Método</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Desayuno</td><td>1 plátano (~120 g) + yogur de soja Alpro mango, 4–5 cucharadas (~85 g)</td><td class="n">171</td><td class="n">3,5 g</td><td>Estimado</td></tr>
+          <tr><td class="k">Comida</td><td>Pasta de garbanzo (~120 g seco) + 3 bistecs de llata (~156 g) + setas (~200 g) + AOVE (~15 g)</td><td class="n">811</td><td class="n">59 g</td><td>Etiquetas + estimación visual de ración</td></tr>
+          <tr><td class="k">Merienda</td><td colspan="3">Sin registrar</td></tr>
+          <tr><td class="k">Cena</td><td colspan="3">Sin registrar</td></tr>
+          <tr class="total"><td>Parcial</td><td>Dos tomas de cuatro</td><td class="n">982</td><td class="n">62,5 g</td><td>±120 kcal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Hallazgos de este único día</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 5.2 · Lo que revela el registro</caption>
+        <thead><tr><th>Hallazgo</th><th>Magnitud</th><th>Consecuencia</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Desayuno sin proteína</td><td>3,5 g frente a los ~40 g que corresponden a una toma</td><td><strong>Déficit de 36 g arrastrado desde primera hora.</strong> Es el hallazgo principal</td></tr>
+          <tr><td class="k">Confusión Alpro / yogur</td><td>3 g de proteína por 100 g frente a 10 g del yogur griego</td><td>Un alimento contabilizado mentalmente como proteico que no lo es</td></tr>
+          <tr><td class="k">Desayuno muy pequeño</td><td>171 kcal = 7 % del objetivo diario</td><td>Concentra la ingesta en la segunda mitad del día</td></tr>
+          <tr><td class="k">Medición por volumen</td><td>Vaso medidor con escalas de harina y azúcar usado para pasta</td><td><strong>Sobreestimación del 35–40 %</strong> por diferencia de densidad. Bloquea la calibración</td></tr>
+          <tr><td class="k">Sin verdura de color</td><td>Solo setas</td><td>Micronutrientes bajos. Pierde la sinergia vitamina C – hierro no hemo de la legumbre</td></tr>
+          <tr><td class="k">Elección de la comida</td><td>Pasta de garbanzo, ternera magra, setas</td><td><span class="pill good">Positivo</span> Plato bien construido: 59 g de proteína, 12 g de fibra, 6,4 mg de hierro. Replicable</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card cool">
+      <span class="tag">Intervención registrada</span>
+      <p>En la comida ibas a añadir <strong>un</strong> bistec. Te indiqué cuatro. Esa sola corrección cambió la comida de <span class="num">28 g</span> a <span class="num">59 g</span> de proteína. Lo anoto porque es el tipo de ajuste que quiero que aprendas a hacer solo: no fue comer distinto, fue <strong>comer más cantidad de lo que ya estabas comiendo.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTE II ============ -->
+<div class="part-head">
+  <span class="lbl">Parte II</span>
+  <h2>Estudio revisado</h2>
+</div>
+
+<section id="s6">
+  <h3 class="ch" data-n="06">La hipótesis que lo cambia todo</h3>
+  <p class="deck">Y que la Fase 0 existe precisamente para validar o tumbar</p>
+  <div class="prose">
+    <p class="lead">Con el registro de hoy me ha aparecido una posibilidad que no había contemplado, y que si se confirma reescribe el plan: puede que no comas de más. Puede que comas <em>de menos</em>, y sobre todo muy poca proteína.</p>
+
+    <h4>La reconstrucción</h4>
+    <p>Vamos a ver qué habría sido hoy sin mi intervención. Desayuno tal cual: <span class="num">171 kcal</span>. Comida con un bistec en vez de cuatro: <span class="num">686 kcal, 28 g</span> de proteína. Merienda y cena de tamaño español convencional: pongamos <span class="num">200</span> y <span class="num">600 kcal</span>, con unos <span class="num">35 g</span> de proteína entre las dos.</p>
+
+    <div class="stats">
+      <div><dt>Día reconstruido</dt><dd class="wn">~1.660<small> kcal</small></dd></div>
+      <div><dt>Proteína</dt><dd class="wn">~66<small> g</small></dd></div>
+      <div><dt>Proteína por kg</dt><dd class="wn">0,81<small> g/kg</small></dd></div>
+      <div><dt>Objetivo del plan</dt><dd>2.450<small> kcal</small></dd></div>
+      <div><dt>Proteína objetivo</dt><dd>165<small> g</small></dd></div>
+      <div><dt>Diferencia</dt><dd class="acc">−99<small> g prot</small></dd></div>
+    </div>
+
+    <p>Si ese patrón fuese representativo, tu ingesta habitual de proteína estaría en torno a <strong>0,8–1,1 g por kilo</strong>: la mitad de lo necesario para construir músculo, y por debajo incluso de lo que se recomienda a una persona sedentaria que quiera conservar la masa que tiene.</p>
+
+    <h4>Por qué esto encaja con todo lo demás</h4>
+    <p>La combinación <em>proteína baja mantenida durante años + ausencia de entrenamiento de fuerza</em> produce exactamente el fenotipo que tienes: <strong>FFMI 18,6 con 22 % de grasa a los 25 años en normopeso.</strong> No es un problema de comer demasiado. Es un problema de no haber dado nunca al cuerpo ni el estímulo ni el material para construir tejido magro.</p>
+    <p>Y explica algo que te habría desconcertado: por qué «comes bien» y aun así no tienes el cuerpo que esperarías. Comer bien en el sentido de comida real y mediterránea no es lo mismo que comer bien en el sentido de cubrir los requerimientos de alguien que quiere ganar músculo. Lo primero lo haces. Lo segundo, probablemente no.</p>
+
+    <div class="card warn big">
+      <span class="tag">Consecuencia si la hipótesis se confirma</span>
+      <p><strong>Las 2.200 kcal de la Fase 1 podrían no ser un déficit, sino un superávit.</strong> Si tu gasto real ronda las 2.100–2.300 y tu ingesta habitual las 1.700, comer 2.200 te haría subir de peso, no bajar — aunque con más músculo, porque a la vez estarías entrenando y comiendo 165 g de proteína.</p>
+      <p>Eso no sería un fracaso. Sería <strong>recomposición en su forma más eficiente</strong>: el peso se queda quieto o sube ligeramente mientras la cintura baja. Pero cambiaría por completo cómo interpretamos la báscula, y si no lo anticipo ahora, en la semana 4 estarías viendo un número que sube y concluyendo que el plan no funciona.</p>
+    </div>
+
+    <div class="card warn big">
+      <span class="tag">Corrección del 10 ago · la mitad de esta hipótesis no se sostiene</span>
+      <p>Con los datos nuevos he revisado esto y <strong>la parte calórica probablemente está mal</strong>. El argumento que la tumba es de balance energético elemental:</p>
+      <p>Tu tasa metabólica basal son <strong>1.851 kcal</strong>. Aunque pasaras el día entero tumbado, gastarías eso. Con teletrabajo y pocos pasos, el factor de actividad más conservador posible (1,20) sitúa tu gasto en unas <strong>2.220 kcal</strong> como mínimo realista.</p>
+      <p>Si comieras 1.660 kcal de forma habitual estarías perdiendo medio kilo por semana, de manera sostenida. No es el caso: tu peso está estable. Luego <strong>mi reconstrucción del día era demasiado baja</strong> — probablemente porque tus cenas y meriendas son mayores de lo que estimé, o porque el día de ayer fue un día flojo.</p>
+      <p><strong>Lo que sí se mantiene, y con más fuerza:</strong> el déficit de proteína. Ese no depende de mi reconstrucción de las calorías totales, sino de lo que vi directamente — un desayuno de 3,5 g y una tendencia a servirte raciones pequeñas de proteína. Un patrón de 2.200–2.400 kcal con 80–100 g de proteína encaja a la vez con tu peso estable, con tu FFMI de 18,6 y con lo que registré ayer.</p>
+    </div>
+
+    <div class="card good">
+      <span class="tag">Hipótesis reformulada</span>
+      <p><strong>No comes de menos. Comes suficiente energía y poca proteína.</strong> Ingesta estimada 2.200–2.400 kcal con 80–110 g de proteína (1,0–1,3 g/kg), mantenida durante años y sin estímulo de fuerza. Eso produce exactamente lo que se ve en las fotos: peso normal, masa muscular baja y grasa concentrada en el centro.</p>
+      <p>Consecuencia práctica, y es buena: <strong>las 2.200 kcal de la Fase 1 sí serán un déficit real</strong>, aunque pequeño. Y la ganancia grande de este plan no va a venir de comer menos, sino de <strong>duplicar la proteína y empezar a entrenar</strong>. Que son las dos cosas que menos cuestan.</p>
+      <p>Sigue siendo una hipótesis. Los catorce días de calibración la confirman o la tumban, y esta vez el número de partida (2.300 kcal, ajustado a tu sedentarismo confirmado) está mucho más cerca de tu mantenimiento probable, así que la señal será más limpia.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <h3 class="ch" data-n="07">Perfil de conducta alimentaria</h3>
+  <p class="deck">Lo observado en un día de trabajo conjunto</p>
+  <div class="prose">
+    <div class="know">
+      <div class="k1"><h4><span class="b"></span>Fortalezas</h4>
+        <ul>
+          <li>Come comida real, sin ultraprocesados en el registro</li>
+          <li>Cocina: plancha, salteado, no fritos</li>
+          <li>Elige bien sin saberlo: pasta de garbanzo, ternera magra, atún</li>
+          <li>Sin restricciones ni alergias que compliquen nada</li>
+          <li>Pregunta antes de decidir — colabora</li>
+          <li>Fotografía las etiquetas cuando se lo pido</li>
+        </ul></div>
+      <div class="k2"><h4><span class="b"></span>Puntos débiles</h4>
+        <ul>
+          <li>Desayuno mínimo y sin proteína</li>
+          <li>Raciones de proteína pequeñas por defecto</li>
+          <li>Confunde alternativas vegetales con lácteos proteicos</li>
+          <li>Mide por volumen, no por peso</li>
+          <li>Poca verdura de color</li>
+          <li>Aceite sin medir</li>
+        </ul></div>
+      <div class="k3"><h4><span class="b"></span>Sin datos</h4>
+        <ul>
+          <li>Cenas y meriendas habituales</li>
+          <li>Fines de semana</li>
+          <li>Alcohol</li>
+          <li>Picoteo entre horas</li>
+          <li>Bebidas azucaradas y café</li>
+          <li>Horarios de comida</li>
+        </ul></div>
+    </div>
+
+    <h4>Las tres intervenciones de mayor rendimiento</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 7.1 · Priorización por impacto y coste de esfuerzo</caption>
+        <thead><tr><th class="n">#</th><th>Intervención</th><th class="n">Ganancia</th><th>Esfuerzo</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td class="k">Cambiar el desayuno<span class="mini">Yogur griego 250 g + mango 100 g + avena 40 g + nueces 15 g</span></td><td class="n">+27 g prot<br>+290 kcal</td><td>Nulo. Mismo gesto, misma fruta, mismo sabor</td></tr>
+          <tr><td class="n">2</td><td class="k">Doblar la ración de proteína en comida y cena<span class="mini">De un filete a cuatro; de 120 g de pollo a 250 g</span></td><td class="n">+50 g prot</td><td>Nulo. Es más cantidad de lo mismo</td></tr>
+          <tr><td class="n">3</td><td class="k">Comprar la báscula de cocina<span class="mini">10–12 €</span></td><td class="n">Precisión<br>±5 %</td><td>Una compra. Desbloquea toda la calibración</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Las tres juntas te llevan de ~66 g a ~145 g de proteína <strong>sin cambiar tu forma de comer</strong>, solo las cantidades y un alimento. Ese es el margen que tienes disponible antes de tener que pedirte nada difícil.</p>
+  </div>
+</section>
+
+<section id="s8">
+  <h3 class="ch" data-n="08">Diagnóstico consolidado</h3>
+  <p class="deck">Versión 3 · integra fotos, registro alimentario e incidencia</p>
+  <div class="prose">
+    <div class="card big">
+      <span class="tag">Formulación en una frase</span>
+      <p>Varón de 25 años en normopeso con <strong>déficit marcado de masa muscular</strong> (FFMI 18,6), adiposidad central moderada (~22 %), <strong>ingesta proteica probablemente muy por debajo de requerimientos</strong>, historial de abandono por molestias musculoesqueléticas, y una <strong>incidencia activa de dolor en muslo izquierdo sin filiar</strong> que obliga a posponer el trabajo de tren inferior.</p>
+    </div>
+
+    <h4>Los cuatro problemas, por prioridad</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 8.1 · Problemas y abordaje</caption>
+        <thead><tr><th class="n">#</th><th>Problema</th><th>Por qué está en esta posición</th><th>Abordaje</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td class="k">Dolor de muslo sin filiar</td><td>Bloquea el tren inferior y es el mecanismo histórico de abandono</td><td>Autoexploración, señales de alarma, fisioterapia si &gt;7–10 días. Tren superior mientras tanto</td></tr>
+          <tr><td class="n">2</td><td class="k">Proteína insuficiente</td><td>Sin material no hay construcción, entrenes lo que entrenes. Y es lo más fácil de arreglar</td><td>Desayuno reformulado + raciones dobles. Empieza <strong>ya</strong>, no espera a la pierna</td></tr>
+          <tr><td class="n">3</td><td class="k">Masa muscular baja</td><td>Es el 80 % de lo que te separa del físico que quieres. Pero requiere meses</td><td>Programa de fuerza, prioridad espalda y hombro. Arranca cuando la pierna lo permita</td></tr>
+          <tr><td class="n">4</td><td class="k">Adiposidad central</td><td>Importante, pero se resuelve casi sola si los tres anteriores van bien</td><td>Déficit pequeño, y solo cuando la Fase 0 confirme cuál es el déficit real</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card cool">
+      <span class="tag">Lo que ha cambiado respecto a la versión anterior</span>
+      <ul class="tight">
+        <li><strong>El orden de prioridades.</strong> La nutrición sube al puesto 2 y puede empezar esta misma semana, sin esperar a la pierna. Antes iba acoplada al entrenamiento.</li>
+        <li><strong>La naturaleza del problema calórico.</strong> Pasa de «probable exceso» a «probable defecto, con déficit proteico severo». Pendiente de validar.</li>
+        <li><strong>El calendario.</strong> Todo se desplaza una semana. La semana del 10 de agosto pasa a ser semana 0 de evaluación.</li>
+        <li><strong>La expectativa de báscula.</strong> Si la hipótesis del capítulo 6 se confirma, el peso puede no bajar — y aun así ir bien. La cintura pasa a ser la métrica única de referencia.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTE III ============ -->
+<div class="part-head">
+  <span class="lbl">Parte III</span>
+  <h2>Honestidad: los límites de este expediente</h2>
+</div>
+
+<section id="s9">
+  <h3 class="ch" data-n="09">Lo que sé, lo que asumo y lo que no sé</h3>
+  <p class="deck">Me pediste que revisara si me falta algo. Me falta bastante</p>
+  <div class="prose">
+    <p class="lead">Todo el plan que has leído está construido sobre nueve datos confirmados, una decena de supuestos razonables y una lista incómodamente larga de huecos. Aquí está la separación, sin maquillar.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 9.1 · Estado de la información</caption>
+        <thead><tr><th>Dato</th><th>Estado</th><th>Impacto si estoy equivocado</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Edad, altura, sexo</td><td><span class="pill good">Confirmado</span></td><td>—</td></tr>
+          <tr><td class="k">Peso 81,5 kg</td><td><span class="pill warn">Medición única</span></td><td>Bajo. Una pesada puntual puede desviarse ±1,5 kg del valor real</td></tr>
+          <tr><td class="k">% grasa 22 %</td><td><span class="pill warn">Estimado de foto</span></td><td>Medio. Cambia la masa magra en ±3 kg y con ella la proteína óptima</td></tr>
+          <tr><td class="k">Gasto energético</td><td><span class="pill warn">Acotado</span><span class="mini">Teletrabajo confirmado → factor 1,20–1,30 → 2.220–2.400</span></td><td><strong>Alto.</strong> Sigue siendo la variable de la que cuelga el plan, pero el rango se ha estrechado</td></tr>
+          <tr><td class="k">Ingesta habitual</td><td><span class="pill acc">Un día parcial</span></td><td><strong>Alto.</strong> La hipótesis del capítulo 6 depende de esto</td></tr>
+          <tr><td class="k">Cintura</td><td><span class="pill acc">Ausente</span><span class="mini">Sin cinta métrica. Solución en el cap. 12: cordón + metro rígido</span></td><td><strong>Alto.</strong> Es la métrica principal y sigo sin línea base</td></tr>
+          <tr><td class="k">Analítica</td><td><span class="pill good">Recibida 10 ago</span><span class="mini">CATLAB 5 may 2026. Todo normal. Ver cap. 4B</span></td><td>Resuelto. Pendientes: ferritina, vitamina D, perfil lipídico completo, T4 libre</td></tr>
+          <tr><td class="k">Diagnóstico del dolor</td><td><span class="pill warn">Orientado</span><span class="mini">Sobrecarga con desencadenante identificado la semana previa. Intensidad alta en los episodios</span></td><td>Medio. Cuadro mecánico con causa conocida: pronóstico bueno. Falta la escala 0–10 y la evolución</td></tr>
+          <tr><td class="k">Sueño</td><td><span class="pill good">8 h declaradas</span></td><td>Resuelto y favorable. Un problema menos: es el tercer factor en importancia</td></tr>
+          <tr><td class="k">Trabajo y actividad</td><td><span class="pill good">Teletrabajo</span><span class="mini">Pocos pasos, sin recuento exacto</span></td><td>Resuelto. Confirma NEAT muy bajo: los pasos pasan a ser palanca prioritaria</td></tr>
+          <tr><td class="k">Alcohol</td><td><span class="pill good">Casi nulo</span><span class="mini">Coherente con GGT de 13,2</span></td><td>Resuelto y favorable. Sin calorías invisibles por esta vía</td></tr>
+          <tr><td class="k">Rango de las mancuernas</td><td><span class="pill acc">Ausente</span></td><td>Medio. Si el tope son 10 kg, la progresión se agota en semanas</td></tr>
+          <tr><td class="k">Báscula corporal</td><td><span class="pill good">Disponible</span></td><td>Resuelto. El bucle de control es viable desde mañana</td></tr>
+          <tr><td class="k">Lesiones previas</td><td><span class="pill good">Ninguna</span></td><td>Resuelto. Las interrupciones fueron por molestias, no por lesión diagnosticada</td></tr>
+          <tr><td class="k">Medicación y suplementos</td><td><span class="pill good">Ninguno</span></td><td>Resuelto. Sin interacciones que considerar</td></tr>
+          <tr><td class="k">Digestión y tolerancias</td><td><span class="pill acc">Ausente</span></td><td>Bajo-medio. Relevante al subir la fibra a 35 g</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card warn">
+      <span class="tag">Dicho claramente</span>
+      <p><strong>Actualizado el 10 de agosto.</strong> De los tres datos de alto impacto que faltaban, quedan dos: <strong>tu gasto real y tu cintura</strong>. El muslo ha pasado de incógnita a cuadro mecánico con desencadenante conocido, que es un pronóstico razonablemente bueno.</p>
+      <p>Se han cerrado ocho huecos de golpe con la analítica y tus respuestas: sueño, alcohol, trabajo, báscula corporal, lesiones previas, medicación y todo el bloque bioquímico. <strong>Quedan dos compras pendientes de 12 € entre las dos</strong> — báscula de cocina y cinta métrica — y catorce días de registro. Eso es todo lo que separa este plan de estar completamente calibrado sobre ti.</p>
+      <p>Y una cosa que no voy a poder resolver nunca por este canal: <strong>no puedo verte moverte.</strong> Por eso insisto tanto en el vídeo lateral. Es mi único acceso a tu técnica, y la técnica es donde se generan la mitad de las lesiones.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <h3 class="ch" data-n="10">Cuestionario pendiente</h3>
+  <p class="deck">Contéstame por el chat cuando puedas · no hace falta de una sentada</p>
+  <div class="prose">
+    <h5>Bloque A · el muslo <span class="pill acc">prioritario</span></h5>
+    <p>Las siete pruebas de la tabla 1.1 y las cinco preguntas de después. Es lo primero.</p>
+
+    <h5>Bloque B · material y logística <span class="pill warn">parcial</span></h5>
+    <p style="font-size:14px;color:var(--ink-3)">Respondido el 10 ago: báscula corporal sí · báscula de cocina no · cinta métrica no, hay metro rígido. Queda el rango de las mancuernas, que me das mañana.</p>
+    <ol class="qlist">
+      <li><strong>¿Cuánto pesan tus mancuernas como máximo, con todos los discos?</strong><span class="why">Determina cuántos meses de progresión tienes antes de agotarlas</span></li>
+      <li><strong>¿El banco tiene respaldo, y se regula a inclinado?</strong><span class="why">Decide si el press militar va sentado con apoyo y si puedo programar press inclinado</span></li>
+      <li><strong>¿Tienes báscula corporal en casa?</strong><span class="why">Sin ella no hay Fase 0 posible</span></li>
+      <li><strong>¿Y cinta métrica?</strong><span class="why">Vale una de costura, 2 €</span></li>
+    </ol>
+
+    <h5>Bloque C · vida y contexto <span class="pill good">contestado casi entero</span></h5>
+    <p style="font-size:14px;color:var(--ink-3)">Respondido el 10 ago: teletrabajo con pocos pasos · 8 h de sueño · alcohol casi nulo · sin medicación ni suplementos. Quedan las preguntas 7 y 10.</p>
+    <ol class="qlist" start="5">
+      <li><strong>¿A qué te dedicas y cómo es tu día?</strong> ¿Sentado, de pie, moviéndote?<span class="why">El NEAT pesa más que el entrenamiento en el gasto diario</span></li>
+      <li><strong>¿Cuántas horas duermes y a qué hora?</strong> ¿Descansas bien?<span class="why">Tercer factor en importancia. Dormir 5,5 h en lugar de 8,5 reduce a menos de la mitad la grasa perdida con el mismo déficit</span></li>
+      <li><strong>¿Qué días y a qué hora puedes entrenar de forma realista?</strong><span class="why">Prefiero programar 3 días que cumples a 4 que no</span></li>
+      <li><strong>¿Cuánto alcohol bebes en una semana normal?</strong> Sin edulcorar<span class="why">Son calorías invisibles y afecta al sueño y a la recuperación</span></li>
+      <li><strong>¿Fumas? ¿Tomas alguna medicación o suplemento?</strong><span class="why">Necesario antes de recomendarte nada</span></li>
+      <li><strong>¿Nivel de estrés estos meses?</strong><span class="why">El cortisol crónico retiene líquido y enmascara el progreso durante semanas</span></li>
+    </ol>
+
+    <h5>Bloque D · historia clínica <span class="pill good">contestado</span></h5>
+    <p style="font-size:14px;color:var(--ink-3)">Respondido el 10 ago: sin lesiones previas · sin medicación · analítica recibida (cap. 4B). Queda la pregunta 13 sobre digestión, y pedir los cuatro parámetros que faltan.</p>
+    <ol class="qlist" start="11">
+      <li><strong>¿Qué lesiones has tenido, dónde y cuándo?</strong> Las que te hicieron parar<span class="why">«Algún dolor» no me deja anticipar nada. Con localizaciones concretas puedo prevenir</span></li>
+      <li><strong>¿Alguna condición médica diagnosticada?</strong> Tiroides, digestivo, articular, lo que sea</li>
+      <li><strong>¿Cómo llevas la digestión?</strong> ¿Algo te sienta mal?<span class="why">Vamos a subir la fibra a 30–35 g y conviene hacerlo con cabeza</span></li>
+      <li><strong>La analítica de hace tres meses.</strong> Me la mencionaste y no me llegó<span class="why">Vitamina D, ferritina, perfil lipídico, glucosa y TSH cambian recomendaciones concretas</span></li>
+    </ol>
+
+    <h5>Bloque E · mediciones de línea base <span class="pill warn">hazlas esta semana</span></h5>
+    <ul class="checklist">
+      <li><strong>Peso cada mañana</strong>, en ayunas, tras orinar, sin ropa. Los siete días</li>
+      <li><strong>Cintura</strong> a la altura del ombligo, en espiración normal, sin meter tripa</li>
+      <li><strong>Cuello</strong> justo por debajo de la laringe</li>
+      <li><strong>Tres fotos</strong>: frente, perfil y espalda. Misma luz, misma hora, mismo sitio</li>
+      <li><strong>Cadera</strong> en su punto más ancho, y brazo y muslo si quieres seguir hipertrofia</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ PARTE IV ============ -->
+<div class="part-head">
+  <span class="lbl">Parte IV</span>
+  <h2>Operativa</h2>
+</div>
+
+<section id="s11">
+  <h3 class="ch" data-n="11">Protocolos de decisión</h3>
+  <p class="deck">Las reglas con las que voy a decidir, escritas de antemano</p>
+  <div class="prose">
+    <p>Esto está aquí para que puedas auditarme. Si algún día te digo «sube 150 kcal», tienes derecho a saber por qué regla lo digo.</p>
+
+    <h4>P1 · Ajuste calórico semanal</h4>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Media de peso vs semana anterior</th><th>Acción</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Baja 0,2–0,4 kg</td><td>Nada. En zona</td></tr>
+          <tr><td class="k">Baja &lt;0,2 kg dos semanas seguidas</td><td>Primero auditar el registro. Si está limpio: −150 kcal <em>o</em> +1.500 pasos. Una cosa, no las dos</td></tr>
+          <tr><td class="k">Baja &gt;0,6 kg</td><td>+150 kcal. Ese ritmo cuesta músculo</td></tr>
+          <tr><td class="k">Sube</td><td>Una semana no significa nada. Dos, auditar registro</td></tr>
+          <tr><td class="k">Semana atípica<span class="mini">viaje, evento, enfermedad, mal sueño</span></td><td>No ajustar. Esperar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Regla de un solo cambio:</strong> cuando algo no funcione, muevo una variable y espero dos semanas. Si toco tres a la vez, ninguno de los dos aprende nada.</p>
+
+    <h4>P2 · Progresión de carga</h4>
+    <ul class="tight">
+      <li>Doble progresión: subo repeticiones dentro del rango; al completar todas las series en el tope, subo peso.</li>
+      <li><strong>Techo del 5 % semanal</strong> en un mismo ejercicio, aunque sobre fuerza. Es el freno que protege el tendón.</li>
+      <li>Si la técnica se rompe, la serie no cuenta y el peso no sube.</li>
+      <li>Descarga cada 6–8 semanas, programada, no reactiva.</li>
+    </ul>
+
+    <h4>P3 · Semáforo del dolor</h4>
+    <div class="tl">
+      <div class="g"><h4><span class="dot"></span>Verde · sigue</h4><p>Molestia muscular difusa, aparece con el esfuerzo, desaparece en 24–48 h, mejora al calentar.</p><p><strong>Entrenar con normalidad.</strong></p></div>
+      <div class="a"><h4><span class="dot"></span>Ámbar · modifica</h4><p>Dolor localizado en articulación o tendón, 3–4 sobre 10, en un movimiento concreto.</p><p><strong>Bajar carga 30–50 %, reducir rango, cambiar de ejercicio dentro del mismo patrón. Seguir entrenando.</strong></p></div>
+      <div class="r"><h4><span class="dot"></span>Rojo · para y consulta</h4><p>Dolor agudo &gt;5 sobre 10, hinchazón, bloqueo, hormigueo, o que limita la vida diaria.</p><p><strong>Retirar ese patrón. Mantener el resto. Fisio si no mejora en 7–10 días.</strong></p></div>
+    </div>
+    <p><strong>Regla que no se negocia:</strong> un dolor sustituye un ejercicio; no cancela una sesión ni un programa. La sesión de hoy con dolor de pierna es una sesión de tren superior, no una sesión perdida.</p>
+
+    <h4>P4 · Cuándo te mando al médico</h4>
+    <p>Sin dudarlo, ante: cualquier señal de alarma del capítulo 1; dolor articular que no mejora en 7–10 días de manejo conservador; cualquier síntoma que no encaje en un cuadro mecánico. <strong>No voy a intentar resolver por chat algo que necesita manos encima.</strong></p>
+
+    <h4>P5 · Qué hago si te estancas o te caes del plan</h4>
+    <ul class="tight">
+      <li><strong>Semana perdida:</strong> no se compensa. Se retoma en comida donde estabas y en entrenamiento al 80 % de las cargas una semana.</li>
+      <li><strong>Parón de más de un mes:</strong> se repiten dos semanas de Fase 0 antes de volver al déficit.</li>
+      <li><strong>Atracón:</strong> se vuelve al plan en la comida siguiente. Ni ayuno ni cardio de castigo. Un día no borra una semana; una semana de compensación sí.</li>
+      <li><strong>Estancamiento tres sesiones seguidas en un ejercicio:</strong> reviso sueño y comida antes de tocar el programa. Casi siempre es eso.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s12">
+  <h3 class="ch" data-n="12">Semana 1 · en marcha</h3>
+  <p class="deck">17 al 23 de agosto · calibración nutricional y tren superior</p>
+  <div class="prose">
+    <p class="lead">Empezamos hoy, lunes 17. No entrenas pierna, pero no es una semana en blanco: la calibración nutricional arranca ya, porque no depende del muslo.</p>
+
+    <div class="card good">
+      <span class="tag">Objetivo calórico revisado · 2.300 kcal</span>
+      <p>Baja de 2.450 a <strong>2.300</strong> al confirmarse el teletrabajo y el bajo recuento de pasos. Con TMB de 1.851 y factor de actividad sedentario (1,20–1,30), tu mantenimiento probable está en <strong>2.220–2.400</strong>. Poner el punto de partida ahí en medio hace que la señal de estos catorce días sea mucho más limpia: cuanto más cerca del mantenimiento real empieces, más rápido se ve hacia dónde se mueve el peso.</p>
+      <p style="margin-bottom:0">Macros: <strong>165 g de proteína · 73 g de grasa · 246 g de carbohidrato.</strong> La proteína no se toca; es el objetivo real de la fase.</p>
+    </div>
+
+    <div class="card cool">
+      <span class="tag">Cintura sin cinta métrica · solución de hoy</span>
+      <p>Me dices que tienes metro rígido pero no cinta. Se resuelve así, y sale igual de preciso:</p>
+      <ol class="tight">
+        <li>Coge un <strong>cordón de zapato, un cable o un trozo de cuerda fina</strong>.</li>
+        <li>Rodéate la cintura a la altura del ombligo, de pie, en ayunas, al final de una espiración normal. Ni metas tripa ni la saques. Ceñido pero sin hundir la piel.</li>
+        <li><strong>Marca el punto exacto</strong> donde el cordón se cruza consigo mismo — con un rotulador, un nudo o una pinza.</li>
+        <li>Estíralo sobre el metro y lee la medida.</li>
+      </ol>
+      <p>Usa el mismo cordón siempre y la comparación entre semanas será perfecta, que es lo único que necesito. Repite lo mismo para el cuello, justo por debajo de la nuez: con cintura, cuello y altura calculo tu porcentaje de grasa con la fórmula del estudio y dejamos de estimar sobre fotos.</p>
+      <p style="margin-bottom:0">Aun así, cómprate una cinta de costura la próxima vez que pases por un bazar: cuesta 2 €.</p>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 12.1 · Semana 0</caption>
+        <thead><tr><th>Día</th><th>Entrenamiento</th><th>Otras tareas</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Lun 10</td><td>Nada. Observar el muslo</td><td>Autoexploración de la tabla 1.1. Registrar comida conmigo</td></tr>
+          <tr><td class="k">Mar 11</td><td>Bici 15 min suave <em>si no duele</em></td><td>Compra, incluida la báscula de cocina. Mediciones de línea base</td></tr>
+          <tr><td class="k">Mié 12</td><td>Tren superior, tumbado o sentado<span class="mini">Press en suelo · remo con apoyo · pullover · pájaro · 2 series, RIR 4</span></td><td>Desayuno nuevo desde hoy. Contestar bloques B y C</td></tr>
+          <tr><td class="k">Jue 13</td><td>Bici 20 min si tolera</td><td>Fotos y perímetros si no los has hecho</td></tr>
+          <tr><td class="k">Vie 14</td><td>Tren superior, misma sesión</td><td>Reevaluar el muslo con la misma escala 0–10</td></tr>
+          <tr><td class="k">Sáb 15</td><td>Libre. Caminar</td><td>—</td></tr>
+          <tr><td class="k">Dom 16</td><td>Descanso</td><td><strong>Balance:</strong> ¿el dolor va a mejor, igual o peor? Decidimos si el 17 arranca completo o solo tren superior</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card good">
+      <span class="tag">Sesión de tren superior · esta semana</span>
+      <p>Todo sentado o tumbado, sin cargar la pierna. Si algún movimiento te obliga a apretar la pierna para estabilizar y eso molesta, dímelo y lo cambio.</p>
+      <ul class="tight">
+        <li><strong>Press con mancuernas en el suelo</strong> — 2 × 10–12, RIR 4</li>
+        <li><strong>Remo a una mano con apoyo en el banco</strong> — 2 × 12 por lado, RIR 4 <span class="pill acc">tu prioridad</span></li>
+        <li><strong>Pullover con mancuerna</strong> — 2 × 12–15, RIR 4</li>
+        <li><strong>Press militar sentado</strong> — 2 × 12, RIR 4</li>
+        <li><strong>Elevaciones laterales</strong> — 2 × 15, muy ligero</li>
+        <li><strong>Pájaro</strong> — 2 × 15, muy ligero</li>
+      </ul>
+      <p>Veinticinco minutos. Deliberadamente fácil: es la fase de aprender los movimientos, no de progresar. Y da la casualidad de que estos seis ejercicios son exactamente los que más van a cambiar tu silueta.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Objetivo nutricional de esta semana</span>
+      <p>No hay objetivo calórico todavía — la Fase 0 arranca el 17. Esta semana quiero <strong>dos cosas y nada más</strong>:</p>
+      <ol class="tight">
+        <li><strong>Cambiar el desayuno.</strong> 250 g de yogur griego 0 % + 100 g de mango + 40 g de avena + 15 g de nueces. 460 kcal y 30 g de proteína.</li>
+        <li><strong>Contarme todo lo que comes</strong>, cada día, tal cual, sin corregirte para quedar bien. Necesito ver tu patrón real — especialmente cenas, meriendas y el fin de semana, que es justo lo que no tengo.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="s13">
+  <h3 class="ch" data-n="13">Calendario revisado</h3>
+  <p class="deck">Todo desplazado una semana</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 13.1 · Calendario v3</caption>
+        <thead><tr><th>Bloque</th><th>Fechas</th><th class="n">kcal</th><th>Contenido</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Fase 0 · Calibración</td><td>17 – 30 ago</td><td class="n">2.300</td><td>Arranca mañana. Sin déficit. Sale el gasto real. Tren superior; el inferior entra al pasar las puertas del capítulo 1</td></tr>
+          <tr><td class="k">Fase 1 · Déficit</td><td>31 ago – 25 oct</td><td class="n">A determinar</td><td>8 semanas. <strong>Las calorías salen de la Fase 0, no de mi estimación</strong></td></tr>
+          <tr><td class="k">Fase 2 · Estabilización</td><td>26 oct – 22 nov</td><td class="n">+100/sem</td><td>Vuelta progresiva a mantenimiento</td></tr>
+          <tr><td class="k">Fase 3 · Construcción</td><td>23 nov – marzo</td><td class="n">Mantenimiento</td><td>4 días, torso/pierna. Aquí está el resultado real</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>La <a href="https://claude.ai/code/artifact/be3e3f63-73e7-4358-b0a1-4757f73de0e1">app del programa</a> ya está actualizada: la semana 1 corre del 17 al 23 de agosto y arrancas hoy.</p>
+    <p><strong>Ojo a la línea de la Fase 1:</strong> pone «a determinar» a propósito. Después de la corrección del capítulo 6 lo más probable es que acabe siendo 2.100–2.200, pero no voy a fijarlo hasta ver los catorce días. Prefiero decirte que no lo sé a darte un número que puede estar desviado en la dirección equivocada.</p>
+  </div>
+</section>
+
+<section id="s14">
+  <h3 class="ch" data-n="14">Cómo trabajamos por el chat</h3>
+  <p class="deck">El canal, el formato y lo que puedes esperar de mí</p>
+  <div class="prose">
+    <h4>Qué me mandas</h4>
+    <ul>
+      <li><strong>Comida:</strong> cuando la comas o al final del día. En lenguaje normal. Foto de la etiqueta si es un producto envasado — hoy hemos visto que cambia bastante el cálculo.</li>
+      <li><strong>Entrenamiento:</strong> qué has hecho, con qué pesos, cuántas repeticiones y cómo lo has sentido. Y si algo ha dolido, dónde y cuánto.</li>
+      <li><strong>Peso:</strong> el de cada mañana, o los siete juntos el domingo. Me da igual el formato.</li>
+      <li><strong>Vídeo lateral</strong> de cada ejercicio nuevo. Es mi único acceso a tu técnica.</li>
+    </ul>
+
+    <h4>Qué te devuelvo</h4>
+    <ul>
+      <li><strong>Por comida:</strong> kcal y proteína, con los supuestos que he usado.</li>
+      <li><strong>Por día:</strong> total frente a objetivo, reparto de macros, fibra, distribución de la proteína entre tomas, y qué ajustar mañana.</li>
+      <li><strong>Cada domingo:</strong> media de peso real frente a la planificada, lectura según el protocolo P1, patrones que veo, y el briefing de la semana siguiente con sus sesiones.</li>
+      <li><strong>Cuando toque:</strong> la sesión del día con series, repeticiones, RIR y descansos.</li>
+    </ul>
+
+    <div class="card warn">
+      <span class="tag">Una limitación del canal que debes conocer</span>
+      <p>Esta conversación puede resumirse cuando se hace muy larga, y con el resumen se pierde detalle. <strong>Por eso existe este expediente:</strong> es la copia de seguridad. Todo lo importante que averigüemos lo consolido aquí, y este documento se actualiza — no se sustituye por otro.</p>
+      <p>Si algún día notas que he perdido el hilo de algo que ya te sabías, dime «mira el expediente» y lo recupero. Y guarda tú también los enlaces: los cuatro documentos están en tu repositorio de GitHub, en la rama <code style="font-family:var(--f-mono);font-size:.85em">claude/estudio-fisico-nutricional-uxw689</code>.</p>
+    </div>
+
+    <h4>Los cuatro documentos y para qué sirve cada uno</h4>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Documento</th><th>Cuándo lo abres</th></tr></thead>
+        <tbody>
+          <tr><td class="k"><a href="https://claude.ai/code/artifact/be3e3f63-73e7-4358-b0a1-4757f73de0e1">Programa semanal</a></td><td>Cada día. Qué toca hoy, qué comer, registrar pesos</td></tr>
+          <tr><td class="k"><a href="https://claude.ai/code/artifact/c04478cf-3ce8-4b61-b9e7-3945819c5432">Manual de entrenamiento</a></td><td>Antes de un ejercicio nuevo. Técnica, animación, errores</td></tr>
+          <tr><td class="k"><a href="https://claude.ai/code/artifact/f92483ef-3c9d-4026-a157-c1f30ad791d7">Estudio físico</a></td><td>Cuando quieras entender el porqué. Teoría y nutrición</td></tr>
+          <tr><td class="k">Expediente <em>(este)</em></td><td>Referencia. Qué sé de ti, qué falta, con qué reglas decido</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Expediente personal · versión 4</strong> · Actualizado el 17 de agosto de 2026. Incorpora: fotografías del 10 ago, registro nutricional parcial del 10 ago, etiquetas de producto verificadas, incidencia de sobrecarga en muslo izquierdo, analítica CATLAB del 5 de mayo de 2026, y respuestas a los bloques B, C y D del cuestionario.</p>
+  <p>Documento de orientación sobre nutrición y entrenamiento. No constituye diagnóstico ni acto médico. El dolor descrito en el capítulo 1 requiere valoración presencial si persiste o si aparece cualquiera de las señales de alarma listadas. Ante patología previa, medicación o síntomas que no encajen en un cuadro mecánico, consulta a un profesional sanitario.</p>
+</footer>
+
+</main>
+</div>
+</div>

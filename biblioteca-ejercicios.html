@@ -1,0 +1,449 @@
+<title>Biblioteca de ejercicios</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ground:#F1F3F1; --surface:#FBFCFB; --surface-2:#E9ECEA;
+  --ink:#131917; --ink-2:#4E5B57; --ink-3:#7C8985;
+  --line:#D6DCD8; --line-strong:#B9C2BD;
+  --accent:#A63A1C; --accent-soft:#F2E2DB;
+  --good:#2C6E56; --good-soft:#E0EBE5;
+  --warn:#8A5D0C; --warn-soft:#F2E9D6;
+  --shadow:0 1px 2px rgba(19,25,23,.05),0 8px 24px rgba(19,25,23,.04);
+  --f-display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:1000px;margin:0 auto;padding:0 20px 100px}
+
+.masthead{padding:48px 0 0}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.masthead h1{font-family:var(--f-display);font-weight:750;letter-spacing:-.03em;line-height:1.02;font-size:clamp(32px,6vw,52px);text-wrap:balance}
+.masthead .sub{font-size:clamp(16px,2vw,19px);color:var(--ink-2);max-width:56ch;margin-top:16px;line-height:1.5}
+.ruler{height:18px;margin:30px 0 34px;position:relative;border-bottom:1px solid var(--line-strong)}
+.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:8px;background-image:repeating-linear-gradient(to right,var(--line-strong) 0 1px,transparent 1px 24px)}
+.ruler::after{content:"";position:absolute;left:0;bottom:0;width:2px;height:18px;background:var(--accent)}
+
+h2.pat{font-family:var(--f-display);font-weight:720;letter-spacing:-.022em;font-size:clamp(20px,2.8vw,26px);line-height:1.15;margin:56px 0 4px;padding-left:46px;position:relative;text-wrap:balance}
+h2.pat::before{content:attr(data-n);position:absolute;left:0;top:.16em;font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--accent);border:1px solid var(--accent);width:30px;height:22px;display:flex;align-items:center;justify-content:center}
+h2.pat + .why{padding-left:46px;color:var(--ink-3);font-family:var(--f-display);font-size:14px;line-height:1.5;margin-bottom:18px;max-width:64ch}
+h3.sec{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.02em;margin:52px 0 5px}
+p.deck{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+p{margin-bottom:15px}
+p.lead{font-size:18px;color:var(--ink-2);line-height:1.55}
+strong{font-weight:700;color:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+ul,ol{margin:0 0 16px 0;padding-left:21px}
+li{margin-bottom:7px}
+li::marker{color:var(--ink-3)}
+
+.scroll{overflow-x:auto;margin:0 0 8px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-family:var(--f-display);font-size:13.5px;min-width:640px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+thead th{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+td.ex{font-weight:700;white-space:nowrap}
+td.ex a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:1px}
+td.ex a:hover{color:var(--accent)}
+td.ex .vid{display:block;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:400;margin-top:4px;border:0}
+td.cue{font-style:italic;color:var(--ink-2)}
+td.err{color:var(--ink-2)}
+.lv{display:inline-block;font-family:var(--f-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--line-strong);color:var(--ink-3);white-space:nowrap}
+.lv.now{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.lv.soon{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.lv.leg{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);padding:18px 20px;margin:22px 0;box-shadow:var(--shadow)}
+.card.good{border-left-color:var(--good)} .card.warn{border-left-color:var(--warn)}
+.card .tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+.card.good .tag{color:var(--good)} .card.warn .tag{color:var(--warn)}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.card p{font-size:15px}
+
+.flow{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+@media (min-width:760px){.flow{grid-template-columns:repeat(4,1fr)}}
+.fw{background:var(--surface);padding:16px 17px;position:relative}
+.fw::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.fw .n{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.fw h4{font-family:var(--f-display);font-size:15px;font-weight:700;margin:0 0 6px;letter-spacing:-.01em}
+.fw p{font-family:var(--f-display);font-size:13px;line-height:1.45;color:var(--ink-2);margin:0}
+footer{border-top:1px solid var(--line);margin-top:64px;padding-top:24px}
+footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-width:70ch;margin-bottom:8px}
+</style>
+
+<div class="shell">
+
+<header class="masthead">
+  <p class="eyebrow">Referencia única · 79 ejercicios con vídeo · 15 patrones</p>
+  <h1>Biblioteca de ejercicios</h1>
+  <p class="sub">Todo lo que puedo programarte, en una sola página. No tienes que abrirla para entrenar: las sesiones te llegan por el chat. Esto es solo para cuando quieras ver cómo se hace algo.</p>
+  <div class="ruler"></div>
+</header>
+
+<h3 class="sec">Cómo funciona a partir de ahora</h3>
+<p class="deck">El chat es la app · esto es el manual</p>
+<div style="max-width:68ch">
+  <p class="lead">Tenías razón en que estaba hecho un lío. Cuatro documentos y una app para entrenar veinticinco minutos es demasiada fricción, y la fricción es exactamente lo que hace que un plan se abandone.</p>
+  <p>Miré cómo trabajan los servicios de entrenamiento personal de gama alta —Future, Caliber, Ladder— y el patrón es el mismo en todos: <strong>un entrenador humano escribe la semana, la manda por un hilo de mensajes, cada ejercicio lleva su vídeo, y el plan se reajusta con el feedback diario.</strong> El usuario no navega por una biblioteca: recibe lo que le toca hacer hoy. En Ladder los bloques duran cinco o seis semanas y la programación llega semanalmente; en Caliber la comunicación con el entrenador es por chat y vídeo.</p>
+  <p>Es exactamente lo que has pedido, así que eso hacemos.</p>
+</div>
+
+<div class="flow">
+  <div class="fw"><p class="n">Cada domingo</p><h4>Yo planifico</h4><p>Reviso tu semana —peso, comidas, sensaciones, dolor— y decido cuántas sesiones y de qué. Te lo mando por chat.</p></div>
+  <div class="fw"><p class="n">Cada día de entreno</p><h4>Te mando la sesión</h4><p>Ejercicios, series, repeticiones, RIR, descansos y peso a usar. Con enlace al vídeo de cada uno.</p></div>
+  <div class="fw"><p class="n">Al terminar</p><h4>Me cuentas</h4><p>Pesos, repeticiones reales y cómo lo has sentido. Dos líneas bastan.</p></div>
+  <div class="fw"><p class="n">Siempre</p><h4>Yo llevo la cuenta</h4><p>Guardo tus cargas, tu progresión y tu historial. Tú no tienes que registrar nada en ningún sitio.</p></div>
+</div>
+
+<div class="card good">
+  <span class="tag">Qué desaparece de tu día a día</span>
+  <p>La app del programa deja de ser obligatoria. Sigue existiendo por si algún día quieres ver el calendario completo o llevar tú el registro, pero <strong>no necesitas abrirla para nada</strong>. Lo mismo con el estudio y el expediente: son de consulta, no de uso diario.</p>
+  <p>Tú solo tienes dos cosas: <strong>este chat</strong> y, si quieres ver una técnica, <strong>esta página</strong>.</p>
+</div>
+
+<div class="card warn">
+  <span class="tag">Sobre los vídeos</span>
+  <p>Cada ejercicio enlaza a una <strong>búsqueda de YouTube ya escrita</strong>, no a un vídeo concreto. Es deliberado: los vídeos sueltos se borran, se hacen privados o cambian de canal, y un enlace roto en mitad de una serie no sirve de nada. Una búsqueda siempre funciona y siempre te da varias demostraciones para comparar.</p>
+  <p style="margin-bottom:0">Al abrirla, <strong>elige un vídeo corto, de menos de tres minutos, y de un canal que enseñe el movimiento de perfil.</strong> Si el vídeo dura ocho minutos y empieza con una intro, siguiente.</p>
+</div>
+
+<!-- ================= 1 ================= -->
+<h2 class="pat" data-n="01">Empuje horizontal</h2>
+<p class="why">Pectoral, tríceps y deltoides anterior. No es tu prioridad —lo es la espalda— pero un torso equilibrado necesita empuje. Con tus hombros algo adelantados, el rango controlado importa más que el peso.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+floor+press+technique+form" target="_blank" rel="noopener">Press en el suelo</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Flechas, no cruces»: codos a 45°</td><td class="err">Abrir los codos a 90°. Es la causa número uno de dolor de hombro</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=press+banca+con+mancuernas+tecnica+correcta" target="_blank" rel="noopener">Press en banco</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Guarda las escápulas en los bolsillos»</td><td class="err">Soltar las escápulas: el hombro pierde su base</td><td><span class="lv soon">Semana 5</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=incline+dumbbell+press+form+technique" target="_blank" rel="noopener">Press inclinado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Empuja hacia la frente, no hacia el techo»</td><td class="err">Inclinar el banco más de 45°: pasa a ser press militar</td><td><span class="lv soon">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=flexiones+tecnica+correcta+push+up+form" target="_blank" rel="noopener">Flexiones</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Aparta el suelo de ti»</td><td class="err">Cadera hundida. Aprieta el glúteo</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=decline+push+up+feet+elevated+form" target="_blank" rel="noopener">Flexiones con pies elevados</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El cuerpo baja en bloque»</td><td class="err">Adelantar la cabeza. El cuello sigue la línea del cuerpo</td><td><span class="lv soon">Progresión</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+chest+fly+bench+technique" target="_blank" rel="noopener">Aperturas</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Abraza un árbol»: codos casi fijos</td><td class="err">Bajar demasiado. El hombro en apertura extrema es frágil</td><td><span class="lv soon">Fase 2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 2 ================= -->
+<h2 class="pat" data-n="02">Empuje vertical</h2>
+<p class="why">Deltoides. <strong>Tu segunda prioridad absoluta.</strong> Es el músculo que da anchura de hombro, y en tu silueta actual hombros y cintura miden casi lo mismo. Dos centímetros de deltoides cambian más tu aspecto que dos kilos de báscula.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=seated+dumbbell+shoulder+press+technique+form" target="_blank" rel="noopener">Press militar sentado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Aparta el techo»</td><td class="err">Arquear la lumbar. Señal inequívoca de exceso de peso</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=arnold+press+dumbbell+technique" target="_blank" rel="noopener">Press Arnold</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Gira mientras subes»</td><td class="err">Girar de golpe arriba en vez de durante el recorrido</td><td><span class="lv soon">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=elevaciones+laterales+tecnica+correcta+lateral+raise" target="_blank" rel="noopener">Elevaciones laterales</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sube con los codos, la mano solo va de paso»</td><td class="err">Pasar de la altura del hombro: ahí trabaja el trapecio</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+front+raise+technique+form" target="_blank" rel="noopener">Elevaciones frontales</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sin balanceo, el torso no se mueve»</td><td class="err">Innecesario si haces press. Accesorio opcional</td><td><span class="lv">Opcional</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 3 ================= -->
+<h2 class="pat" data-n="03">Tirón horizontal</h2>
+<p class="why"><strong>Tu prioridad número uno.</strong> Dorsal, romboides y trapecio medio: grosor de espalda, contraste con la cintura y, de propina, tiran de los hombros hacia atrás corrigiendo la postura adelantada. Si un día solo pudieras hacer un ejercicio, sería un remo.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=one+arm+dumbbell+row+bench+technique+form" target="_blank" rel="noopener">Remo a una mano</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Guarda la mancuerna en el bolsillo trasero»</td><td class="err">Rotar el torso al tirar: sobra peso</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=two+dumbbell+bent+over+row+form" target="_blank" rel="noopener">Remo con dos mancuernas</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Pecho orgulloso, espalda plana»</td><td class="err">Redondear la espalda. Exige mucho de la lumbar</td><td><span class="lv soon">Semana 5</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=inverted+row+under+table+bodyweight+form" target="_blank" rel="noopener">Remo invertido bajo mesa</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Lleva el pecho al borde de la mesa»</td><td class="err">Cadera caída. Cuerpo en línea recta</td><td><span class="lv soon">Semana 9</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=chest+supported+row+incline+bench+dumbbell" target="_blank" rel="noopener">Remo con pecho apoyado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El pecho no se despega del banco»</td><td class="err">Ninguno relevante: es la versión más segura para la lumbar</td><td><span class="lv soon">Si molesta la espalda</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 4 ================= -->
+<h2 class="pat" data-n="04">Tirón vertical</h2>
+<p class="why">Anchura del dorsal — lo que crea la silueta en V y hace que la cintura <em>parezca</em> más estrecha sin cambiar un centímetro. Es tu patrón más deficitario y el único que tu material no cubre bien. Una barra de puerta cuesta 25 €.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+pullover+bench+technique+form" target="_blank" rel="noopener">Pullover</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Tira con las axilas»</td><td class="err">Doblar y estirar el codo: eso es tríceps</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dominadas+tecnica+correcta+pull+up+form" target="_blank" rel="noopener">Dominadas</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Lleva los codos a las costillas»</td><td class="err">Medio rango. Baja hasta estirar del todo</td><td><span class="lv soon">Si compras la barra</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=band+assisted+pull+up+technique" target="_blank" rel="noopener">Dominadas asistidas con banda</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«La banda ayuda abajo, no arriba»</td><td class="err">Banda demasiado gruesa: no llegas a esforzarte</td><td><span class="lv soon">Puente hacia la dominada</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 5 ================= -->
+<h2 class="pat" data-n="05">Espalda alta y hombro posterior</h2>
+<p class="why">Trabajo directamente postural. El deltoides posterior y el trapecio medio son los antagonistas del pectoral: cuando están débiles, los hombros se van hacia delante. Dos series de esto valen más para tu aspecto que cualquier cantidad de pecho.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=bent+over+rear+delt+fly+dumbbell+form" target="_blank" rel="noopener">Pájaro</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Abre las alas»</td><td class="err">Peso excesivo: se convierte en remo. Con 3 kg vas bien</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=seated+bent+over+rear+delt+fly+dumbbell+technique" target="_blank" rel="noopener">Pájaro sentado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Pecho casi tocando los muslos, pies planos y paralelos»</td><td class="err"><strong>Añadido el 20 ago.</strong> El pájaro en banco no le sirve: con 1,85 m los brazos chocan con el suelo. Esta es su versión</td><td><span class="lv now">Ahora · versión válida para él</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=prone+incline+bench+rear+delt+raise" target="_blank" rel="noopener">Pájaro en banco inclinado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sujeta un lápiz entre los omóplatos»</td><td class="err">Encoger los hombros hacia las orejas</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=side+lying+external+rotation+shoulder+dumbbell" target="_blank" rel="noopener">Rotación externa tumbado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El codo no se despega del costado»</td><td class="err">Usar más de 3 kg. Es prevención, no fuerza</td><td><span class="lv soon">Semana 5</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=face+pull+resistance+band+technique" target="_blank" rel="noopener">Face pull con banda</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Tira de la cuerda hacia la frente»</td><td class="err">Necesitas banda. 12 € y es la mejor compra preventiva</td><td><span class="lv soon">Si compras banda</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+shrug+technique+form" target="_blank" rel="noopener">Encogimientos</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sube recto, sin rodar el hombro»</td><td class="err">Rotar los hombros. Solo arriba y abajo</td><td><span class="lv">Opcional</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 6 ================= -->
+<h2 class="pat" data-n="06">Dominante de rodilla</h2>
+<p class="why">Cuádriceps y glúteo. <strong>Todo este bloque está suspendido</strong> hasta que el muslo izquierdo pase las tres puertas de reingreso. Cuando vuelva, entra por la sentadilla goblet y con carga reducida al 60 %.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=goblet+squat+technique+form" target="_blank" rel="noopener">Sentadilla goblet</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Separa el suelo con los pies»</td><td class="err">Talones que se levantan. Ponlos sobre un disco</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+squat+suitcase+hold+form" target="_blank" rel="noopener">Sentadilla con mancuernas a los lados</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Pecho alto todo el recorrido»</td><td class="err">Inclinarte hacia delante al cansarte</td><td><span class="lv leg">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=bulgarian+split+squat+technique+form" target="_blank" rel="noopener">Sentadilla búlgara</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Baja como un ascensor»</td><td class="err">Empujar con el pie de atrás. Es apoyo, no motor</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=walking+lunge+dumbbell+technique" target="_blank" rel="noopener">Zancada</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Rodilla de atrás al suelo, no adelante»</td><td class="err">Zancada corta: carga la rodilla en vez del glúteo</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+step+up+box+technique" target="_blank" rel="noopener">Step-up a la silla</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sube empujando con el pie de arriba»</td><td class="err">Impulsarte con el pie del suelo</td><td><span class="lv leg">Alternativa suave</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=wall+sit+isometric+quad+technique" target="_blank" rel="noopener">Sentadilla isométrica en pared</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Aguanta sin moverte»</td><td class="err">Ninguno. Es el primer paso del reingreso: carga sin movimiento</td><td><span class="lv leg">Puerta 1</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 7 ================= -->
+<h2 class="pat" data-n="07">Dominante de cadera</h2>
+<p class="why">Isquiotibiales, glúteo y erectores lumbares: la musculatura que sostiene la pelvis en su sitio. Es tu herramienta contra la anteversión pélvica que hace que el abdomen sobresalga más de lo que le toca a tu porcentaje de grasa.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=romanian+deadlift+dumbbell+technique+form" target="_blank" rel="noopener">Peso muerto rumano</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Cierra un cajón con la cadera»</td><td class="err">Espalda redondeada. Para la serie inmediatamente</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=single+leg+romanian+deadlift+dumbbell+form" target="_blank" rel="noopener">Peso muerto a una pierna</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«La pierna de atrás y el torso forman una línea»</td><td class="err">Abrir la cadera. Las caderas miran al suelo</td><td><span class="lv leg">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=hip+thrust+dumbbell+bench+technique" target="_blank" rel="noopener">Hip thrust</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Haz una mesa con el cuerpo»</td><td class="err">Arquear la lumbar arriba. Para en la línea recta</td><td><span class="lv leg">Al reingresar · entra antes que la sentadilla</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=glute+bridge+floor+technique+form" target="_blank" rel="noopener">Puente de glúteo en el suelo</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Empuja con los talones»</td><td class="err">Ninguno. Es la versión más suave de la cadena posterior</td><td><span class="lv leg">Puerta 1</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=lying+leg+curl+ankle+weights+hamstring" target="_blank" rel="noopener">Curl femoral con tobilleras</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Solo se mueve la rodilla»</td><td class="err">Levantar la cadera para ayudarte</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=standing+calf+raise+dumbbell+technique" target="_blank" rel="noopener">Elevación de talones</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sube del todo, baja hasta estirar»</td><td class="err">Medio rango. Prepara el Aquiles para volver a correr</td><td><span class="lv soon">Semana 5</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 8 ================= -->
+<h2 class="pat" data-n="08">Brazo</h2>
+<p class="why">Accesorios. El bíceps ya trabaja en cada remo y el tríceps en cada press, así que esto es un extra — pero es un extra visible y muy agradecido, y ver el brazo cambiar es un refuerzo real. Siempre al final de la sesión.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dumbbell+biceps+curl+technique+form" target="_blank" rel="noopener">Curl de bíceps</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El codo está clavado al costado»</td><td class="err">Balancear el torso. Pruébalo sentado</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=hammer+curl+dumbbell+technique" target="_blank" rel="noopener">Curl martillo</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Palmas enfrentadas todo el rato»</td><td class="err">Ninguno. Es la variante amable si molesta el codo</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=overhead+dumbbell+triceps+extension+form" target="_blank" rel="noopener">Extensión de tríceps sobre la cabeza</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Los codos apuntan al techo y no se mueven»</td><td class="err">Abrir los codos hacia fuera</td><td><span class="lv soon">Semana 9</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=triceps+kickback+dumbbell+technique" target="_blank" rel="noopener">Patada de tríceps</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El brazo queda paralelo al suelo»</td><td class="err">Bajar el codo entre repeticiones</td><td><span class="lv">Opcional</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=bench+dips+chair+triceps+technique" target="_blank" rel="noopener">Fondos en la silla</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Baja recto, pegado a la silla»</td><td class="err">Bajar demasiado: castiga el hombro. Con tus hombros adelantados, cuidado</td><td><span class="lv">Con precaución</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 9 ================= -->
+<h2 class="pat" data-n="09">Core</h2>
+<p class="why">No son abdominales de estética: es entrenamiento antiextensión, enseñar al core a impedir que la pelvis bascule hacia delante. Es el trabajo directo contra lo que hace que tu abdomen sobresalga más de lo que corresponde a tu grasa.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=plancha+abdominal+tecnica+correcta+plank+form" target="_blank" rel="noopener">Plancha frontal</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Aprieta una moneda entre los glúteos»</td><td class="err">Cadera hundida: comprime la lumbar en vez de trabajar</td><td><span class="lv leg">Carga la pierna · al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=side+plank+technique+form" target="_blank" rel="noopener">Plancha lateral</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Empuja el suelo con el codo»</td><td class="err">Dejar caer la cadera</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=dead+bug+exercise+technique+form" target="_blank" rel="noopener">Dead bug</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Aplasta una uva con la espalda baja»</td><td class="err">Que la lumbar se despegue. Reduce el rango</td><td><span class="lv now">Ahora · sin carga de pierna</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=hollow+body+hold+technique" target="_blank" rel="noopener">Hollow hold</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Costillas hacia abajo»</td><td class="err">Arquear la espalda al bajar las piernas</td><td><span class="lv soon">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=lying+leg+raise+technique+form" target="_blank" rel="noopener">Elevación de piernas</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«La lumbar no se despega»</td><td class="err">Usar impulso. Baja despacio</td><td><span class="lv soon">Semana 9</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=pallof+press+band+anti+rotation" target="_blank" rel="noopener">Press Pallof con banda</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«No dejes que te giren»</td><td class="err">Necesitas banda</td><td><span class="lv soon">Si compras banda</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 10 ================= -->
+<h2 class="pat" data-n="10">Cardio y calentamiento</h2>
+<p class="why">La bici es tu herramienta principal: impacto cero, y con tu historial de molestias eso vale más que cualquier ventaja teórica de correr. La carrera queda aplazada hasta el mes 3 como mínimo.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Actividad</th><th>Cómo</th><th>Cuándo</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex">Bici · calentamiento</td><td>5 min, resistencia baja, subiendo poco a poco</td><td class="err">Antes de cada sesión de fuerza</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex">Bici · zona 2</td><td>25–40 min a ritmo conversacional: podrías hablar sin ahogarte</td><td class="err">2–3 días por semana, sin fuerza ese día</td><td><span class="lv now">Ahora · si no molesta la pierna</span></td></tr>
+      <tr><td class="ex">Bici · intervalos</td><td>8 × (1 min fuerte + 1 min suave)</td><td class="err">Máximo 1 día por semana</td><td><span class="lv soon">Mes 3</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=movilidad+dinamica+calentamiento+antes+de+entrenar+5+minutos" target="_blank" rel="noopener">Movilidad dinámica</a><span class="vid">▶ ver vídeo</span></td><td>10 círculos de brazos · 10 rotaciones de tronco · 10 encogimientos</td><td class="err">Después de la bici, antes de la primera serie</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex">Caminar</td><td>Objetivo 9.000 pasos al día</td><td class="err">Todos los días. Con teletrabajo es tu palanca más grande</td><td><span class="lv now">Ahora</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ================= 11 ================= -->
+<h2 class="pat" data-n="11">Banco con soporte de piernas</h2>
+<p class="why"><strong>El descubrimiento del 18 de agosto.</strong> Los cuatro rodillos convierten el banco en una estación de pierna. Para tu muslo izquierdo esto vale oro: te deja cargar el cuádriceps en el rango exacto que no duele, sentado, sin apoyar el peso del cuerpo ni pedir equilibrio. Es la vía de reingreso, no la sentadilla.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=leg+extension+bench+technique+form" target="_blank" rel="noopener">Extensión de cuádriceps</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Estira hasta arriba y aguanta un segundo»</td><td class="err">Coger carrerilla con el impulso. Y no pases del rango que no duele</td><td><span class="lv leg">Puerta 1 · rehabilitación</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=lying+leg+curl+bench+technique" target="_blank" rel="noopener">Curl femoral tumbado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Talones al glúteo, cadera pegada al banco»</td><td class="err">Levantar la cadera para ayudarte</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=nordic+hamstring+curl+assisted+beginner" target="_blank" rel="noopener">Curl nórdico asistido</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Baja todo lo lento que puedas, empuja con las manos para volver»</td><td class="err">Dejarte caer. Si no controlas, acorta el recorrido</td><td><span class="lv leg">Fase 2</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=decline+sit+up+bench+anchored+feet+form" target="_blank" rel="noopener">Abdominales con pies anclados</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Sube enrollando la columna, vértebra a vértebra»</td><td class="err">Tirar del cuello con las manos</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=lying+leg+raise+bench+technique" target="_blank" rel="noopener">Elevación de piernas en banco</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«La lumbar no se despega del banco»</td><td class="err">Usar impulso al bajar</td><td><span class="lv soon">Semana 9</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ================= 12 ================= -->
+<h2 class="pat" data-n="12">Mini bandas <small>(bucle corto y denso, Decathlon)</small></h2>
+<p class="why"><strong>Corrección del 18 de agosto.</strong> No son bandas largas con anclaje, son bucles cortos. Eso descarta el press Pallof, el face pull anclado y la dominada asistida, que necesitan una banda larga que se fije a algo. A cambio son <em>perfectas</em> para lo que más te hace falta: el trabajo de glúteo medio y todo el complejo del hombro posterior.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=band+pull+apart+mini+loop+band+shoulders+technique" target="_blank" rel="noopener">Pull-apart</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Separa la banda sin doblar el codo»</td><td class="err">Encoger los hombros hacia las orejas</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=band+pull+apart+face+level+w+raise+technique" target="_blank" rel="noopener">Face pull con banda corta</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«A la altura de la frente, codos altos»</td><td class="err">Bajar los codos: se convierte en pull-apart normal</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=band+external+rotation+elbows+at+sides+technique" target="_blank" rel="noopener">Rotación externa</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Los codos no se despegan del costado»</td><td class="err">Separar los codos del cuerpo</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=seated+band+row+feet+anchored+technique" target="_blank" rel="noopener">Remo sentado con banda</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Codos a la cadera, aprieta las escápulas»</td><td class="err">Echarte hacia atrás con el torso</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=side+lying+banded+hip+abduction+glute+medius" target="_blank" rel="noopener">Abducción de cadera tumbado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Abre sin girar la pelvis hacia atrás»</td><td class="err">Rotar la cadera para llegar más lejos</td><td><span class="lv leg">Cuando el fisio lo autorice</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=clamshell+exercise+glute+medius+mini+band" target="_blank" rel="noopener">Clamshell</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Talones juntos, la cadera no rota»</td><td class="err">Dejar caer la pelvis hacia atrás</td><td><span class="lv leg">Cuando el fisio lo autorice</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=monster+walk+lateral+band+walk+glute+medius" target="_blank" rel="noopener">Monster walk</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Pasos laterales sin juntar los pies»</td><td class="err">Inclinar el torso al andar</td><td><span class="lv leg">Cuando el fisio lo autorice</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=banded+push+up+resistance+technique" target="_blank" rel="noopener">Flexiones con banda</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«La banda por la espalda, sujeta con las manos»</td><td class="err">Que la banda se desplace al cuello</td><td><span class="lv soon">Semana 5</span></td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card warn">
+  <span class="tag">Lo que la mini banda NO puede hacer</span>
+  <p><strong>Press Pallof, face pull anclado, jalón y dominada asistida</strong> necesitan una banda larga con anclaje. Si algún día quieres esos ejercicios, una banda larga de resistencia cuesta 10–12 € y se ancla en una puerta.</p>
+  <p style="margin-bottom:0">Dicho eso: <strong>para tus dos prioridades reales</strong> —el glúteo medio y el hombro posterior— la mini banda es exactamente la herramienta correcta. No es un apaño.</p>
+</div>
+
+<!-- ================= 13 ================= -->
+<h2 class="pat" data-n="13">Mochila lastrada y barras de flexiones</h2>
+<p class="why">Con 6 kg por mano, la mochila es tu forma más barata de añadir 10–15 kg de golpe. Llénala de libros o de botellas de agua de litro y medio: cada botella es 1,5 kg y las puedes quitar de una en una para progresar fino. Las barras de flexiones dan muñeca neutra y más profundidad de pecho.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=push+up+bars+parallettes+deep+range+technique" target="_blank" rel="noopener">Flexiones con barras</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Baja hasta que el pecho pase de las manos»</td><td class="err">Perder la línea del cuerpo por bajar más</td><td><span class="lv now">Ahora</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=weighted+push+up+backpack+technique" target="_blank" rel="noopener">Flexiones con mochila</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El cuerpo sigue siendo una tabla»</td><td class="err">Que la mochila se desplace al cuello</td><td><span class="lv soon">Semana 4</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=backpack+squat+weighted+bodyweight+technique" target="_blank" rel="noopener">Sentadilla con mochila</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Mochila alta, pegada a la espalda»</td><td class="err">Mochila baja: te tira hacia atrás</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=weighted+lunge+backpack+technique" target="_blank" rel="noopener">Zancada con mochila</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Rodilla de atrás al suelo»</td><td class="err">Zancada corta: carga la rodilla</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=hip+thrust+backpack+weight+bench" target="_blank" rel="noopener">Hip thrust con mochila</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Haz una mesa con el cuerpo»</td><td class="err">Arquear la lumbar arriba</td><td><span class="lv leg">Al reingresar</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ================= 14 ================= -->
+<h2 class="pat" data-n="14">Barra de conexión y mango kettlebell</h2>
+<p class="why"><strong>Corrección del 18 de agosto.</strong> La barra mide 40–50 cm: es de conexión, no una barra olímpica. Eso descarta sentadilla, press militar de pie y peso muerto rumano con barra — los discos chocarían con los muslos o el agarre queda demasiado estrecho para ser seguro. Donde sí es insustituible es en los ejercicios que piden <em>un solo implemento pesado</em>, porque concentra los 19,5 kg en las dos manos.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=barbell+hip+thrust+bench+technique" target="_blank" rel="noopener">Hip thrust con barra</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Haz una mesa con el cuerpo»</td><td class="err">Arquear la lumbar arriba. Pon una toalla bajo la barra</td><td><span class="lv leg">Al reingresar · <strong>el mejor uso de la barra</strong></span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=close+grip+bench+press+dumbbell+bar+technique" target="_blank" rel="noopener">Press cerrado en banco</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Codos pegados al cuerpo»</td><td class="err">Abrir los codos. El agarre estrecho pide codos cerrados</td><td><span class="lv now">Semana 3</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=close+grip+barbell+row+technique+form" target="_blank" rel="noopener">Remo con agarre estrecho</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Codos a la cadera, torso a 45°»</td><td class="err">Redondear la espalda o incorporarte al tirar</td><td><span class="lv now">Semana 3</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=barbell+pullover+bench+technique" target="_blank" rel="noopener">Pullover con barra</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Tira con las axilas, codos casi fijos»</td><td class="err">Doblar el codo: eso es tríceps</td><td><span class="lv now">Semana 3</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=barbell+biceps+curl+technique+form" target="_blank" rel="noopener">Curl con barra</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Codos clavados al costado»</td><td class="err">Balancear el torso</td><td><span class="lv now">Semana 3</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=skull+crusher+ez+bar+technique+form" target="_blank" rel="noopener">Extensión de tríceps tumbado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Solo se mueve el antebrazo»</td><td class="err">Bajar la barra a la frente sin control</td><td><span class="lv soon">Semana 5</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=kettlebell+goblet+squat+technique+form" target="_blank" rel="noopener">Goblet squat con kettlebell</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Codos por dentro de las rodillas»</td><td class="err">Ninguno nuevo. El agarre es mucho más cómodo que con mancuerna</td><td><span class="lv leg">Al reingresar</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=kettlebell+swing+technique+hip+hinge" target="_blank" rel="noopener">Swing con kettlebell</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El impulso sale de la cadera, no de los brazos»</td><td class="err">Convertirlo en sentadilla. Y no antes de que la pierna esté al 100 %</td><td><span class="lv leg">Fase 2</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card warn">
+  <span class="tag">Lo que la barra corta NO puede hacer</span>
+  <p><strong>Sentadilla frontal o trasera:</strong> 40–50 cm no apoyan con seguridad en los hombros. Se hace con el mango kettlebell a 10 kg, más mochila lastrada si hace falta más.</p>
+  <p><strong>Press militar de pie:</strong> el agarre queda tan estrecho que el hombro trabaja en una posición forzada. Se hace con mancuernas, que además permiten más rango.</p>
+  <p style="margin-bottom:0"><strong>Peso muerto rumano:</strong> los discos chocarían con los muslos al bajar. Y no hace falta: <strong>dos mancuernas a 10 kg son 20 kg</strong>, más que los 19,5 de la barra, con mucha mejor ergonomía.</p>
+</div>
+
+<!-- ================= 15 ================= -->
+<h2 class="pat" data-n="15">Estiramientos y vuelta a la calma</h2>
+<p class="why"><strong>Añadido el 20 de agosto.</strong> Llevaba prescribiéndolos en las sesiones sin que estuvieran en la biblioteca. Van aquí porque la vuelta a la calma no es opcional: es donde baja el pulso, y en su caso además es donde se corrigió el estiramiento que le agravó el muslo el 18 de agosto.</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Ejercicio</th><th>Cue principal</th><th>Error a evitar</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=doorway+chest+stretch+pec+technique" target="_blank" rel="noopener">Pectoral en marco de puerta</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Antebrazo en el marco, codo a la altura del hombro, giras el torso»</td><td class="err"><strong>Con la pierna IZQUIERDA delante le pinchó el muslo (18 ago).</strong> Pies juntos o pierna derecha delante</td><td><span class="lv now">Ahora · 30 s por lado</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=lat+stretch+doorway+hang+technique" target="_blank" rel="noopener">Dorsal en marco de puerta</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Agárrate y deja caer el peso hacia atrás y abajo»</td><td class="err">Tirar con los brazos en vez de dejar caer el peso</td><td><span class="lv now">Ahora · 30 s por lado</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=neck+stretch+upper+trapezius+technique" target="_blank" rel="noopener">Cuello, oreja al hombro</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«El hombro contrario se queda abajo»</td><td class="err">Tirar de la cabeza con la mano. Basta el peso del brazo</td><td><span class="lv now">Ahora · 20 s por lado</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=cat+camel+cow+stretch+spine+technique" target="_blank" rel="noopener">Gato-camello</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Vértebra a vértebra, sin prisa»</td><td class="err">Hacerlo rápido. Es movilidad, no repeticiones</td><td><span class="lv now">Ahora · calentamiento, 8 lentos</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=seated+thoracic+rotation+mobility+technique" target="_blank" rel="noopener">Rotación torácica sentado</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«Mano en la nuca, gira desde las costillas, no desde la cadera»</td><td class="err">Girar la cadera en lugar del torso</td><td><span class="lv now">Ahora · calentamiento, 8 por lado</span></td></tr>
+      <tr><td class="ex"><a href="https://www.youtube.com/results?search_query=respiracion+diafragmatica+tumbado+tecnica" target="_blank" rel="noopener">Respiración diafragmática</a><span class="vid">▶ ver vídeo</span></td><td class="cue">«6 s inspirar por la nariz, 6 s espirar por la boca»</td><td class="err">Respirar con el pecho. Sube la barriga, no las costillas</td><td><span class="lv now">Ahora · 1 min al cerrar</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card warn">
+  <span class="tag">Regla que salió de su propio caso</span>
+  <p style="margin-bottom:0">Un estiramiento de tren superior <strong>puede cargar el tren inferior por la posición de los pies</strong>. El de pectoral en la puerta se hace en zancada, y esa zancada mete la cadera adelantada en extensión. Con la molestia lateral del muslo izquierdo activa, la pierna que se adelanta importa. <strong>Ante cualquier estiramiento nuevo: si nota pinchazo, se cambia la posición de los pies antes de descartar el ejercicio.</strong></p>
+</div>
+
+
+<h3 class="sec">Configuraciones de disco por sesión</h3>
+<p class="deck">Para cambiar de peso dos veces, no seis</p>
+<div style="max-width:68ch"><p>Cambiar discos entre ejercicios es fricción, y la fricción es lo que hace abandonar. Las sesiones van ordenadas por carga: montas una configuración, haces todo lo que va con ella, y solo entonces cambias.</p></div>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Bloque</th><th>Montaje</th><th class="err">Qué haces sin tocar nada</th></tr></thead>
+    <tbody>
+      <tr><td class="ex">Pesado</td><td>2 discos de 2 kg + 2 de 1,25 por lado = <strong>10 kg por mano</strong></td><td class="err">Remo, pullover, press de banca</td></tr>
+      <tr><td class="ex">Medio</td><td>Quitas un disco de 1,25 por lado = <strong>7,5 kg</strong></td><td class="err">Press militar, curl</td></tr>
+      <tr><td class="ex">Ligero</td><td>Las <strong>mancuernas fijas de 3 kg</strong> y las mini bandas. Cero montaje</td><td class="err">Elevaciones laterales, pájaro, pull-apart, rotación externa</td></tr>
+      <tr><td class="ex">Barra</td><td>Todos los discos en la barra de conexión = <strong>19,5 kg</strong></td><td class="err">Hip thrust, press cerrado, remo estrecho, curl</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card good">
+  <span class="tag">Regla de montaje</span>
+  <p>Una sesión no lleva más de <strong>dos configuraciones de mancuerna</strong>. El trabajo ligero va siempre con las fijas de 3 kg, así que ese bloque nunca cuesta nada. Si un día no te apetece cambiar, haz la sesión entera con el montaje pesado y sube repeticiones en lo que se quede corto: pierdes poco.</p>
+</div>
+
+<h3 class="sec">Cómo hacer que la carga ligera pese</h3>
+<p class="deck">Cinco técnicas · siguen valiendo cuando el peso se queda corto</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Técnica</th><th>Cómo</th><th>Dónde la uso</th></tr></thead>
+    <tbody>
+      <tr><td class="ex">Concentrar discos</td><td>Todos los discos en la barra de conexión: 19,5 kg en un solo implemento</td><td class="err">Hip thrust, press cerrado, remo estrecho</td></tr>
+      <tr><td class="ex">Tempo 4-1-1</td><td>4 segundos bajando, 1 de pausa abajo, subida firme</td><td class="err">Todos. Es la primera palanca cuando falta peso</td></tr>
+      <tr><td class="ex">Repeticiones 1,5</td><td>Baja del todo, sube a la mitad, vuelve a bajar, y sube del todo. Eso es una repetición</td><td class="err">Elevaciones laterales, curl, sentadilla</td></tr>
+      <tr><td class="ex">Series descendentes</td><td>Al fallo con 6 kg, quitas un disco de cada lado y sigues sin descanso</td><td class="err">Última serie de aislamientos</td></tr>
+      <tr><td class="ex">Rango alto de repeticiones</td><td>15–25 repeticiones llevadas a RIR 1–2</td><td class="err">Todo lo que se te quede ligero. De 5 a 30 repeticiones el estímulo es equivalente si llegas cerca del fallo</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="sec">Las cuatro reglas que gobiernan todo</h3>
+<p class="deck">Da igual el ejercicio</p>
+<div style="max-width:68ch">
+  <ol>
+    <li><strong>Tempo: 2 segundos bajando, subida firme.</strong> La fase de bajada genera tanto estímulo como la de subida y es la que todo el mundo desperdicia. Además te obliga a usar un peso que puedes controlar, que es la mejor protección que existe.</li>
+    <li><strong>RIR es la ley, no la hoja.</strong> Si pongo 12 repeticiones y llegas a la 9 sintiendo que solo te quedan dos, paras en 9. Si en la 12 te sobran cuatro, subimos peso la próxima vez.</li>
+    <li><strong>Un cue por serie, no cinco.</strong> Elige uno, hazlo tuyo durante dos o tres sesiones, y pasa al siguiente.</li>
+    <li><strong>Un dolor sustituye un ejercicio, no cancela una sesión.</strong> Si te duele el hombro, entrenas espalda y pierna. Prácticamente nunca hay motivo para no entrenar nada.</li>
+  </ol>
+</div>
+
+<footer>
+  <p><strong>Biblioteca de ejercicios</strong> · 79 movimientos con vídeo · Referencia de consulta. Las sesiones te llegan por el chat; no necesitas esta página para entrenar.</p>
+  <p>Orientación general sobre técnica de ejercicio. No sustituye la valoración presencial de un profesional del ejercicio o de la fisioterapia. Ante dolor articular persistente, consulta.</p>
+</footer>
+</div>

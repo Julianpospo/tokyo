@@ -1,0 +1,1332 @@
+<title>Manual de entrenamiento · Técnica, sesiones y progresión</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ground:#F1F3F1; --surface:#FBFCFB; --surface-2:#E9ECEA;
+  --ink:#131917; --ink-2:#4E5B57; --ink-3:#7C8985;
+  --line:#D6DCD8; --line-strong:#B9C2BD;
+  --accent:#A63A1C; --accent-soft:#F2E2DB;
+  --good:#2C6E56; --good-soft:#E0EBE5;
+  --warn:#8A5D0C; --warn-soft:#F2E9D6;
+  --figbg:#E7EBE9;
+  --shadow:0 1px 2px rgba(19,25,23,.05),0 8px 24px rgba(19,25,23,.04);
+  --f-display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321;
+    --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+    --line:#262E2B; --line-strong:#39423E;
+    --accent:#E0714A; --accent-soft:#2C1C15;
+    --good:#57AC8B; --good-soft:#16241E;
+    --warn:#C99A3A; --warn-soft:#241C0E;
+    --figbg:#1B211F;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D100F; --surface:#151A18; --surface-2:#1D2321;
+  --ink:#E9EEEB; --ink-2:#A3AFAA; --ink-3:#7A8781;
+  --line:#262E2B; --line-strong:#39423E;
+  --accent:#E0714A; --accent-soft:#2C1C15;
+  --good:#57AC8B; --good-soft:#16241E;
+  --warn:#C99A3A; --warn-soft:#241C0E;
+  --figbg:#1B211F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}
+
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+
+.shell{max-width:1180px;margin:0 auto;padding:0 24px 110px}
+.prose{max-width:69ch}
+
+/* HEADER */
+.masthead{padding:56px 0 0}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.masthead h1{font-family:var(--f-display);font-weight:750;letter-spacing:-.028em;line-height:1.03;font-size:clamp(32px,5.8vw,56px);text-wrap:balance;max-width:16ch}
+.masthead .sub{font-size:clamp(17px,2.2vw,20px);color:var(--ink-2);max-width:58ch;margin-top:18px;line-height:1.5}
+.ruler{height:20px;margin:34px 0 40px;position:relative;border-bottom:1px solid var(--line-strong)}
+.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:9px;background-image:repeating-linear-gradient(to right,var(--line-strong) 0 1px,transparent 1px 24px)}
+.ruler::after{content:"";position:absolute;left:0;bottom:0;width:2px;height:20px;background:var(--accent)}
+
+/* PARTS + HEADINGS */
+.part-head{margin:86px 0 36px;padding-top:20px;border-top:2px solid var(--ink)}
+.part-head:first-of-type{margin-top:12px}
+.part-head .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.part-head h2{font-family:var(--f-display);font-weight:720;letter-spacing:-.024em;font-size:clamp(23px,3.3vw,33px);line-height:1.1;text-wrap:balance}
+section{margin-bottom:56px;scroll-margin-top:20px}
+h3.ch{font-family:var(--f-display);font-weight:680;letter-spacing:-.02em;line-height:1.16;font-size:clamp(20px,2.6vw,26px);text-wrap:balance;margin-bottom:6px;padding-left:50px;position:relative}
+h3.ch::before{content:attr(data-n);position:absolute;left:0;top:.1em;font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--accent);letter-spacing:0;border-bottom:2px solid var(--accent);padding-bottom:2px}
+h3.ch + .deck{padding-left:50px;color:var(--ink-3);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px}
+h4{font-family:var(--f-display);font-weight:660;font-size:16.5px;letter-spacing:-.008em;margin:30px 0 12px}
+h5{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:24px 0 10px}
+p{margin-bottom:16px}
+p.lead{font-size:19px;line-height:1.55;color:var(--ink-2)}
+strong{font-weight:700;color:var(--ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+ul,ol{margin:0 0 18px 0;padding-left:22px}
+li{margin-bottom:8px}
+li::marker{color:var(--ink-3)}
+ul.tight li,ol.tight li{margin-bottom:5px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.94em}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);padding:20px 22px;margin:24px 0;box-shadow:var(--shadow)}
+.card.good{border-left-color:var(--good)}
+.card.warn{border-left-color:var(--warn)}
+.card .tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+.card.good .tag{color:var(--good)}
+.card.warn .tag{color:var(--warn)}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+
+.pill{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line-strong);color:var(--ink-2);white-space:nowrap}
+.pill.acc{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pill.good{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+
+/* TABLES */
+.scroll{overflow-x:auto;margin:22px 0;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--f-display);font-size:13.5px;min-width:500px}
+caption{caption-side:top;text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2)}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+thead th{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{font-weight:600;white-space:nowrap}
+tbody tr.total td{background:var(--surface-2);font-weight:700}
+
+/* ANIM CONTROL */
+.animbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);padding:12px 16px;margin:24px 0}
+.animbar p{margin:0;font-family:var(--f-display);font-size:13px;color:var(--ink-2)}
+button.ctl{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);cursor:pointer}
+button.ctl:hover{border-color:var(--accent);color:var(--accent)}
+
+/* EXERCISE CARD */
+.ex{border:1px solid var(--line);background:var(--surface);margin:0 0 26px;box-shadow:var(--shadow);scroll-margin-top:20px}
+.ex-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.ex-n{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;border:1px solid var(--accent);padding:3px 7px;flex-shrink:0;margin-top:2px}
+.ex-head h4{font-family:var(--f-display);font-size:18px;font-weight:700;letter-spacing:-.015em;margin:0}
+.ex-meta{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:5px 0 0}
+.ex-head .pill{margin-left:auto;flex-shrink:0;margin-top:2px}
+.ex-body{display:grid;grid-template-columns:1fr;gap:0}
+@media (min-width:820px){.ex-body{grid-template-columns:300px minmax(0,1fr)}}
+.ex-fig{background:var(--figbg);padding:18px 16px 14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+@media (min-width:820px){.ex-fig{border-bottom:none;border-right:1px solid var(--line)}}
+.ex-fig svg{width:100%;max-width:300px;height:auto;margin:0 auto;display:block;color:var(--ink)}
+.ex-fig figcaption{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);text-align:center;margin-top:12px;line-height:1.5}
+
+/* tempo indicator — injected under every figure */
+.tempo{max-width:300px;margin:14px auto 0;width:100%}
+.tempo .bar{height:3px;background:var(--surface-2);position:relative;overflow:hidden}
+.tempo .bar i{position:absolute;inset:0;background:var(--accent);transform-origin:left center;transform:scaleX(0);animation:tsweep 4.2s linear infinite}
+.tempo .lbls{display:flex;justify-content:space-between;margin-top:6px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tempo .lbls span{transition:none}
+.tempo .down{animation:tdown 4.2s steps(1,end) infinite}
+.tempo .up{animation:tup 4.2s steps(1,end) infinite}
+@keyframes tsweep{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tdown{0%,55.9%{color:var(--accent);opacity:1}56%,100%{color:var(--ink-3);opacity:.4}}
+@keyframes tup{0%,55.9%{color:var(--ink-3);opacity:.4}56%,100%{color:var(--accent);opacity:1}}
+.animpaused .tempo .bar i,.animpaused .tempo .down,.animpaused .tempo .up{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.tempo .bar i,.tempo .down,.tempo .up{animation:none}.tempo .bar i{transform:scaleX(1);opacity:.3}}
+.ex-txt{padding:20px 22px;font-family:var(--f-display);font-size:14.5px;line-height:1.55}
+.ex-txt h5{margin:20px 0 8px}
+.ex-txt h5:first-child{margin-top:0}
+.ex-txt ol,.ex-txt ul{padding-left:20px;margin-bottom:0}
+.ex-txt li{margin-bottom:6px}
+.ex-txt p{margin-bottom:0}
+.cue{border-left:2px solid var(--accent);padding:2px 0 2px 12px;margin-bottom:9px;font-style:italic}
+.cue:last-child{margin-bottom:0}
+.err{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-bottom:0}
+.err dt{font-weight:700;color:var(--accent);white-space:nowrap}
+.err dd{margin:0 0 8px}
+.forme{background:var(--accent-soft);border:1px solid var(--accent);padding:12px 14px;margin-top:20px;font-size:13.5px;line-height:1.5}
+.forme strong{color:var(--ink)}
+.forme .t{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+
+/* SVG figure styling */
+.fig-body{fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+.fig-limb{fill:none;stroke:currentColor;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.fig-head{fill:currentColor}
+.fig-gear{fill:none;stroke:currentColor;stroke-width:2.6;opacity:.4}
+.fig-load{fill:var(--accent)}
+.fig-path{fill:none;stroke:var(--accent);stroke-width:1.6;stroke-dasharray:4 4;opacity:.75}
+.fig-note{fill:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.04em}
+.fig-ground{stroke:currentColor;stroke-width:2;opacity:.28}
+
+/* GRID LISTS */
+.grid2{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0}
+@media (min-width:700px){.grid2{grid-template-columns:1fr 1fr}}
+.grid2 > div{background:var(--surface);padding:18px 20px}
+.grid2 h4{margin:0 0 8px;font-size:15px}
+.grid2 p{font-family:var(--f-display);font-size:13.5px;line-height:1.5;color:var(--ink-2);margin-bottom:0}
+
+.checklist{list-style:none;padding-left:0}
+.checklist li{padding-left:26px;position:relative;font-family:var(--f-display);font-size:14.5px;line-height:1.5}
+.checklist li::before{content:"";position:absolute;left:0;top:.42em;width:11px;height:11px;border:1.5px solid var(--line-strong)}
+
+hr.tick{border:none;height:1px;background:var(--line);margin:40px 0;position:relative}
+hr.tick::after{content:"";position:absolute;left:50%;top:-3px;width:1px;height:7px;background:var(--line-strong)}
+
+footer{border-top:1px solid var(--line);margin-top:70px;padding-top:26px}
+footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-width:70ch}
+
+.toc{background:var(--surface);border:1px solid var(--line);padding:20px 22px;margin:28px 0}
+.toc h5{margin:0 0 12px}
+.toc ol{list-style:none;padding:0;margin:0;display:grid;gap:2px 24px}
+@media (min-width:640px){.toc ol{grid-template-columns:1fr 1fr}}
+.toc li{margin:0}
+.toc a{display:block;font-family:var(--f-display);font-size:13.5px;text-decoration:none;color:var(--ink-2);padding:4px 0 4px 26px;position:relative}
+.toc a::before{content:attr(data-n);position:absolute;left:0;font-family:var(--f-mono);font-size:10px;color:var(--accent);font-variant-numeric:tabular-nums}
+.toc a:hover{color:var(--accent)}
+</style>
+
+<div class="shell">
+
+<header class="masthead">
+  <p class="eyebrow">Manual de entrenamiento · Documento complementario al estudio físico</p>
+  <h1>Técnica, sesiones y progresión</h1>
+  <p class="sub">Catorce ejercicios explicados y animados, construidos alrededor de lo que tu cuerpo necesita ahora: espalda, hombros y core. Con mancuernas, banco, tobilleras, esterilla y bici estática.</p>
+  <div class="ruler"></div>
+</header>
+
+<div class="animbar">
+  <p><strong>Las figuras están animadas al tempo real de ejecución:</strong> la bajada dura más que la subida y hay una desaceleración en el punto de estiramiento. La barra bajo cada figura te marca el ritmo — cópialo, porque el tempo forma parte de la técnica tanto como la postura.</p>
+  <button class="ctl" id="toggle" type="button">Pausar animaciones</button>
+</div>
+
+<!-- ============ PARTE I ============ -->
+<div class="part-head">
+  <span class="lbl">Parte I</span>
+  <h2>Cómo voy a entrenarte</h2>
+</div>
+
+<section id="m1">
+  <h3 class="ch" data-n="01">Los principios que aplico</h3>
+  <p class="deck">Qué separa a un buen entrenador de una lista de ejercicios</p>
+  <div class="prose">
+    <p class="lead">Un programa es solo el 30 % del trabajo. El otro 70 % es cómo se enseña, cómo se corrige y cómo se consigue que sigas ahí dentro de seis meses. Estos son los nueve principios con los que voy a trabajar contigo, y de dónde salen.</p>
+
+    <h4>1 · Los cues son externos, no internos</h4>
+    <p>Hay dos formas de decir lo mismo. «Contrae el glúteo al subir» dirige tu atención <em>hacia dentro</em> del cuerpo. «Empuja el suelo para separarte de él» la dirige <em>hacia fuera</em>, hacia el efecto del movimiento. La segunda funciona mejor: décadas de investigación sobre foco atencional —el cuerpo de trabajo de Gabriele Wulf es el más citado— muestran que el foco externo produce más fuerza, mejor economía de movimiento y un aprendizaje que se retiene más tiempo.</p>
+    <p>Por eso todos los cues de este manual están escritos como acciones sobre el mundo, no como órdenes a un músculo. Si alguna vez te doy un cue interno, será deliberado y para un caso concreto.</p>
+
+    <h4>2 · Un cue por serie, nunca cinco</h4>
+    <p>Tu memoria de trabajo puede sostener una idea mientras ejecutas un movimiento complejo. No tres. Cada ficha de este manual tiene 2–3 cues, pero <strong>no los uses todos a la vez</strong>: elige uno, hazlo tuyo durante dos o tres sesiones, y pasa al siguiente. Intentar corregir cinco cosas a la vez es la forma más eficiente de no corregir ninguna.</p>
+
+    <h4>3 · La carga se gana; la técnica va primero</h4>
+    <p>Regla operativa: <strong>no subes peso hasta que puedas hacer todas las repeticiones del rango con técnica limpia y sin buscar impulso.</strong> Esta es la regla que más te protege, dado tu historial. El peso que puedes levantar hoy con una técnica regular casi siempre es mayor que el que tus tendones toleran esta semana.</p>
+
+    <h4>4 · El vídeo es tu entrenador presencial</h4>
+    <p>No estoy en la habitación contigo, y el espejo miente: mirarte de frente mientras haces una sentadilla te cambia la postura del cuello y no te deja ver el perfil, que es donde están casi todos los errores. La solución es barata: <strong>graba una serie de cada ejercicio nuevo, desde un lateral, a la altura de la cadera.</strong> Míralo después. Vas a ver cosas que no notaste haciéndolo.</p>
+    <p>Hazlo la primera vez que hagas cada ejercicio, y luego una vez cada 3–4 semanas, o cuando subas de peso de forma significativa.</p>
+
+    <h4>5 · Autorregulación: el RIR manda sobre la hoja</h4>
+    <p>La hoja dice «12 repeticiones». Tu cuerpo, un martes de noviembre con cinco horas de sueño, dice otra cosa. El <strong>RIR</strong> (repeticiones en reserva) es el mecanismo que reconcilia ambos: si la hoja pide RIR 2 y llegas a la 9 sintiendo que solo te quedan dos, <em>paras en 9</em>. Y si en la 12 aún te sobran cuatro, subes peso la próxima vez.</p>
+    <p>Es la diferencia entre seguir un programa y entrenar. Un programa rígido te obliga a elegir entre fallar o mentirte; la autorregulación absorbe los días malos sin romper nada.</p>
+
+    <h4>6 · El tempo es parte de la técnica</h4>
+    <p>Una repetición tiene dos mitades y no valen lo mismo. La <strong>fase excéntrica</strong> —cuando el peso baja y el músculo se alarga bajo tensión— genera al menos tanto estímulo de crecimiento como la subida, y es la que casi todo el mundo desperdicia dejando caer el peso. La <strong>fase concéntrica</strong> es donde produces fuerza y donde debes ser decidido.</p>
+    <p>El tempo por defecto de este programa es <strong>2 segundos bajando, una pausa breve abajo, y subida controlada pero firme</strong>. Es el ritmo al que van todas las animaciones de las fichas: la barra de debajo de cada figura te lo marca. Bajar despacio tiene además un efecto que te interesa especialmente — te obliga a usar un peso que puedes controlar, que es la mejor protección que existe contra los tirones y las tendinopatías.</p>
+
+    <h4>7 · El feedback se retira, no se acumula</h4>
+    <p>Al principio necesitas mucha corrección. Después, cada vez menos: si dependes de que alguien te diga cómo se hace cada repetición, no has aprendido el movimiento, has aprendido a obedecer. Este manual está escrito para que en dos meses no lo necesites abierto durante la sesión.</p>
+
+    <h4>8 · Lo que no se registra no progresa</h4>
+    <p>Tienes que apuntar peso, series, repeticiones y RIR de cada ejercicio. No por burocracia: porque la sobrecarga progresiva es literalmente imposible de aplicar si no sabes qué hiciste la semana pasada. Es el hábito que más correlaciona con progresar, y cuesta noventa segundos por sesión.</p>
+
+    <h4>9 · Nunca dos seguidas</h4>
+    <p>La regla de adherencia más útil que conozco: <strong>puedes saltarte una sesión; no puedes saltarte dos seguidas.</strong> Una sesión perdida es ruido estadístico. Dos son el principio de un patrón, y tu historial dice que los patrones se te consolidan rápido. Si el problema es tiempo o ganas, existe la sesión mínima del capítulo 4 — quince minutos que cuentan como sesión.</p>
+
+    <div class="card">
+      <span class="tag">Cómo adapto esto a ti en concreto</span>
+      <p>Tu perfil tiene dos particularidades que cambian mi forma de entrenarte:</p>
+      <ul class="tight">
+        <li><strong>Historial de abandono por dolor.</strong> Empiezo con rangos de movimiento conservadores y los amplío antes de subir carga. Primero te ganas el rango, después el peso. Y la primera progresión de cada ejercicio siempre es en repeticiones, nunca en kilos.</li>
+        <li><strong>Desequilibrio entre torso y extremidades.</strong> El orden de los ejercicios dentro de cada sesión no es arbitrario: espalda y hombros van pronto, cuando estás fresco, porque son tu prioridad. Los brazos van al final porque ya reciben trabajo indirecto.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="m2">
+  <h3 class="ch" data-n="02">Antes de tocar una mancuerna</h3>
+  <p class="deck">Cuatro tests caseros · quince minutos · una sola vez</p>
+  <div class="prose">
+    <p>Estos cuatro tests te dicen si hay algo que corregir antes de cargar peso encima. No necesitas material más allá de un palo de escoba y un cronómetro. Hazlos hoy y anota el resultado.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.1 · Screening de movimiento</caption>
+        <thead><tr><th>Test</th><th>Cómo</th><th>Apto si…</th><th>Si no…</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sentadilla profunda</td><td>Pies a la anchura de los hombros, brazos estirados arriba, baja todo lo que puedas</td><td>Bajas hasta que el muslo pasa la paralela con los talones en el suelo y sin que la espalda baja se redondee</td><td>Sentadilla goblet con rango parcial + trabajo de movilidad de tobillo. La mancuerna delante <em>ayuda</em> a bajar más</td></tr>
+          <tr><td class="k">Bisagra de cadera</td><td>Palo de escoba vertical en la espalda tocando nuca, dorsal y sacro. Lleva la cadera atrás</td><td>Los tres puntos siguen tocando el palo con el torso a 45°</td><td>Practica la bisagra sin peso contra una pared antes del peso muerto rumano</td></tr>
+          <tr><td class="k">Flexión de hombro</td><td>Tumbado boca arriba, rodillas dobladas, lumbar pegada al suelo. Sube los brazos por encima de la cabeza</td><td>Las manos tocan el suelo sin que la lumbar se despegue</td><td>Press militar con rango parcial. Nada de press por detrás de la nuca</td></tr>
+          <tr><td class="k">Plancha 60 s</td><td>Plancha frontal con antebrazos, cuerpo en línea</td><td>Aguantas 60 s sin que la cadera caiga</td><td>Empieza con series de 20–30 s. Es tu punto de partida realista</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Calentamiento estándar · 6 minutos</h4>
+    <p>Igual antes de cada sesión. No es opcional y no es estiramiento estático: estirar en frío antes de entrenar reduce la producción de fuerza y no previene lesiones.</p>
+    <ol>
+      <li><strong>Bici estática, 4 minutos.</strong> Empieza suave y sube hasta notar el cuerpo caliente y la respiración algo acelerada.</li>
+      <li><strong>Movilidad dinámica, 90 segundos.</strong> 10 círculos de brazos hacia atrás · 10 sentadillas sin peso · 10 bisagras de cadera sin peso · 10 rotaciones de tronco.</li>
+      <li><strong>Series de aproximación.</strong> En el primer ejercicio de empuje y en el primero de pierna: una serie de 8 repeticiones con la mitad del peso de trabajo. Esto es lo que más protege articulaciones y tendones, y lo que más gente se salta.</li>
+    </ol>
+
+    <h4>Cómo respirar y cómo sostener el tronco</h4>
+    <p>En todos los ejercicios con carga la regla es la misma: <strong>inspira antes de bajar el peso, aguanta el aire durante la parte difícil, y suelta al terminar la repetición.</strong> Ese aire retenido presuriza el abdomen y convierte tu tronco en un cilindro rígido que protege la columna. Se llama maniobra de Valsalva y es lo que hace que un peso muerto sea seguro.</p>
+    <p>El cue que quiero que uses: <strong>«imagina que alguien te va a dar un puñetazo en la barriga»</strong>. Eso es la tensión abdominal correcta — no meter tripa, no sacar pecho: tensar en 360°.</p>
+    <p><em>Excepción:</em> si notas mareo o ves puntos, estás aguantando demasiado tiempo. En series largas y ligeras, respira normal.</p>
+  </div>
+</section>
+
+<section id="m3">
+  <h3 class="ch" data-n="03">Cómo elegir el peso</h3>
+  <p class="deck">La pregunta que más vas a hacerte las primeras semanas</p>
+  <div class="prose">
+    <p>Con mancuernas de discos tienes control fino sobre la carga, lo cual es una ventaja enorme. El problema es saber dónde empezar. Estos son puntos de partida razonables para un hombre de 81,5 kg sin entrenamiento reciente. <strong>Trátalos como una primera apuesta, no como una prescripción.</strong></p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 3.1 · Cargas de partida orientativas · semana 1</caption>
+        <thead><tr><th>Ejercicio</th><th class="n">Peso inicial</th><th>Referencia</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sentadilla goblet</td><td class="n">10–14 kg</td><td>Una sola mancuerna, vertical contra el pecho</td></tr>
+          <tr><td class="k">Press con mancuernas</td><td class="n">8–12 kg</td><td>Cada mano</td></tr>
+          <tr><td class="k">Remo a una mano</td><td class="n">10–14 kg</td><td>Es de los ejercicios donde más peso podrás mover</td></tr>
+          <tr><td class="k">Peso muerto rumano</td><td class="n">10–14 kg</td><td>Cada mano. Limitado por la técnica, no por la fuerza</td></tr>
+          <tr><td class="k">Press militar sentado</td><td class="n">6–10 kg</td><td>Cada mano. Siempre menos de lo que crees</td></tr>
+          <tr><td class="k">Pullover</td><td class="n">8–12 kg</td><td>Una sola mancuerna, ambas manos</td></tr>
+          <tr><td class="k">Hip thrust</td><td class="n">12–20 kg</td><td>El glúteo aguanta mucho más de lo que imaginas</td></tr>
+          <tr><td class="k">Sentadilla búlgara</td><td class="n">0 kg</td><td>Peso corporal las 2 primeras semanas. El equilibrio es el limitante</td></tr>
+          <tr><td class="k">Curl de bíceps</td><td class="n">6–10 kg</td><td>Cada mano</td></tr>
+          <tr><td class="k">Elevaciones laterales</td><td class="n">3–5 kg</td><td>Cada mano. Si puedes con 10 kg, lo estás haciendo mal</td></tr>
+          <tr><td class="k">Pájaro</td><td class="n">2–4 kg</td><td>Cada mano. Ridículamente ligero, a propósito</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card good">
+      <span class="tag">El test de la primera serie</span>
+      <p>Haz la primera serie con el peso que has elegido y para en la repetición que marque la hoja. Entonces pregúntate: <strong>¿cuántas más habría podido hacer?</strong></p>
+      <ul class="tight">
+        <li><strong>0–1 más</strong> → demasiado peso. Baja un 10–15 % para la siguiente serie.</li>
+        <li><strong>2–3 más</strong> → exacto. Ese es tu peso de trabajo.</li>
+        <li><strong>4–5 más</strong> → algo ligero. Termina la sesión así y sube la próxima vez.</li>
+        <li><strong>6 o más</strong> → sube ya, en la segunda serie.</li>
+      </ul>
+      <p>Durante las dos primeras semanas quiero que te quedes deliberadamente en la franja de 4–5. Vas a sentir que no estás haciendo nada. Es exactamente lo que busco: es el precio de llegar a la semana ocho.</p>
+    </div>
+  </div>
+</section>
+
+<section id="m4">
+  <h3 class="ch" data-n="04">La sesión mínima viable</h3>
+  <p class="deck">Para el día que no vas a entrenar</p>
+  <div class="prose">
+    <p>Este capítulo es corto y probablemente el más importante del manual.</p>
+    <p>Habrá días en los que no tengas tiempo, ni ganas, ni energía. La opción por defecto en esos días es no entrenar, y ahí es donde empiezan las rachas de tres semanas sin hacer nada. La alternativa que te propongo es una sesión de <strong>quince minutos que cuenta como sesión completa</strong> a efectos de tu registro y de tu identidad como alguien que entrena:</p>
+    <ol>
+      <li>2 min de bici</li>
+      <li>2 series de sentadilla goblet</li>
+      <li>2 series de remo a una mano</li>
+      <li>2 series de press con mancuernas</li>
+      <li>1 plancha</li>
+    </ol>
+    <p>Eso es todo. Sin calentamiento largo, sin accesorios, sin llegar al fallo. Anótala en el registro como sesión hecha, porque lo es: mantiene el estímulo, mantiene el hábito y —lo que más importa— <strong>evita el segundo día perdido</strong>.</p>
+    <div class="card warn">
+      <span class="tag">Regla</span>
+      <p>Cuando dudes entre <em>sesión completa</em> y <em>nada</em>, la respuesta correcta casi nunca es «nada». Es la sesión mínima. Un entrenamiento del 40 % hecho vale infinitamente más que uno del 100 % imaginado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTE II ============ -->
+<div class="part-head">
+  <span class="lbl">Parte II</span>
+  <h2>Biblioteca de ejercicios</h2>
+</div>
+
+<div class="prose">
+  <p class="lead">Catorce fichas. Cada una tiene la animación del movimiento, el montaje, la ejecución paso a paso, los cues que quiero que uses, los errores que voy a estar vigilando y por qué ese ejercicio concreto te importa a ti.</p>
+  <p>El orden es por patrón de movimiento, no por sesión. La etiqueta de la derecha te dice en qué sesión aparece.</p>
+</div>
+
+<nav class="toc">
+  <h5>Índice de ejercicios</h5>
+  <ol>
+    <li><a href="#e1" data-n="01">Sentadilla goblet</a></li>
+    <li><a href="#e2" data-n="02">Peso muerto rumano</a></li>
+    <li><a href="#e3" data-n="03">Sentadilla búlgara</a></li>
+    <li><a href="#e4" data-n="04">Hip thrust</a></li>
+    <li><a href="#e5" data-n="05">Remo a una mano</a></li>
+    <li><a href="#e6" data-n="06">Pullover con mancuerna</a></li>
+    <li><a href="#e7" data-n="07">Pájaro</a></li>
+    <li><a href="#e8" data-n="08">Press con mancuernas</a></li>
+    <li><a href="#e9" data-n="09">Flexiones</a></li>
+    <li><a href="#e10" data-n="10">Press militar sentado</a></li>
+    <li><a href="#e11" data-n="11">Elevaciones laterales</a></li>
+    <li><a href="#e12" data-n="12">Curl de bíceps</a></li>
+    <li><a href="#e13" data-n="13">Plancha frontal</a></li>
+    <li><a href="#e14" data-n="14">Dead bug</a></li>
+  </ol>
+</nav>
+
+<!-- ===== E1 GOBLET ===== -->
+<article class="ex" id="e1">
+  <div class="ex-head">
+    <span class="ex-n">01</span>
+    <div><h4>Sentadilla goblet</h4><p class="ex-meta">Dominante de rodilla · Cuádriceps · Glúteo · Core</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 200 175" role="img" aria-label="Figura de perfil bajando a sentadilla con una mancuerna sujeta contra el pecho">
+        <line class="fig-ground" x1="20" y1="160" x2="180" y2="160"/>
+        <circle class="fig-head" r="9">
+          <animate attributeName="cx" values="100;94;100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="40;68;40" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </circle>
+        <polyline class="fig-body" points="100,52 100,96">
+          <animate attributeName="points" values="100,52 100,96; 92,80 86,128; 100,52 100,96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="100,96 100,128 100,157 114,160">
+          <animate attributeName="points" values="100,96 100,128 100,157 114,160; 86,128 110,132 100,157 114,160; 100,96 100,128 100,157 114,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="100,58 90,78 104,70">
+          <animate attributeName="points" values="100,58 90,78 104,70; 92,86 82,106 96,98; 100,58 90,78 104,70" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-4" y="-11" width="8" height="22" rx="2"/><rect x="-9" y="-13" width="18" height="5" rx="2"/><rect x="-9" y="8" width="18" height="5" rx="2"/>
+          <animateTransform attributeName="transform" type="translate" values="110,68; 102,96; 110,68" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+      </svg>
+      <figcaption>El peso delante actúa de contrapeso:<br>te deja bajar más recto</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Pies a la anchura de los hombros, puntas ligeramente hacia fuera (15–30°). Sujeta una mancuerna en vertical contra el esternón, como una copa, con las dos manos bajo el disco superior. Codos dentro, pegados al cuerpo.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Inspira y tensa el abdomen.</li>
+        <li>Baja llevando la cadera hacia atrás y abajo a la vez, dejando que las rodillas viajen hacia delante sobre los pies.</li>
+        <li>Baja hasta que el muslo esté paralelo al suelo, o hasta donde puedas <em>sin que la pelvis se meta por debajo</em> (verás la espalda baja redondearse: ahí está tu límite de hoy).</li>
+        <li>Sube empujando el suelo, soltando el aire en la segunda mitad.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Separa el suelo con los pies» — para subir.</div>
+      <div class="cue">«Los codos por dentro de las rodillas» — marca la profundidad correcta.</div>
+      <div class="cue">«Rompe el suelo con los pies hacia fuera» — activa el glúteo y evita que la rodilla se meta hacia dentro.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Talones que se levantan</dt><dd>Falta de movilidad de tobillo. Solución inmediata: pon los talones sobre un disco de 2 cm.</dd>
+        <dt>Rodillas hacia dentro</dt><dd>Aplica el cue de romper el suelo. Si persiste, baja el peso.</dd>
+        <dt>Espalda baja redondeada abajo</dt><dd>Has bajado más de lo que permite tu cadera. Reduce el rango.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>De 8 a 12 repeticiones con el mismo peso; cuando completes 3 series de 12, sube 2 kg. Cuando llegues a 24–26 kg la mancuerna se hace incómoda contra el pecho: cambia a sentadilla con dos mancuernas a los lados.</p>
+      <div class="forme"><span class="t">Para ti</span><strong>El goblet es la mejor sentadilla para empezar</strong> porque el contrapeso delantero te permite mantener el torso vertical sin exigirle nada a tu lumbar, y porque tú mismo notas cuándo la técnica se rompe: la mancuerna te tira hacia delante. Es la variante que menos probabilidad tiene de darte problemas de rodilla o espalda.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E2 RDL ===== -->
+<article class="ex" id="e2">
+  <div class="ex-head">
+    <span class="ex-n">02</span>
+    <div><h4>Peso muerto rumano</h4><p class="ex-meta">Dominante de cadera · Isquiotibiales · Glúteo · Espalda baja</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 200 175" role="img" aria-label="Figura de perfil realizando una bisagra de cadera con mancuernas, bajando el torso mientras la cadera va hacia atrás">
+        <line class="fig-ground" x1="20" y1="160" x2="180" y2="160"/>
+        <circle class="fig-head" r="9">
+          <animate attributeName="cx" values="96;138;96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="38;70;38" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </circle>
+        <polyline class="fig-body" points="96,50 96,94">
+          <animate attributeName="points" values="96,50 96,94; 128,76 84,94; 96,50 96,94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="96,94 96,126 96,157 110,160">
+          <animate attributeName="points" values="96,94 96,126 96,157 110,160; 84,94 92,126 96,157 110,160; 96,94 96,126 96,157 110,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="96,56 96,78 96,100">
+          <animate attributeName="points" values="96,56 96,78 96,100; 128,80 128,102 128,124; 96,56 96,78 96,100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="96,106; 128,130; 96,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M108,92 Q124,92 130,80"/>
+        <text class="fig-note" x="112" y="105">cadera atrás</text>
+      </svg>
+      <figcaption>La cadera va atrás, no el torso abajo.<br>Las rodillas casi no se mueven</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>De pie, pies a la anchura de las caderas, una mancuerna en cada mano delante de los muslos, palmas hacia el cuerpo. Rodillas con una flexión mínima y <strong>fija</strong>: no cambia durante todo el ejercicio.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Inspira, tensa el abdomen y saca ligeramente el pecho.</li>
+        <li>Lleva la cadera hacia atrás como si fueras a cerrar un cajón con el culo. El torso baja como consecuencia, no como intención.</li>
+        <li>Las mancuernas bajan rozando las piernas. Baja hasta notar un estiramiento fuerte detrás del muslo, típicamente a media espinilla.</li>
+        <li>Vuelve empujando la cadera hacia delante. Termina de pie, sin echar los hombros atrás.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Cierra un cajón con la cadera» — el movimiento es horizontal, no vertical.</div>
+      <div class="cue">«Arrastra las mancuernas por las piernas» — mantiene la barra cerca y protege la lumbar.</div>
+      <div class="cue">«Alarga los isquios hasta que tiren» — el estiramiento marca el final del recorrido, no una altura fija.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Convertirlo en sentadilla</dt><dd>Si las rodillas se doblan al bajar, has dejado de hacer una bisagra. Fija la rodilla.</dd>
+        <dt>Espalda redondeada</dt><dd>El error grave. Para la serie inmediatamente y baja el peso. Repasa el test del palo de escoba.</dd>
+        <dt>Bajar demasiado</dt><dd>El suelo no es el objetivo. El estiramiento del isquio es el objetivo.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>10 a 12 repeticiones. Es el ejercicio donde más despacio quiero que subas: +2 kg cada dos semanas como máximo, y solo si las últimas repeticiones siguen limpias.</p>
+      <div class="forme"><span class="t">Para ti</span>Este ejercicio trabaja toda la cadena posterior — isquios, glúteo y erectores lumbares — que es justo la musculatura que sostiene la pelvis en su sitio. <strong>Es tu mejor herramienta contra la anteversión pélvica</strong> que se intuye en las fotos, junto con el trabajo de core. Y es el ejercicio con más potencial de molestar la espalda si lo haces mal, así que grábate la primera vez.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E3 BULGARA ===== -->
+<article class="ex" id="e3">
+  <div class="ex-head">
+    <span class="ex-n">03</span>
+    <div><h4>Sentadilla búlgara</h4><p class="ex-meta">Dominante de rodilla unilateral · Cuádriceps · Glúteo · Estabilidad</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 210 175" role="img" aria-label="Figura de perfil con el pie trasero apoyado en una silla, bajando en sentadilla a una pierna">
+        <line class="fig-ground" x1="15" y1="160" x2="195" y2="160"/>
+        <g class="fig-gear"><rect x="146" y="118" width="52" height="7" rx="2"/><line x1="152" y1="125" x2="152" y2="160"/><line x1="192" y1="125" x2="192" y2="160"/></g>
+        <circle class="fig-head" r="9">
+          <animate attributeName="cx" values="94;90;94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="38;60;38" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </circle>
+        <polyline class="fig-body" points="94,50 94,94">
+          <animate attributeName="points" values="94,50 94,94; 90,72 86,116; 94,50 94,94" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="94,94 94,126 94,157 108,160">
+          <animate attributeName="points" values="94,94 94,126 94,157 108,160; 86,116 100,136 94,157 108,160; 94,94 94,126 94,157 108,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="94,94 126,112 150,116" opacity=".6">
+          <animate attributeName="points" values="94,94 126,112 150,116; 86,116 122,140 150,118; 94,94 126,112 150,116" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="94,56 92,78 92,100">
+          <animate attributeName="points" values="94,56 92,78 92,100; 90,78 88,100 88,122; 94,56 92,78 92,100" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="92,106; 88,128; 92,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+      </svg>
+      <figcaption>El pie de atrás solo estabiliza.<br>El trabajo lo hace la pierna de delante</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>De espaldas a la silla, apoya el empeine del pie trasero en el asiento. Da un paso adelante con el otro pie hasta que, al bajar, la rodilla delantera quede sobre el tobillo y no muy por delante. La distancia correcta la encuentras probando: si notas tirón en el cuádriceps de la pierna trasera, estás demasiado cerca.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Torso ligeramente inclinado hacia delante, abdomen tenso.</li>
+        <li>Baja en vertical hasta que la rodilla trasera casi toque el suelo.</li>
+        <li>Sube empujando con el talón del pie delantero.</li>
+        <li>Completa todas las repeticiones de un lado antes de cambiar.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Baja como un ascensor» — el movimiento es vertical, no hacia delante.</div>
+      <div class="cue">«Empuja el suelo con el talón de delante» — evita que la carga se vaya a la pierna trasera.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Empujar con el pie de atrás</dt><dd>Es apoyo, no motor. Si notas que trabaja, adelanta más el pie delantero.</dd>
+        <dt>Perder el equilibrio</dt><dd>Normal las primeras sesiones. Apóyate con una mano en la pared y usa mancuernas solo cuando ya no la necesites.</dd>
+        <dt>Silla demasiado alta</dt><dd>Si la cadera se descoloca, usa un apoyo más bajo. La altura ideal ronda los 30–40 cm.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>Semanas 1–2 sin peso, 10 por pierna. Después mancuernas a los lados, 8–12 por pierna. Es un ejercicio muy exigente: espera progresar más despacio que en la sentadilla bilateral.</p>
+      <div class="forme"><span class="t">Para ti</span>Trabaja una pierna cada vez, lo que iguala descompensaciones entre lados y <strong>carga menos la columna que una sentadilla pesada</strong> para el mismo estímulo en la pierna. Con tu historial de molestias, es una forma inteligente de entrenar piernas duro sin acumular carga axial.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E4 HIP THRUST ===== -->
+<article class="ex" id="e4">
+  <div class="ex-head">
+    <span class="ex-n">04</span>
+    <div><h4>Hip thrust</h4><p class="ex-meta">Dominante de cadera · Glúteo mayor · Isquiotibiales</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 210 175" role="img" aria-label="Figura con las escápulas apoyadas en un banco, elevando la cadera con una mancuerna encima">
+        <line class="fig-ground" x1="15" y1="160" x2="195" y2="160"/>
+        <g class="fig-gear"><rect x="30" y="106" width="66" height="8" rx="2"/><line x1="36" y1="114" x2="36" y2="160"/><line x1="90" y1="114" x2="90" y2="160"/></g>
+        <circle class="fig-head" r="9">
+          <animate attributeName="cx" values="46;44;46" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="98;92;98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </circle>
+        <polyline class="fig-body" points="62,104 118,140">
+          <animate attributeName="points" values="62,104 118,140; 60,100 116,112; 62,104 118,140" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="118,140 152,128 152,157 166,160">
+          <animate attributeName="points" values="118,140 152,128 152,157 166,160; 116,112 152,128 152,157 166,160; 118,140 152,128 152,157 166,160" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-16" y="-4" width="32" height="8" rx="2"/><rect x="-20" y="-9" width="6" height="18" rx="2"/><rect x="14" y="-9" width="6" height="18" rx="2"/>
+          <animateTransform attributeName="transform" type="translate" values="118,130; 116,102; 118,130" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M132,136 L132,112"/>
+        <text class="fig-note" x="136" y="126">sube</text>
+      </svg>
+      <figcaption>Arriba, hombro–cadera–rodilla en línea recta.<br>Ni un grado más</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Siéntate en el suelo con la espalda apoyada en el banco, justo por debajo de las escápulas. Pies planos en el suelo, separados a la anchura de las caderas, colocados de forma que <strong>al llegar arriba la espinilla quede vertical</strong>. Mancuerna en horizontal sobre el pliegue de la cadera (usa una toalla doblada si molesta).</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Mete la barbilla hacia el pecho y mantenla ahí todo el ejercicio.</li>
+        <li>Empuja el suelo con los talones y sube la cadera.</li>
+        <li>Para cuando el torso y el muslo formen una línea recta. <strong>No sigas subiendo:</strong> el rango extra sale de arquear la lumbar, no del glúteo.</li>
+        <li>Aprieta arriba un segundo completo y baja controlando.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Haz una mesa con el cuerpo» — describe la posición final exacta.</div>
+      <div class="cue">«Mira tus rodillas todo el rato» — mantiene la barbilla metida y evita hiperextender el cuello.</div>
+      <div class="cue">«Empuja con los talones» — evita que el cuádriceps robe el trabajo.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Arquear la lumbar arriba</dt><dd>El más común y el que causa molestias. Si arriba notas la espalda baja en vez del glúteo, has subido de más.</dd>
+        <dt>Barbilla al techo</dt><dd>Mirar arriba desalinea toda la columna. Ojos a las rodillas.</dd>
+        <dt>Pies demasiado cerca</dt><dd>Convierte el ejercicio en trabajo de cuádriceps. Aléjalos hasta que la espinilla quede vertical arriba.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>12 a 15 repeticiones con pausa de un segundo arriba. Es el ejercicio donde más rápido vas a poder subir peso: el glúteo tolera mucha carga. Cuando una sola mancuerna se te quede corta, usa dos.</p>
+      <div class="forme"><span class="t">Para ti</span>Un glúteo fuerte tira de la pelvis hacia atrás, hacia una posición neutra. <strong>Junto con el peso muerto rumano y el trabajo de core, es la pieza que corrige la anteversión pélvica</strong> — la que hace que el abdomen sobresalga más de lo que le corresponde a tu porcentaje de grasa. Es trabajo estético además de funcional.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E5 REMO ===== -->
+<article class="ex" id="e5">
+  <div class="ex-head">
+    <span class="ex-n">05</span>
+    <div><h4>Remo a una mano con apoyo</h4><p class="ex-meta">Tirón horizontal · Dorsal · Romboides · Trapecio medio · Bíceps</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura apoyada con rodilla y mano en un banco, tirando de una mancuerna hacia la cadera">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <g class="fig-gear"><rect x="66" y="112" width="106" height="8" rx="2"/><line x1="74" y1="120" x2="74" y2="160"/><line x1="164" y1="120" x2="164" y2="160"/></g>
+        <circle class="fig-head" cx="186" cy="82" r="9"/>
+        <polyline class="fig-body" points="174,90 100,98"/>
+        <polyline class="fig-limb" points="174,92 172,102 170,112"/>
+        <polyline class="fig-limb" points="100,98 100,112"/>
+        <polyline class="fig-limb" points="100,98 80,128 66,157 52,160"/>
+        <polyline class="fig-limb" points="172,94 178,118 180,140">
+          <animate attributeName="points" values="172,94 178,118 180,140; 156,90 172,108 176,116; 172,94 178,118 180,140" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="180,146; 176,122; 180,146" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M192,142 L192,118"/>
+        <text class="fig-note" x="150" y="76">codo atrás</text>
+      </svg>
+      <figcaption>El codo va hacia la cadera,<br>por detrás del torso</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Apoya la rodilla derecha y la mano derecha en el banco. El pie izquierdo en el suelo, algo separado. La espalda debe quedar <strong>plana y casi paralela al suelo</strong>, no inclinada 45°. Mancuerna en la mano izquierda, colgando.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Deja que el brazo cuelgue del todo y que el hombro se estire hacia el suelo. Ese estiramiento es parte del ejercicio.</li>
+        <li>Tira llevando el <strong>codo hacia la cadera</strong>, no la mano hacia el pecho. El codo debe pasar por detrás de la línea del torso.</li>
+        <li>Aprieta un instante arriba, con la escápula juntándose hacia la columna.</li>
+        <li>Baja controlando 2 segundos hasta el estiramiento completo.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Arranca el cortacésped» — describe la trayectoria del codo hacia atrás y arriba.</div>
+      <div class="cue">«Guarda la mancuerna en el bolsillo trasero» — dirige el codo a la cadera, no al hombro.</div>
+      <div class="cue">«La mano es solo un gancho» — evita que tires con el bíceps.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Rotar el torso</dt><dd>Si el hombro sube y gira al tirar, estás usando peso de más. La cadera y los hombros permanecen cuadrados con el suelo.</dd>
+        <dt>Codo abierto hacia fuera</dt><dd>Convierte el ejercicio en trabajo de deltoides posterior. Codo cerca del cuerpo.</dd>
+        <dt>No estirar abajo</dt><dd>Media repetición es medio resultado. Deja que el peso te estire abajo del todo.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>10 a 12 por lado. Es de los ejercicios donde más rápido vas a ganar fuerza. Bajada controlada de 2 segundos siempre: la fase excéntrica es donde está gran parte del estímulo.</p>
+      <div class="forme"><span class="t">Para ti</span><strong>Este es tu ejercicio número uno.</strong> El dorsal y el trapecio medio son los músculos que van a dar grosor y anchura a tu espalda, crear el contraste con la cintura y —efecto secundario nada menor— tirar de los hombros hacia atrás corrigiendo la postura adelantada que se ve en las fotos. Si un día solo pudieras hacer un ejercicio, sería este.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E6 PULLOVER ===== -->
+<article class="ex" id="e6">
+  <div class="ex-head">
+    <span class="ex-n">06</span>
+    <div><h4>Pullover con mancuerna</h4><p class="ex-meta">Tirón vertical · Dorsal (anchura) · Serrato · Pectoral</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura tumbada en un banco llevando una mancuerna desde encima del pecho hasta detrás de la cabeza">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <g class="fig-gear"><rect x="60" y="112" width="120" height="8" rx="2"/><line x1="68" y1="120" x2="68" y2="160"/><line x1="172" y1="120" x2="172" y2="160"/></g>
+        <circle class="fig-head" cx="72" cy="102" r="9"/>
+        <polyline class="fig-body" points="86,108 144,108"/>
+        <polyline class="fig-limb" points="144,108 168,120 168,157 180,160"/>
+        <polyline class="fig-limb" points="86,108 88,86 92,64">
+          <animate attributeName="points" values="86,108 88,86 92,64; 86,108 70,90 50,80; 86,108 88,86 92,64" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-4" y="-10" width="8" height="20" rx="2"/><rect x="-9" y="-13" width="18" height="5" rx="2"/><rect x="-9" y="8" width="18" height="5" rx="2"/>
+          <animateTransform attributeName="transform" type="translate" values="93,58; 45,78; 93,58" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M93,46 Q66,50 44,66"/>
+      </svg>
+      <figcaption>Arco amplio por detrás de la cabeza.<br>Codos casi fijos</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Túmbate a lo largo del banco, pies firmes en el suelo. Sujeta una mancuerna en vertical con las dos manos entrelazadas bajo el disco superior, brazos extendidos sobre el pecho con los codos ligeramente flexionados.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Inspira y tensa el abdomen — importante: aquí es fácil arquear la lumbar.</li>
+        <li>Baja la mancuerna en arco por detrás de la cabeza, manteniendo el ángulo del codo constante.</li>
+        <li>Baja hasta notar un estiramiento claro en el costado y la axila. No hace falta tocar nada.</li>
+        <li>Vuelve por el mismo arco, tirando con la espalda, hasta que la mancuerna quede sobre el pecho.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Dibuja un arco grande con la mancuerna» — mantiene el radio y evita que se convierta en un press.</div>
+      <div class="cue">«Costillas hacia abajo» — impide que la lumbar se despegue del banco.</div>
+      <div class="cue">«Tira con las axilas» — dirige la fuerza al dorsal y no a los tríceps.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Lumbar arqueada</dt><dd>El fallo más frecuente. Si la espalda baja se despega del banco, reduce el rango o el peso.</dd>
+        <dt>Doblar y estirar los codos</dt><dd>Eso es un extensión de tríceps. El codo mantiene su ángulo.</dd>
+        <dt>Peso excesivo</dt><dd>Es un ejercicio de estiramiento bajo tensión, no de fuerza bruta. Ligero y controlado.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>12 a 15 repeticiones, tempo lento, 3 segundos en la bajada. Sube peso muy despacio: el hombro en flexión completa es una posición vulnerable.</p>
+      <div class="forme"><span class="t">Para ti</span>Es tu <strong>sustituto del tirón vertical mientras no tengas barra de dominadas</strong>. Trabaja el dorsal en su función de llevar el brazo desde encima de la cabeza hasta el costado, que es lo que le da anchura. No es tan bueno como una dominada — por eso insisto tanto en esa barra de 25 € — pero es lo mejor disponible con tu material y funciona.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E7 PAJARO ===== -->
+<article class="ex" id="e7">
+  <div class="ex-head">
+    <span class="ex-n">07</span>
+    <div><h4>Pájaro · elevación posterior</h4><p class="ex-meta">Tirón · Deltoides posterior · Trapecio medio · Romboides</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura inclinada hacia delante elevando los brazos hacia atrás y arriba con mancuernas ligeras">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <circle class="fig-head" cx="164" cy="72" r="9"/>
+        <polyline class="fig-body" points="152,80 96,98"/>
+        <polyline class="fig-limb" points="96,98 92,128 92,157 78,160"/>
+        <polyline class="fig-limb" points="152,82 152,106 152,130">
+          <animate attributeName="points" values="152,82 152,106 152,130; 152,82 138,96 118,82; 152,82 152,106 152,130" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="152,136; 114,80; 152,136" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M162,132 Q150,102 126,84"/>
+        <text class="fig-note" x="98" y="66">escápulas juntas</text>
+      </svg>
+      <figcaption>Brazos casi rectos, subiendo hacia<br>fuera y atrás. Peso muy ligero</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>De pie con las rodillas algo flexionadas, inclina el torso hacia delante hasta casi la horizontal manteniendo la espalda plana (la misma posición de la bisagra del ejercicio 02). Mancuernas colgando bajo los hombros, palmas enfrentadas, codos con una flexión mínima y fija.</p>
+      <p><em>Alternativa más cómoda:</em> tumbado boca abajo sobre el banco inclinado. Elimina la fatiga lumbar y te deja concentrarte en la espalda alta.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Sube los brazos hacia fuera y ligeramente atrás, describiendo una T con el cuerpo.</li>
+        <li>Para cuando las manos lleguen a la altura de los hombros.</li>
+        <li>Aprieta un segundo juntando las escápulas.</li>
+        <li>Baja lento, 2–3 segundos.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Abre las alas» — describe el movimiento completo mejor que cualquier instrucción anatómica.</div>
+      <div class="cue">«Sujeta un lápiz entre los omóplatos» — activa el trapecio medio, que es la mitad del objetivo.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Demasiado peso</dt><dd>Se nota porque el movimiento se convierte en un remo y los codos se doblan. Con 3 kg vas bien; con 12 kg no estás haciendo este ejercicio.</dd>
+        <dt>Encoger los hombros</dt><dd>Si el trapecio superior sube hacia las orejas, has perdido el objetivo. Hombros lejos de las orejas.</dd>
+        <dt>Impulso con el torso</dt><dd>El torso no se mueve. Ni un grado.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>15 repeticiones, siempre con control absoluto. Sube de kilo en kilo, no de dos en dos. Aquí la calidad importa más que en ningún otro ejercicio del programa.</p>
+      <div class="forme"><span class="t">Para ti</span>Es trabajo <strong>directamente postural</strong>. El deltoides posterior y el trapecio medio son los antagonistas del pectoral y del deltoides anterior; cuando están débiles, los hombros se van hacia delante — exactamente lo que se aprecia en tu segunda foto. Dos series de esto por sesión valen más para tu aspecto que cualquier cantidad de trabajo de pecho.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E8 PRESS ===== -->
+<article class="ex" id="e8">
+  <div class="ex-head">
+    <span class="ex-n">08</span>
+    <div><h4>Press con mancuernas</h4><p class="ex-meta">Empuje horizontal · Pectoral · Tríceps · Deltoides anterior</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura tumbada en un banco empujando una mancuerna desde el pecho hacia arriba">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <g class="fig-gear"><rect x="60" y="112" width="120" height="8" rx="2"/><line x1="68" y1="120" x2="68" y2="160"/><line x1="172" y1="120" x2="172" y2="160"/></g>
+        <circle class="fig-head" cx="72" cy="102" r="9"/>
+        <polyline class="fig-body" points="86,108 144,108"/>
+        <polyline class="fig-limb" points="144,108 168,120 168,157 180,160"/>
+        <polyline class="fig-limb" points="86,108 88,86 92,64">
+          <animate attributeName="points" values="86,108 88,86 92,64; 72,98 94,96 96,96; 86,108 88,86 92,64" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="93,60; 99,94; 93,60" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M108,92 L108,62"/>
+      </svg>
+      <figcaption>Semanas 1–4: hazlo en el suelo.<br>El codo toca antes y el hombro va protegido</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Túmbate con una mancuerna en cada mano a la altura del pecho, palmas hacia delante o ligeramente giradas. Pies firmes en el suelo, escápulas juntas y metidas hacia abajo — como si te las guardaras en los bolsillos traseros. Esa posición de la escápula es lo que estabiliza el hombro.</p>
+      <p><strong>Semanas 1–4: hazlo tumbado en el suelo</strong> sobre la esterilla. El suelo frena el codo antes de que el hombro llegue a su rango extremo. Pasa al banco cuando lleves un mes sin molestias.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Inspira y baja las mancuernas con los <strong>codos a unos 45°</strong> del torso, nunca abiertos a 90°.</li>
+        <li>Baja hasta que los codos queden a la altura del torso o el brazo toque el suelo.</li>
+        <li>Empuja hacia arriba y ligeramente hacia dentro, sin llegar a chocar las mancuernas.</li>
+        <li>No bloquees el codo de golpe arriba.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Guarda las escápulas en los bolsillos» — la posición que protege el hombro.</div>
+      <div class="cue">«Dobla el banco por la mitad» — genera tensión en toda la espalda alta y estabiliza.</div>
+      <div class="cue">«Flechas, no cruces» — describe la posición del brazo a 45°, no a 90°.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Codos abiertos a 90°</dt><dd>La causa más común de dolor de hombro en el press. Ciérralos.</dd>
+        <dt>Hombros que se despegan</dt><dd>Si las escápulas se sueltan, el hombro pierde su base. Vuelve a colocarlas antes de cada serie.</dd>
+        <dt>Rebotar en el suelo</dt><dd>Toca y para. Sin rebote.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>8 a 12 repeticiones. Bajada de 2 segundos, subida controlada. Cuando completes 3×12 con técnica limpia, sube 2 kg por mancuerna.</p>
+      <div class="forme"><span class="t">Para ti</span>El pecho no es tu prioridad — la espalda y el hombro lo son — pero un torso equilibrado necesita empuje. Lo importante aquí es el <strong>orden de progresión: suelo primero, banco después</strong>. Tus hombros ya están algo adelantados, y esa posición reduce el espacio subacromial: el press profundo con codos abiertos es exactamente el movimiento que más probabilidades tiene de darte la molestia que te ha hecho abandonar antes.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E9 FLEXIONES ===== -->
+<article class="ex" id="e9">
+  <div class="ex-head">
+    <span class="ex-n">09</span>
+    <div><h4>Flexiones</h4><p class="ex-meta">Empuje horizontal · Pectoral · Tríceps · Core · Serrato</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura en posición de flexión bajando el cuerpo en línea recta hacia el suelo">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <circle class="fig-head" r="9">
+          <animate attributeName="cx" values="48;46;48" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+          <animate attributeName="cy" values="98;120;98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </circle>
+        <polyline class="fig-body" points="62,104 124,120">
+          <animate attributeName="points" values="62,104 124,120; 62,126 124,134; 62,104 124,120" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="124,120 154,138 180,156 192,158">
+          <animate attributeName="points" values="124,120 154,138 180,156 192,158; 124,134 154,144 180,156 192,158; 124,120 154,138 180,156 192,158" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="62,104 64,132 68,157">
+          <animate attributeName="points" values="62,104 64,132 68,157; 62,126 46,146 68,157; 62,104 64,132 68,157" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+      </svg>
+      <figcaption>El cuerpo baja entero, en bloque.<br>La cadera no se adelanta</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Manos en el suelo un poco más anchas que los hombros, a la altura del pecho — no de la cara. Cuerpo en línea recta de la cabeza a los talones. Glúteo apretado y abdomen tenso: eso es lo que impide que la cadera se hunda.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Baja en bloque, con los codos a 45° del torso.</li>
+        <li>Baja hasta que el pecho quede a un palmo del suelo o lo roce.</li>
+        <li>Empuja el suelo y sube manteniendo la línea.</li>
+        <li>Arriba, separa un poco más las escápulas — eso activa el serrato, que casi nadie trabaja.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Aparta el suelo de ti» — cambia por completo la sensación de empuje.</div>
+      <div class="cue">«Aprieta el glúteo como si te pellizcaran» — mantiene la línea sin pensar en la cadera.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Cadera hundida</dt><dd>Falta de tensión abdominal. Si no puedes mantener la línea, hazlas con las manos elevadas en el banco.</dd>
+        <dt>Cabeza adelantada</dt><dd>El cuello sigue la línea del cuerpo. Mira un punto del suelo un palmo por delante de las manos.</dd>
+        <dt>Medio rango</dt><dd>Diez completas valen más que veinte a medias.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>Si no llegas a 8, empieza con las manos apoyadas en el banco. Cuando pases de 20 en el suelo, sube los pies a la silla. Después, mochila con peso.</p>
+      <div class="forme"><span class="t">Para ti</span>Es el ejercicio que mejor te enseña a mantener el core tenso mientras haces otra cosa, que es exactamente la habilidad que necesitas para que la plancha se traduzca en una postura mejor. Y con los pies elevados el énfasis sube hacia la parte alta del pecho y el hombro, que es donde te interesa desarrollar.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E10 PRESS MILITAR ===== -->
+<article class="ex" id="e10">
+  <div class="ex-head">
+    <span class="ex-n">10</span>
+    <div><h4>Press militar sentado</h4><p class="ex-meta">Empuje vertical · Deltoides · Tríceps · Trapecio superior</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 200 175" role="img" aria-label="Figura sentada en un banco con respaldo empujando una mancuerna por encima de la cabeza">
+        <line class="fig-ground" x1="15" y1="160" x2="185" y2="160"/>
+        <g class="fig-gear"><rect x="86" y="120" width="66" height="8" rx="2"/><rect x="144" y="66" width="8" height="56" rx="2"/><line x1="94" y1="128" x2="94" y2="160"/><line x1="146" y1="128" x2="146" y2="160"/></g>
+        <circle class="fig-head" cx="126" cy="58" r="9"/>
+        <polyline class="fig-body" points="126,70 134,118"/>
+        <polyline class="fig-limb" points="134,118 106,134 106,157 92,160"/>
+        <polyline class="fig-limb" points="126,74 112,92 118,72">
+          <animate attributeName="points" values="126,74 112,92 118,72; 126,74 122,68 124,42; 126,74 112,92 118,72" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="117,68; 124,38; 117,68" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <path class="fig-path" d="M100,66 L100,40"/>
+      </svg>
+      <figcaption>La espalda no se arquea:<br>si lo hace, el peso es excesivo</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Sentado con la espalda apoyada en el respaldo, pies firmes en el suelo. Mancuernas a la altura de las orejas, codos ligeramente por delante del cuerpo —no completamente abiertos hacia los lados— y palmas hacia delante o en agarre neutro.</p>
+      <p><strong>Si el test de flexión de hombro te salió regular, empieza en agarre neutro</strong> (palmas enfrentadas): es la posición más amable para el hombro.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Inspira, tensa el abdomen y aprieta el glúteo contra el asiento.</li>
+        <li>Empuja hacia arriba y ligeramente hacia dentro, hasta que las mancuernas casi se toquen sobre la cabeza.</li>
+        <li>Baja controlando hasta que los codos queden algo por debajo de los hombros.</li>
+        <li>El torso no se mueve en ningún momento.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Aparta el techo» — foco externo puro; produce más fuerza que pensar en el hombro.</div>
+      <div class="cue">«Costillas hacia abajo» — impide el arqueo lumbar, que es el fallo típico.</div>
+      <div class="cue">«Saca la cabeza entre los brazos arriba» — completa el rango y mete el trapecio en el trabajo.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Arquear la espalda</dt><dd>Convierte el press vertical en un press inclinado y carga la lumbar. Señal inequívoca de exceso de peso.</dd>
+        <dt>Codos hacia atrás</dt><dd>Fuerza el hombro en rotación externa extrema. Codos un poco por delante.</dd>
+        <dt>Bajar demasiado</dt><dd>Si el codo baja mucho por debajo del hombro sin movilidad para ello, el hombro sufre. Para donde tu rango te permita.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>10 a 12 repeticiones. Es el ejercicio del programa donde más despacio vas a progresar en kilos, y es completamente normal: el hombro es una articulación pequeña. Subidas de 1 kg por mancuerna.</p>
+      <div class="forme"><span class="t">Para ti</span>El deltoides es, junto con el dorsal, <strong>el músculo con más impacto visual en tu caso</strong>: es literalmente lo que hace que los hombros sean más anchos que la cintura. Ahora mismo la diferencia entre ambos es mínima, y esa es la razón principal de que la silueta se vea recta. Press militar y elevaciones laterales son la pareja que lo cambia.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E11 LATERALES ===== -->
+<article class="ex" id="e11">
+  <div class="ex-head">
+    <span class="ex-n">11</span>
+    <div><h4>Elevaciones laterales</h4><p class="ex-meta">Empuje vertical · Deltoides medio</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura de frente elevando las mancuernas lateralmente hasta la altura de los hombros">
+        <line class="fig-ground" x1="15" y1="160" x2="200" y2="160"/>
+        <circle class="fig-head" cx="108" cy="36" r="9.5"/>
+        <polyline class="fig-body" points="108,48 108,102"/>
+        <polyline class="fig-limb" points="108,102 94,130 94,157"/>
+        <polyline class="fig-limb" points="108,102 122,130 122,157"/>
+        <polyline class="fig-limb" points="108,56 90,78 86,98">
+          <animate attributeName="points" values="108,56 90,78 86,98; 108,56 84,60 58,58; 108,56 90,78 86,98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="108,56 126,78 130,98">
+          <animate attributeName="points" values="108,56 126,78 130,98; 108,56 132,60 158,58; 108,56 126,78 130,98" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="85,104; 53,58; 85,104" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <g class="fig-load">
+          <rect x="-8" y="-2.5" width="16" height="5" rx="2"/><rect x="-11" y="-6" width="5" height="12" rx="1.5"/><rect x="6" y="-6" width="5" height="12" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="131,104; 163,58; 131,104" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <line class="fig-path" x1="40" y1="58" x2="176" y2="58"/>
+        <text class="fig-note" x="76" y="50">altura del hombro</text>
+      </svg>
+      <figcaption>Para a la altura del hombro.<br>Más arriba trabaja el trapecio, no el deltoides</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>De pie, mancuernas a los lados con las palmas hacia el cuerpo. Codos con una flexión ligera y constante. Torso completamente quieto: si necesitas balancearte, el peso es excesivo.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Sube los brazos hacia los lados, guiando el movimiento con el codo, no con la mano.</li>
+        <li>Para exactamente a la altura de los hombros.</li>
+        <li>Baja lento, 2–3 segundos. La bajada es donde está el estímulo en este ejercicio.</li>
+        <li>No descanses abajo: mantén algo de tensión entre repeticiones.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Sube con los codos, la mano solo va de paso» — evita que se convierta en un movimiento de muñeca.</div>
+      <div class="cue">«Vierte una jarra de agua» — una rotación mínima del meñique hacia arriba que mejora el reclutamiento del deltoides medio.</div>
+      <div class="cue">«Hombros lejos de las orejas» — impide que el trapecio se lleve el trabajo.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Subir por encima del hombro</dt><dd>A partir de ahí trabaja el trapecio superior. Para en la horizontal.</dd>
+        <dt>Impulso con las piernas</dt><dd>El indicador universal de que el peso es demasiado. Baja a 3 kg sin complejos.</dd>
+        <dt>Encogerse de hombros</dt><dd>Mismo problema. Piensa en alargar el cuello.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>12 a 15 repeticiones. Progresa <strong>en repeticiones antes que en peso</strong>, siempre. Pasar de 3 a 5 kg es un salto del 66 %: es enorme para un músculo tan pequeño. Si tienes discos de 1 kg, úsalos aquí.</p>
+      <div class="forme"><span class="t">Para ti</span>El deltoides medio es el músculo que más cambia la percepción de una silueta, porque es el que define la anchura de los hombros. En tu caso —donde hombros y cintura miden casi lo mismo— <strong>ganar dos centímetros de deltoides hace más por tu aspecto que perder dos kilos.</strong> Y es un músculo pequeño que responde rápido al trabajo con volumen y peso ligero.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E12 CURL ===== -->
+<article class="ex" id="e12">
+  <div class="ex-head">
+    <span class="ex-n">12</span>
+    <div><h4>Curl de bíceps</h4><p class="ex-meta">Aislamiento · Bíceps · Braquial</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 200 175" role="img" aria-label="Figura de perfil flexionando el codo para subir una mancuerna, con el codo fijo al costado">
+        <line class="fig-ground" x1="20" y1="160" x2="180" y2="160"/>
+        <circle class="fig-head" cx="100" cy="36" r="9"/>
+        <polyline class="fig-body" points="100,48 100,94"/>
+        <polyline class="fig-limb" points="100,94 100,126 100,157 114,160"/>
+        <polyline class="fig-limb" points="100,54 100,80 100,106">
+          <animate attributeName="points" values="100,54 100,80 100,106; 100,54 100,80 84,62; 100,54 100,80 100,106" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <g class="fig-load">
+          <rect x="-9" y="-3" width="18" height="6" rx="2"/><rect x="-12" y="-7" width="5" height="14" rx="1.5"/><rect x="7" y="-7" width="5" height="14" rx="1.5"/>
+          <animateTransform attributeName="transform" type="translate" values="100,112; 82,58; 100,112" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </g>
+        <circle cx="100" cy="80" r="5" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+        <text class="fig-note" x="110" y="84">codo fijo</text>
+      </svg>
+      <figcaption>El codo es una bisagra clavada al costado.<br>No viaja hacia delante</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>De pie o sentado, mancuernas a los lados. Codos pegados al costado, hombros atrás y abajo. Puedes hacerlo con las dos manos a la vez o alternando.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Sube la mancuerna flexionando solo el codo, girando la palma hacia arriba durante el recorrido.</li>
+        <li>Aprieta arriba sin dejar que el codo se adelante.</li>
+        <li>Baja controlando hasta la extensión casi completa.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«El codo está clavado al costado» — la clave entera del ejercicio.</div>
+      <div class="cue">«Enseña el reloj» — la supinación al subir, que recluta más bíceps.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Balanceo del torso</dt><dd>Si tienes que echar la espalda atrás, el peso sobra. Pruébalo sentado: elimina la trampa.</dd>
+        <dt>Codo que viaja adelante</dt><dd>Convierte el final del movimiento en trabajo de hombro.</dd>
+        <dt>No estirar abajo</dt><dd>El bíceps crece en el rango completo. Extiende del todo.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>10 a 12 repeticiones. Variante recomendada: <strong>curl martillo</strong> (palmas enfrentadas todo el rato), que trabaja el braquial y es más amable con el codo si notas molestias en el epicóndilo.</p>
+      <div class="forme"><span class="t">Para ti</span>Está al final de la sesión por una razón: el bíceps ya trabaja en cada remo que haces. Es un accesorio, no una prioridad. Dicho esto, es un músculo pequeño, visible y muy agradecido — y ver el brazo cambiar es un refuerzo psicológico real. <strong>Mantenlo, pero nunca lo hagas antes que la espalda.</strong></div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E13 PLANCHA ===== -->
+<article class="ex" id="e13">
+  <div class="ex-head">
+    <span class="ex-n">13</span>
+    <div><h4>Plancha frontal</h4><p class="ex-meta">Core · Antiextensión · Transverso · Recto abdominal · Glúteo</p></div>
+    <span class="pill acc">A1</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 200" role="img" aria-label="Comparación entre una plancha correcta con el cuerpo en línea y una plancha incorrecta con la cadera hundida">
+        <line class="fig-ground" x1="15" y1="76" x2="200" y2="76"/>
+        <circle class="fig-head" cx="46" cy="40" r="8"/>
+        <polyline class="fig-body" points="60,46 122,58"/>
+        <polyline class="fig-limb" points="122,58 152,66 180,74"/>
+        <polyline class="fig-limb" points="60,46 58,66 40,74"/>
+        <text class="fig-note" x="86" y="30" fill="var(--good)">correcto · línea recta</text>
+        <line x1="46" y1="34" x2="186" y2="70" stroke="var(--good)" stroke-width="1.4" stroke-dasharray="4 4" opacity=".8"/>
+
+        <line class="fig-ground" x1="15" y1="176" x2="200" y2="176"/>
+        <circle class="fig-head" cx="46" cy="140" r="8"/>
+        <polyline class="fig-body" points="60,146 122,172" stroke="var(--accent)"/>
+        <polyline class="fig-limb" points="122,172 152,172 180,174" stroke="var(--accent)"/>
+        <polyline class="fig-limb" points="60,146 58,166 40,174"/>
+        <text class="fig-note" x="86" y="130">error · cadera hundida</text>
+        <path class="fig-path" d="M124,162 L124,146"/>
+      </svg>
+      <figcaption>La diferencia entre las dos es<br>apretar el glúteo</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Antebrazos en el suelo, codos justo bajo los hombros, manos en puño o palmas planas. Pies a la anchura de las caderas. Cuerpo en línea recta de la cabeza a los talones.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li><strong>Aprieta el glúteo con fuerza.</strong> Esto es lo que mete la pelvis en posición neutra y quita la curva de la lumbar.</li>
+        <li>Lleva las costillas hacia abajo, como si quisieras acercar el esternón al ombligo.</li>
+        <li>Empuja el suelo con los antebrazos, separando ligeramente las escápulas.</li>
+        <li>Respira con normalidad. Si aguantas la respiración, no es una plancha, es una apnea.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Aprieta una moneda entre los glúteos» — el cue que arregla el 80 % de las planchas malas.</div>
+      <div class="cue">«Arrastra los codos hacia los pies» — genera tensión abdominal real en lugar de aguantar pasivamente.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Cadera hundida</dt><dd>Comprime la lumbar en vez de trabajar el abdomen. Es el error del dibujo inferior.</dd>
+        <dt>Cadera muy alta</dt><dd>Descarga el core. Debe estar incómodo.</dd>
+        <dt>Aguantar minutos</dt><dd>Una plancha de 3 minutos es un ejercicio de aburrimiento. 30–45 segundos con máxima tensión valen mucho más.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>3 series de 30–45 segundos. Cuando eso sea fácil, no alargues el tiempo: aumenta la dificultad levantando un pie del suelo, o alejando los codos hacia delante.</p>
+      <div class="forme"><span class="t">Para ti</span>La plancha bien hecha es <strong>entrenamiento antiextensión</strong>: enseña a tu core a impedir que la pelvis bascule hacia delante. Es el trabajo directo contra la anteversión que hace que tu abdomen sobresalga más de lo que le corresponde. Hecha mal —con la cadera hundida— entrena exactamente lo contrario. De ahí que sea el único ejercicio del manual donde te he dibujado también el error.</div>
+    </div>
+  </div>
+</article>
+
+<!-- ===== E14 DEAD BUG ===== -->
+<article class="ex" id="e14">
+  <div class="ex-head">
+    <span class="ex-n">14</span>
+    <div><h4>Dead bug</h4><p class="ex-meta">Core · Antiextensión · Coordinación contralateral</p></div>
+    <span class="pill">A2</span>
+  </div>
+  <div class="ex-body">
+    <figure class="ex-fig">
+      <svg viewBox="0 0 215 175" role="img" aria-label="Figura tumbada boca arriba extendiendo un brazo hacia atrás y la pierna contraria hacia delante">
+        <line class="fig-ground" x1="15" y1="152" x2="200" y2="152"/>
+        <circle class="fig-head" cx="56" cy="138" r="9"/>
+        <polyline class="fig-body" points="70,144 128,144"/>
+        <polyline class="fig-limb" points="70,142 70,118 70,96">
+          <animate attributeName="points" values="70,142 70,118 70,96; 70,142 58,124 38,116; 70,142 70,118 70,96" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="128,144 128,112 154,112">
+          <animate attributeName="points" values="128,144 128,112 154,112; 128,144 154,132 184,138; 128,144 128,112 154,112" dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.56;1" keySplines="0 0 .55 1;.45 0 .6 1"/>
+        </polyline>
+        <polyline class="fig-limb" points="128,144 126,114 150,116" opacity=".45"/>
+        <polyline class="fig-limb" points="70,142 74,118 74,98" opacity=".45"/>
+        <text class="fig-note" x="88" y="164">lumbar pegada al suelo</text>
+        <line class="fig-path" x1="72" y1="152" x2="130" y2="152"/>
+      </svg>
+      <figcaption>Brazo y pierna contrarios,<br>a la vez y despacio</figcaption>
+    </figure>
+    <div class="ex-txt">
+      <h5>Montaje</h5>
+      <p>Tumbado boca arriba en la esterilla. Brazos estirados hacia el techo, caderas y rodillas a 90° — muslos verticales, espinillas horizontales. <strong>Aplasta la zona lumbar contra el suelo</strong> y mantenla ahí durante todo el ejercicio: no debe caber una mano por debajo.</p>
+      <h5>Ejecución</h5>
+      <ol>
+        <li>Baja despacio el brazo derecho hacia atrás y estira la pierna izquierda hacia delante, a la vez.</li>
+        <li>Llega hasta donde puedas <strong>sin que la lumbar se despegue</strong>. Ese punto es tu rango, y será corto al principio.</li>
+        <li>Vuelve al inicio con el mismo control.</li>
+        <li>Alterna lados. 10 repeticiones por lado.</li>
+      </ol>
+      <h5>Cues</h5>
+      <div class="cue">«Aplasta una uva con la espalda baja» — el punto de control de todo el ejercicio.</div>
+      <div class="cue">«Alárgate en dos direcciones» — favorece un movimiento largo y controlado en vez de rápido y corto.</div>
+      <h5>Errores</h5>
+      <dl class="err">
+        <dt>Lumbar despegada</dt><dd>El ejercicio deja de servir en ese instante. Reduce el rango hasta recuperar el contacto.</dd>
+        <dt>Ir rápido</dt><dd>No hay ningún beneficio en la velocidad. Cada repetición dura 4–5 segundos.</dd>
+        <dt>Aguantar la respiración</dt><dd>Exhala mientras extiendes. La respiración es parte del control.</dd>
+      </dl>
+      <h5>Progresión</h5>
+      <p>3 series de 10 por lado. Progresa alargando el recorrido, no acelerando. Cuando el rango completo sea fácil manteniendo la lumbar pegada, añade tobilleras ligeras.</p>
+      <div class="forme"><span class="t">Para ti</span>Es la pareja de la plancha y probablemente el ejercicio de core que más te va a servir. La plancha te enseña a <em>mantener</em> la pelvis neutra; el dead bug te enseña a mantenerla <strong>mientras los brazos y las piernas se mueven</strong>, que es lo que ocurre en la vida real y en todos los demás ejercicios. Es el eslabón entre «hago abdominales» y «tengo mejor postura».</div>
+    </div>
+  </div>
+</article>
+
+<!-- ============ PARTE III ============ -->
+<div class="part-head">
+  <span class="lbl">Parte III</span>
+  <h2>Las sesiones</h2>
+</div>
+
+<section id="m5">
+  <h3 class="ch" data-n="05">Hojas de sesión</h3>
+  <p class="deck">Lo que haces en cada entrenamiento, en orden</p>
+  <div class="prose">
+    <p>Tres sesiones por semana con al menos 48 horas entre ellas. Alterna A1 / A2 / A1 una semana y A2 / A1 / A2 la siguiente, de modo que cada sesión se repita cada cuatro o cinco días.</p>
+    <p>El orden importa: <strong>lo prioritario va primero, cuando estás fresco.</strong> Verás que en las dos sesiones la espalda y los hombros aparecen pronto.</p>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Sesión A1 · 45–50 min</caption>
+      <thead><tr><th class="n">#</th><th>Ejercicio</th><th class="n">Series</th><th class="n">Reps</th><th class="n">RIR</th><th class="n">Descanso</th><th class="n">Peso</th></tr></thead>
+      <tbody>
+        <tr><td class="n">—</td><td>Calentamiento: bici 4 min + movilidad 90 s</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td class="n">1</td><td class="k">Sentadilla goblet</td><td class="n">3</td><td class="n">8–12</td><td class="n">2–3</td><td class="n">90 s</td><td class="n">____</td></tr>
+        <tr><td class="n">2</td><td class="k">Press con mancuernas</td><td class="n">3</td><td class="n">8–12</td><td class="n">2–3</td><td class="n">90 s</td><td class="n">____</td></tr>
+        <tr><td class="n">3</td><td class="k">Remo a una mano</td><td class="n">3</td><td class="n">10–12 / lado</td><td class="n">2</td><td class="n">75 s</td><td class="n">____</td></tr>
+        <tr><td class="n">4</td><td class="k">Peso muerto rumano</td><td class="n">3</td><td class="n">10–12</td><td class="n">3</td><td class="n">90 s</td><td class="n">____</td></tr>
+        <tr><td class="n">5</td><td class="k">Press militar sentado</td><td class="n">2</td><td class="n">10–12</td><td class="n">2</td><td class="n">75 s</td><td class="n">____</td></tr>
+        <tr><td class="n">6</td><td class="k">Elevaciones laterales</td><td class="n">2</td><td class="n">12–15</td><td class="n">1–2</td><td class="n">60 s</td><td class="n">____</td></tr>
+        <tr><td class="n">7</td><td class="k">Plancha frontal</td><td class="n">3</td><td class="n">30–45 s</td><td class="n">—</td><td class="n">45 s</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>Sesión A2 · 45–55 min</caption>
+      <thead><tr><th class="n">#</th><th>Ejercicio</th><th class="n">Series</th><th class="n">Reps</th><th class="n">RIR</th><th class="n">Descanso</th><th class="n">Peso</th></tr></thead>
+      <tbody>
+        <tr><td class="n">—</td><td>Calentamiento: bici 4 min + movilidad 90 s</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td class="n">1</td><td class="k">Sentadilla búlgara</td><td class="n">3</td><td class="n">10 / pierna</td><td class="n">2–3</td><td class="n">90 s</td><td class="n">____</td></tr>
+        <tr><td class="n">2</td><td class="k">Pullover con mancuerna</td><td class="n">3</td><td class="n">12–15</td><td class="n">2</td><td class="n">75 s</td><td class="n">____</td></tr>
+        <tr><td class="n">3</td><td class="k">Flexiones</td><td class="n">3</td><td class="n">máximas</td><td class="n">1–2</td><td class="n">75 s</td><td class="n">—</td></tr>
+        <tr><td class="n">4</td><td class="k">Hip thrust</td><td class="n">3</td><td class="n">12–15</td><td class="n">2</td><td class="n">75 s</td><td class="n">____</td></tr>
+        <tr><td class="n">5</td><td class="k">Pájaro</td><td class="n">3</td><td class="n">15</td><td class="n">1–2</td><td class="n">60 s</td><td class="n">____</td></tr>
+        <tr><td class="n">6</td><td class="k">Curl de bíceps</td><td class="n">2</td><td class="n">10–12</td><td class="n">1–2</td><td class="n">60 s</td><td class="n">____</td></tr>
+        <tr><td class="n">7</td><td class="k">Dead bug</td><td class="n">3</td><td class="n">10 / lado</td><td class="n">—</td><td class="n">45 s</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <div class="card warn">
+      <span class="tag">Ajuste para las semanas 1 y 2 · Fase 0</span>
+      <p>Durante las dos primeras semanas, <strong>2 series en lugar de 3</strong> en todos los ejercicios, y <strong>RIR 4–5</strong>. Vas a terminar cada sesión con la sensación de no haber entrenado. Es intencionado y es la parte del plan que más protege tu continuidad: las agujetas incapacitantes de la primera semana son la principal causa de que la segunda semana no exista.</p>
+    </div>
+  </div>
+</section>
+
+<section id="m6">
+  <h3 class="ch" data-n="06">Progresión y registro</h3>
+  <p class="deck">Cómo se convierte esto en resultados</p>
+  <div class="prose">
+    <h4>Doble progresión, con un ejemplo real</h4>
+    <p>El método es siempre el mismo: <strong>primero subes repeticiones dentro del rango, y solo cuando llegas al tope de todas las series, subes peso.</strong> Así se ve en la práctica con tu press de mancuernas:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.1 · Progresión real de un ejercicio · rango 8–12</caption>
+        <thead><tr><th>Sesión</th><th class="n">Peso</th><th class="n">Serie 1</th><th class="n">Serie 2</th><th class="n">Serie 3</th><th>Decisión</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1</td><td class="n">10 kg</td><td class="n">10</td><td class="n">9</td><td class="n">8</td><td>Peso correcto. Objetivo: sumar repeticiones</td></tr>
+          <tr><td class="k">2</td><td class="n">10 kg</td><td class="n">11</td><td class="n">10</td><td class="n">9</td><td>Progresando</td></tr>
+          <tr><td class="k">3</td><td class="n">10 kg</td><td class="n">12</td><td class="n">11</td><td class="n">10</td><td>Casi</td></tr>
+          <tr><td class="k">4</td><td class="n">10 kg</td><td class="n">12</td><td class="n">12</td><td class="n">11</td><td>Falta una serie</td></tr>
+          <tr><td class="k">5</td><td class="n">10 kg</td><td class="n">12</td><td class="n">12</td><td class="n">12</td><td><strong>Tope alcanzado → sube a 12 kg</strong></td></tr>
+          <tr><td class="k">6</td><td class="n">12 kg</td><td class="n">9</td><td class="n">8</td><td class="n">8</td><td>Ciclo reiniciado. Y ahora eres más fuerte</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Fíjate en la sesión 6: las repeticiones caen. Eso <strong>no es retroceder</strong>, es el mismo trabajo con más carga. Si no entiendes esto, cada subida de peso se sentirá como un fracaso.</p>
+
+    <h4>Qué registrar</h4>
+    <p>Una libreta o una nota del móvil. Por ejercicio y sesión: <strong>peso · series × repeticiones · RIR de la última serie</strong>. Ejemplo de una línea real:</p>
+    <div class="card">
+      <span class="tag">Formato</span>
+      <p style="font-family:var(--f-mono);font-size:13px;line-height:1.9">
+        <strong>14 sep · A1</strong><br>
+        Goblet 14 kg — 12/11/10 — RIR 2<br>
+        Press 10 kg — 12/12/11 — RIR 1 · <em>hombro ok</em><br>
+        Remo 14 kg — 12/12/12 — RIR 2 · <strong>subir a 16</strong><br>
+        RDL 12 kg — 12/12/10 — RIR 3<br>
+        Militar 8 kg — 10/9 — RIR 2<br>
+        Laterales 4 kg — 15/13 — RIR 1<br>
+        Plancha 40/40/35 s
+      </p>
+    </div>
+    <p>Sesenta segundos al terminar. Con eso, cada sesión siguiente empieza sabiendo exactamente qué superar, que es la definición operativa de sobrecarga progresiva.</p>
+
+    <h4>Reglas de progresión</h4>
+    <ul>
+      <li><strong>Máximo 5 % de incremento semanal</strong> en un mismo ejercicio, aunque te sobre fuerza. Este es el freno que protege tus tendones.</li>
+      <li><strong>Salto mínimo posible.</strong> Con discos de 1 kg, sube de 1 en 1 en hombro y brazo; de 2 en 2 en pierna y espalda.</li>
+      <li><strong>Si la técnica se rompe, el peso no cuenta.</strong> Una serie con impulso no es una serie mejor, es otro ejercicio.</li>
+      <li><strong>Descarga cada 6–8 semanas</strong>: una semana con la mitad de las series y el mismo peso. Programada, no cuando ya te duele algo.</li>
+      <li><strong>Estancado tres sesiones seguidas</strong> en un ejercicio: revisa sueño y comida antes de tocar el programa. Suele ser eso.</li>
+    </ul>
+
+    <h4>Las primeras ocho semanas, de un vistazo</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.2 · Qué hacer cada semana</caption>
+        <thead><tr><th>Semana</th><th class="n">Series</th><th class="n">RIR</th><th>Foco</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1–2</td><td class="n">2</td><td class="n">4–5</td><td>Aprender los movimientos. Grabar cada ejercicio nuevo. Cero agujetas incapacitantes</td></tr>
+          <tr><td class="k">3–4</td><td class="n">3</td><td class="n">3</td><td>Fijar las cargas de trabajo reales. Empieza el registro serio</td></tr>
+          <tr><td class="k">5–6</td><td class="n">3</td><td class="n">2–3</td><td><strong>Semanas de riesgo.</strong> Progresión limitada al 5 %. Vigila articulaciones</td></tr>
+          <tr><td class="k">7</td><td class="n">3</td><td class="n">2</td><td>Primeros registros de fuerza claramente por encima del inicio</td></tr>
+          <tr><td class="k">8</td><td class="n">2</td><td class="n">4</td><td><span class="pill">Descarga</span> mitad de series, mismo peso. Llegas fresco a la fase siguiente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card good">
+      <span class="tag">Lo que quiero de ti en las próximas dos semanas</span>
+      <ul class="checklist">
+        <li>Hacer los cuatro tests del capítulo 2 y anotar el resultado</li>
+        <li>Elegir los pesos de partida de la tabla 3.1 y ajustarlos con el test de la primera serie</li>
+        <li>Grabar en vídeo, desde un lateral, la sentadilla goblet, el peso muerto rumano y el remo</li>
+        <li>Hacer las seis sesiones de las semanas 1 y 2 con 2 series y RIR 4–5</li>
+        <li>Registrar las seis sesiones completas</li>
+        <li>Decidir si compras la barra de dominadas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Manual de entrenamiento</strong> · Complemento del estudio físico y nutricional · 10 de agosto de 2026.</p>
+  <p style="margin-top:10px">Las descripciones técnicas son orientativas y no sustituyen la valoración presencial de un profesional del ejercicio o de la fisioterapia. Ante dolor articular persistente, aplica el semáforo del dolor del estudio principal y consulta si no mejora en 7–10 días.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('toggle');
+  var figs = Array.prototype.slice.call(document.querySelectorAll('.ex-fig'));
+  var svgs = [];
+
+  // Barra de tempo bajo cada figura: excéntrica lenta, concéntrica rápida.
+  figs.forEach(function(fig){
+    var svg = fig.querySelector('svg');
+    if (svg) svgs.push(svg);
+    var t = document.createElement('div');
+    t.className = 'tempo';
+    t.setAttribute('aria-hidden', 'true');
+    t.innerHTML = '<div class="bar"><i></i></div>' +
+                  '<div class="lbls"><span class="down">baja · 2,3 s</span><span class="up">sube · 1,9 s</span></div>';
+    fig.appendChild(t);
+  });
+
+  var paused = false;
+  function apply(){
+    svgs.forEach(function(s){ paused ? s.pauseAnimations() : s.unpauseAnimations(); });
+    document.body.classList.toggle('animpaused', paused);
+    btn.textContent = paused ? 'Reanudar animaciones' : 'Pausar animaciones';
+    btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function(){ paused = !paused; apply(); });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    paused = true;
+  }
+  apply();
+})();
+</script>

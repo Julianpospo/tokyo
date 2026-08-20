@@ -1,0 +1,1910 @@
+<title>Estudio físico y nutricional · Protocolo por fases</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ground:#F1F3F1;
+  --surface:#FBFCFB;
+  --surface-2:#E9ECEA;
+  --ink:#131917;
+  --ink-2:#4E5B57;
+  --ink-3:#7C8985;
+  --line:#D6DCD8;
+  --line-strong:#B9C2BD;
+  --accent:#A63A1C;
+  --accent-soft:#F2E2DB;
+  --good:#2C6E56;
+  --good-soft:#E0EBE5;
+  --warn:#8A5D0C;
+  --warn-soft:#F2E9D6;
+  --shadow:0 1px 2px rgba(19,25,23,.05),0 8px 24px rgba(19,25,23,.04);
+
+  --f-display:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-body:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --f-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D100F;
+    --surface:#151A18;
+    --surface-2:#1D2321;
+    --ink:#E9EEEB;
+    --ink-2:#A3AFAA;
+    --ink-3:#7A8781;
+    --line:#262E2B;
+    --line-strong:#39423E;
+    --accent:#E0714A;
+    --accent-soft:#2C1C15;
+    --good:#57AC8B;
+    --good-soft:#16241E;
+    --warn:#C99A3A;
+    --warn-soft:#241C0E;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D100F;
+  --surface:#151A18;
+  --surface-2:#1D2321;
+  --ink:#E9EEEB;
+  --ink-2:#A3AFAA;
+  --ink-3:#7A8781;
+  --line:#262E2B;
+  --line-strong:#39423E;
+  --accent:#E0714A;
+  --accent-soft:#2C1C15;
+  --good:#57AC8B;
+  --good-soft:#16241E;
+  --warn:#C99A3A;
+  --warn-soft:#241C0E;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.25);
+}
+
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- SHELL ---------- */
+.shell{max-width:1240px;margin:0 auto;padding:0 24px 120px}
+.cols{display:grid;grid-template-columns:1fr;gap:48px}
+@media (min-width:1060px){
+  .cols{grid-template-columns:216px minmax(0,1fr);gap:56px;align-items:start}
+}
+
+/* ---------- HEADER ---------- */
+.masthead{border-bottom:1px solid var(--line);padding:56px 0 0}
+.eyebrow{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:22px;
+}
+.masthead h1{
+  font-family:var(--f-display);font-weight:750;letter-spacing:-.028em;line-height:1.02;
+  font-size:clamp(34px,6.2vw,62px);text-wrap:balance;max-width:15ch;
+}
+.masthead .sub{
+  font-family:var(--f-body);font-size:clamp(17px,2.2vw,21px);color:var(--ink-2);
+  max-width:56ch;margin-top:20px;line-height:1.5;
+}
+
+/* ruler rule */
+.ruler{height:20px;margin:36px 0 0;position:relative;border-bottom:1px solid var(--line-strong)}
+.ruler::before{
+  content:"";position:absolute;inset:auto 0 0 0;height:9px;
+  background-image:repeating-linear-gradient(to right,var(--line-strong) 0 1px,transparent 1px 24px);
+}
+.ruler::after{
+  content:"";position:absolute;left:0;bottom:0;width:2px;height:20px;background:var(--accent);
+}
+
+/* subject strip */
+.subject{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);
+  margin:0 0 40px;
+}
+.subject div{background:var(--ground);padding:14px 16px}
+.subject dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.subject dd{font-family:var(--f-mono);font-size:19px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.subject dd span{font-size:12px;font-weight:400;color:var(--ink-3);margin-left:2px}
+
+/* ---------- INDEX RAIL ---------- */
+.rail{display:none}
+@media (min-width:1060px){
+  .rail{display:block;position:sticky;top:24px;max-height:calc(100vh - 48px);overflow-y:auto;padding-right:6px}
+}
+.rail h2{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px;
+}
+.rail ol{list-style:none}
+.rail .part{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:18px 0 8px;
+}
+.rail .part:first-child{margin-top:0}
+.rail a{
+  display:block;font-family:var(--f-display);font-size:13px;line-height:1.35;
+  color:var(--ink-2);text-decoration:none;padding:5px 0 5px 20px;position:relative;
+}
+.rail a::before{
+  content:attr(data-n);position:absolute;left:0;top:5px;
+  font-family:var(--f-mono);font-size:10px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+}
+.rail a:hover,.rail a:focus-visible{color:var(--accent)}
+
+/* ---------- CONTENT ---------- */
+main{min-width:0}
+.prose{max-width:69ch}
+section{padding-top:8px;margin-bottom:64px;scroll-margin-top:24px}
+
+.part-head{
+  margin:88px 0 40px;padding-top:20px;border-top:2px solid var(--ink);
+}
+.part-head:first-of-type{margin-top:56px}
+.part-head .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.part-head h2{font-family:var(--f-display);font-weight:720;letter-spacing:-.024em;font-size:clamp(24px,3.4vw,34px);line-height:1.1;text-wrap:balance}
+
+h3.ch{
+  font-family:var(--f-display);font-weight:680;letter-spacing:-.02em;line-height:1.16;
+  font-size:clamp(21px,2.7vw,27px);text-wrap:balance;margin-bottom:6px;
+  padding-left:52px;position:relative;
+}
+h3.ch::before{
+  content:attr(data-n);position:absolute;left:0;top:.12em;
+  font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums;letter-spacing:0;
+  border-bottom:2px solid var(--accent);padding-bottom:2px;
+}
+h3.ch + .deck{
+  padding-left:52px;color:var(--ink-3);font-family:var(--f-mono);font-size:11.5px;
+  letter-spacing:.05em;text-transform:uppercase;margin-bottom:26px;
+}
+h4{
+  font-family:var(--f-display);font-weight:660;font-size:16.5px;letter-spacing:-.008em;
+  margin:34px 0 12px;color:var(--ink);
+}
+h5{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:26px 0 10px;
+}
+p{margin-bottom:16px}
+p.lead{font-size:19px;line-height:1.55;color:var(--ink-2)}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+ul,ol{margin:0 0 18px 0;padding-left:22px}
+li{margin-bottom:8px}
+li::marker{color:var(--ink-3)}
+ul.tight li,ol.tight li{margin-bottom:4px}
+
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.94em}
+code{font-family:var(--f-mono);font-size:.87em;background:var(--surface-2);padding:1px 5px;border-radius:2px}
+
+/* ---------- DATA CARDS ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  padding:20px 22px;margin:26px 0;box-shadow:var(--shadow);
+}
+.card.good{border-left-color:var(--good)}
+.card.warn{border-left-color:var(--warn)}
+.card .tag{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:9px;
+}
+.card.good .tag{color:var(--good)}
+.card.warn .tag{color:var(--warn)}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0;
+}
+.stats div{background:var(--surface);padding:16px 18px}
+.stats dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;line-height:1.3}
+.stats dd{font-family:var(--f-mono);font-size:24px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stats dd small{font-size:12px;font-weight:400;color:var(--ink-3);letter-spacing:0}
+.stats dd.acc{color:var(--accent)}
+
+/* ---------- TABLES ---------- */
+.scroll{overflow-x:auto;margin:24px 0;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--f-display);font-size:13.5px;min-width:520px}
+caption{
+  caption-side:top;text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  background:var(--surface-2);
+}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+thead th{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:500;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr.total td{background:var(--surface-2);font-weight:700}
+tbody tr.total td.n{color:var(--accent)}
+td.k{font-weight:600;white-space:nowrap}
+
+/* ---------- PHASE TIMELINE ---------- */
+.phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0}
+@media (min-width:760px){.phases{grid-template-columns:repeat(5,1fr)}}
+.ph{background:var(--surface);padding:18px 16px;position:relative}
+.ph::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--line-strong)}
+.ph.p0::before{background:var(--ink-3)}
+.ph.p1::before{background:var(--accent)}
+.ph.p2::before{background:var(--warn)}
+.ph.p3::before{background:var(--good)}
+.ph.p4::before{background:var(--line-strong)}
+.ph .n{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.ph h4{font-family:var(--f-display);font-size:15px;font-weight:700;margin:0 0 6px;letter-spacing:-.01em}
+.ph .when{font-family:var(--f-mono);font-size:11px;color:var(--accent);margin-bottom:9px;font-variant-numeric:tabular-nums}
+.ph p{font-size:13.5px;font-family:var(--f-display);line-height:1.45;color:var(--ink-2);margin:0}
+
+/* ---------- TRAFFIC LIGHT ---------- */
+.tl{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:26px 0}
+@media (min-width:700px){.tl{grid-template-columns:repeat(3,1fr)}}
+.tl > div{background:var(--surface);padding:18px}
+.tl .dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:baseline}
+.tl .g .dot{background:var(--good)}
+.tl .a .dot{background:var(--warn)}
+.tl .r .dot{background:var(--accent)}
+.tl h4{margin:0 0 8px;font-size:14.5px}
+.tl p{font-family:var(--f-display);font-size:13.5px;line-height:1.45;color:var(--ink-2);margin-bottom:8px}
+.tl p:last-child{margin-bottom:0}
+
+/* ---------- MISC ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid var(--line-strong);color:var(--ink-2);margin:0 4px 4px 0;white-space:nowrap;
+}
+.pill.acc{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pill.good{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+
+.formula{
+  font-family:var(--f-mono);font-size:13px;background:var(--surface-2);border:1px solid var(--line);
+  padding:14px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap;line-height:1.9;
+}
+
+.checklist{list-style:none;padding-left:0}
+.checklist li{padding-left:26px;position:relative;font-family:var(--f-display);font-size:14.5px;line-height:1.5}
+.checklist li::before{
+  content:"";position:absolute;left:0;top:.42em;width:11px;height:11px;
+  border:1.5px solid var(--line-strong);
+}
+
+hr.tick{
+  border:none;height:1px;background:var(--line);margin:44px 0;position:relative;
+}
+hr.tick::after{content:"";position:absolute;left:50%;top:-3px;width:1px;height:7px;background:var(--line-strong)}
+
+footer{border-top:1px solid var(--line);margin-top:80px;padding-top:28px}
+footer p{font-family:var(--f-display);font-size:13px;color:var(--ink-3);max-width:70ch}
+
+.refs{font-family:var(--f-display);font-size:13.5px;line-height:1.5;padding-left:0;list-style:none}
+.refs li{padding-left:30px;position:relative;margin-bottom:10px;color:var(--ink-2)}
+.refs li::before{
+  content:attr(data-n);position:absolute;left:0;top:0;font-family:var(--f-mono);
+  font-size:11px;color:var(--accent);font-variant-numeric:tabular-nums;
+}
+</style>
+
+<div class="shell">
+
+<header class="masthead">
+  <p class="eyebrow">Dosier personal · Composición corporal y nutrición</p>
+  <h1>Estudio físico, protocolo de pérdida de grasa y construcción muscular</h1>
+  <p class="sub">Varón, 25 años, 1,85 m, 81,5 kg. Objetivo declarado: −2 kg de forma lenta y sostenible, entrenando en casa. Documento de referencia completo: diagnóstico, teoría, plan por fases, menús y control.</p>
+  <div class="ruler"></div>
+</header>
+
+<dl class="subject">
+  <div><dt>Edad</dt><dd>25<span>años</span></dd></div>
+  <div><dt>Altura</dt><dd>185<span>cm</span></dd></div>
+  <div><dt>Peso</dt><dd>81,5<span>kg</span></dd></div>
+  <div><dt>IMC</dt><dd>23,8</dd></div>
+  <div><dt>Grasa est.</dt><dd>~22<span>%</span></dd></div>
+  <div><dt>Masa magra</dt><dd>63,6<span>kg</span></dd></div>
+  <div><dt>FFMI</dt><dd>18,6</dd></div>
+  <div><dt>Fecha</dt><dd>10·08<span>2026</span></dd></div>
+</dl>
+
+<div class="cols">
+
+<!-- ============ RAIL ============ -->
+<nav class="rail" aria-label="Índice del documento">
+  <h2>Índice</h2>
+  <p class="part">0 · Resumen</p>
+  <ol>
+    <li><a href="#s0" data-n="00">La versión de 60 segundos</a></li>
+  </ol>
+  <p class="part">I · Diagnóstico</p>
+  <ol>
+    <li><a href="#sR" data-n="R">Revisión con evidencia visual</a></li>
+    <li><a href="#s1" data-n="01">Perfil antropométrico</a></li>
+    <li><a href="#s2" data-n="02">Tu motor metabólico</a></li>
+    <li><a href="#s3" data-n="03">Por qué fallaron los intentos anteriores</a></li>
+  </ol>
+  <p class="part">II · Teoría</p>
+  <ol>
+    <li><a href="#s4" data-n="04">Cómo se pierde grasa</a></li>
+    <li><a href="#s5" data-n="05">Cómo se gana músculo</a></li>
+    <li><a href="#s6" data-n="06">Cómo medir calorías</a></li>
+    <li><a href="#s7" data-n="07">Macro y micronutrientes</a></li>
+  </ol>
+  <p class="part">III · Plan por fases</p>
+  <ol>
+    <li><a href="#s8" data-n="08">Mapa de fases</a></li>
+    <li><a href="#s9" data-n="09">Fase 0 · Calibración</a></li>
+    <li><a href="#s10" data-n="10">Fase 1 · Déficit</a></li>
+    <li><a href="#s11" data-n="11">Fase 2 · Estabilización</a></li>
+    <li><a href="#s12" data-n="12">Fase 3 · Construcción</a></li>
+    <li><a href="#s13" data-n="13">Fase 4 · Sostenimiento</a></li>
+  </ol>
+  <p class="part">IV · Ejecución</p>
+  <ol>
+    <li><a href="#s14" data-n="14">Entrenamiento en casa</a></li>
+    <li><a href="#s15" data-n="15">Dolor y abandono</a></li>
+    <li><a href="#s16" data-n="16">Menú de 7 días</a></li>
+    <li><a href="#s17" data-n="17">Intercambios y compra</a></li>
+    <li><a href="#s18" data-n="18">Comer fuera</a></li>
+    <li><a href="#s19" data-n="19">Sueño, estrés, alcohol</a></li>
+    <li><a href="#s20" data-n="20">Suplementos</a></li>
+  </ol>
+  <p class="part">V · Control</p>
+  <ol>
+    <li><a href="#s21" data-n="21">Panel de seguimiento</a></li>
+    <li><a href="#s22" data-n="22">Solución de problemas</a></li>
+    <li><a href="#s23" data-n="23">Anexos y bibliografía</a></li>
+  </ol>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main>
+
+<section id="s0">
+  <h3 class="ch" data-n="00">La versión de 60 segundos</h3>
+  <p class="deck">Si solo lees una página, que sea esta</p>
+  <div class="prose">
+    <p class="lead">Tu punto de partida es bueno: IMC 23,8, peso normal, 25 años. No necesitas una dieta agresiva. Necesitas un déficit pequeño, mucha proteína, y — sobre todo — un programa de fuerza que <em>no abandones a las seis semanas</em>, que es exactamente donde se te ha roto siempre.</p>
+
+    <div class="stats">
+      <div><dt>Gasto estimado</dt><dd>2.450<small> kcal</small></dd></div>
+      <div><dt>Objetivo diario</dt><dd class="acc">2.200<small> kcal</small></dd></div>
+      <div><dt>Proteína</dt><dd>165<small> g</small></dd></div>
+      <div><dt>Grasa</dt><dd>70<small> g</small></dd></div>
+      <div><dt>Carbohidrato</dt><dd>227<small> g</small></dd></div>
+      <div><dt>Ritmo previsto</dt><dd>−0,3<small> kg/sem</small></dd></div>
+    </div>
+
+    <p>Las seis decisiones que sostienen todo el documento:</p>
+    <ol>
+      <li><strong>Déficit de 250–300 kcal, no más.</strong> Perder 0,3 kg por semana es lento a propósito: protege el músculo, no te deja con hambre y no requiere fuerza de voluntad heroica. Los 2 kg caen en 7–8 semanas.</li>
+      <li><strong>165 g de proteína al día</strong> (2,0 g por kg). Es el único macronutriente que realmente hay que perseguir; el resto se acomoda solo.</li>
+      <li><strong>Tres sesiones de fuerza a la semana</strong>, cuerpo completo, con mancuernas en casa. Sin esto, de cada 2 kg que pierdas hasta 0,5 kg serían de músculo.</li>
+      <li><strong>Empezar por debajo de tus posibilidades.</strong> Las dos primeras semanas entrenas fácil a propósito. Tu historial dice que el problema no es empezar, es la semana 5.</li>
+      <li><strong>La báscula se mira como media semanal</strong>, nunca como dato del día. Y la cinta métrica en la cintura manda más que la báscula.</li>
+      <li><strong>Sin prohibiciones.</strong> Cerveza, cena fuera y postre caben. Están presupuestados en el capítulo 18.</li>
+    </ol>
+
+    <div class="card warn">
+      <span class="tag">Advertencia sobre el objetivo</span>
+      <p>Pides −2 kg, pero con 1,85 m y 81,5 kg ya estás en normopeso: lo que probablemente quieres no es pesar menos, es <strong>verte mejor</strong>. Y esas dos cosas se separan en cuanto empiezas a entrenar fuerza. Es perfectamente posible que en la semana 8 peses 80,2 kg en vez de 79,5 y sin embargo tengas la cintura 3 cm más estrecha y estés bastante más fuerte. Eso sería <em>mejor</em> resultado, no peor.</p>
+      <p>Por eso el documento usa dos métricas y no una: <strong>peso</strong> (media de 7 días) y <strong>perímetro de cintura</strong>. Si la cintura baja, vas bien, diga lo que diga la báscula. Y si tomas creatina (cap. 20), asume 1–1,5 kg de agua intramuscular que enmascararán la pérdida durante el primer mes.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Nota previa</span>
+      <p>Esto es un plan de nutrición y entrenamiento general, no un acto médico. Dos cosas que sí conviene hacer con un profesional: una <strong>analítica básica</strong> (hemograma, perfil lipídico, glucosa, vitamina D, ferritina, TSH) antes de empezar, y una <strong>visita a fisioterapia</strong> si el dolor que te ha hecho abandonar otras veces vuelve a aparecer más de 7–10 días seguidos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================== PARTE I ================== -->
+<div class="part-head">
+  <span class="lbl">Parte I</span>
+  <h2>Diagnóstico: de dónde partes</h2>
+</div>
+
+<section id="sR">
+  <h3 class="ch" data-n="R">Revisión con evidencia visual</h3>
+  <p class="deck">Actualización del 10 de agosto · sustituye a las estimaciones previas</p>
+  <div class="prose">
+    <p class="lead">Las fotografías cambian el diagnóstico en una dirección concreta: tienes <strong>algo más de grasa</strong> y, sobre todo, <strong>bastante menos músculo</strong> del que asumían las estimaciones iniciales. Eso no empeora el pronóstico — lo mejora, porque desplaza el trabajo hacia donde el margen de mejora es enorme.</p>
+
+    <h4>Lo que se observa</h4>
+    <ul>
+      <li><strong>Distribución de grasa claramente central.</strong> El abdomen es la parte más ancha del torso y sobresale por delante de la línea del pecho. Los brazos y las piernas son proporcionalmente delgados. Es el patrón clásico de acumulación abdominal en un cuerpo de peso normal.</li>
+      <li><strong>Masa muscular baja en la mitad superior.</strong> Deltoides pequeños y sin separación respecto al brazo, pectoral sin definición estructural, ausencia de anchura dorsal. La silueta no tiene apenas diferencia entre la anchura de hombros y la de cintura.</li>
+      <li><strong>Sin ninguna definición abdominal</strong>, lo que sitúa el porcentaje de grasa claramente por encima del 18 %.</li>
+      <li><strong>Piel muy pálida</strong>: poca exposición solar. Refuerza la recomendación de medir vitamina D en la analítica.</li>
+      <li><strong>Postura:</strong> hombros ligeramente adelantados y posible anteversión pélvica, que exagera visualmente la protrusión abdominal. Parte de la «tripa» que ves en el espejo es postural, no grasa. Es una observación de baja certeza desde una foto, pero justifica el trabajo de core y de espalda alta que lleva el programa.</li>
+    </ul>
+
+    <div class="card warn">
+      <span class="tag">Margen de error</span>
+      <p>Estimar composición corporal desde fotografías tiene un error de <strong>±4 puntos porcentuales</strong>, y la luz, el ángulo y la postura influyen mucho. Tómalo como una franja, no como un dato: <strong>entre el 20 % y el 24 % de grasa</strong>, con 22 % como valor central de trabajo. La fórmula del capítulo 1 con cinta métrica será más fiable que esta lectura.</p>
+    </div>
+
+    <h4>Números revisados</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla R.1 · Estimación anterior frente a estimación revisada</caption>
+        <thead><tr><th></th><th class="n">Estimación inicial</th><th class="n">Revisada</th><th>Consecuencia</th></tr></thead>
+        <tbody>
+          <tr><td class="k">% grasa</td><td class="n">18 %</td><td class="n">22 %</td><td>Más grasa que perder de la prevista</td></tr>
+          <tr><td class="k">Masa grasa</td><td class="n">14,7 kg</td><td class="n">17,9 kg</td><td>—</td></tr>
+          <tr><td class="k">Masa magra</td><td class="n">66,8 kg</td><td class="n">63,6 kg</td><td>Punto de partida muscular bajo</td></tr>
+          <tr><td class="k">FFMI</td><td class="n">19,5</td><td class="n">18,6</td><td>Rango «sin entrenar». Techo natural ≈ 25</td></tr>
+          <tr class="total"><td>Lectura</td><td colspan="3">El problema es en un 80 % falta de músculo, no exceso de grasa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>La consecuencia estratégica</h4>
+    <p>Haz este cálculo mental. Si pierdes los 2 kg que pediste y no ganas nada de músculo, acabas en <strong>79,5 kg con un 20 % de grasa</strong>. En el espejo, la diferencia sería casi imperceptible: seguirías teniendo la misma silueta, un poco más pequeña. Es el resultado que produce una dieta sin entrenamiento de fuerza, y es la razón por la que tanta gente adelgaza y no le gusta lo que ve.</p>
+    <p>Ahora el otro camino. Si en doce meses cambias <strong>5 kg de grasa por 4 kg de músculo</strong>, pesarías 80,5 kg — prácticamente lo mismo que ahora — con un 14 % de grasa, la cintura 9 cm más estrecha y hombros y espalda que le den forma a la silueta. Ese cuerpo no se parece en nada al de las fotos, y la báscula apenas se habría movido.</p>
+
+    <div class="card good">
+      <span class="tag">Lo que cambia en el plan</span>
+      <ol class="tight">
+        <li><strong>El entrenamiento pasa a ser el eje</strong>, no el acompañamiento de la dieta. Si tuvieras que elegir una sola cosa, sería entrenar fuerza, no comer 2.200 kcal.</li>
+        <li><strong>El déficit se queda igual de pequeño</strong> (−300 kcal) pero <strong>el horizonte se alarga</strong>: de 8 semanas a 12–16. Con un 22 % de grasa no hay ninguna prisa y sí mucho que construir.</li>
+        <li><strong>Los 2 kg dejan de ser el objetivo</strong> y pasan a ser un punto de control intermedio. La métrica real es la cintura y el registro de fuerza.</li>
+        <li><strong>La recomposición es la estrategia correcta</strong>, y tu perfil es el que mejor responde a ella: sin entrenar y con grasa suficiente para alimentar la construcción de músculo. Nada de superávit: engordarías sobre una base que ya tiene grasa central.</li>
+      </ol>
+    </div>
+
+    <h4>Proyección realista a doce meses</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla R.2 · Trayectoria esperada con adherencia real</caption>
+        <thead><tr><th>Momento</th><th class="n">Peso</th><th class="n">% grasa</th><th class="n">Masa magra</th><th class="n">Cintura</th><th>Qué notarás</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Hoy</td><td class="n">81,5 kg</td><td class="n">~22 %</td><td class="n">63,6 kg</td><td class="n">base</td><td>—</td></tr>
+          <tr><td class="k">Mes 4</td><td class="n">79,5 kg</td><td class="n">~19 %</td><td class="n">64,8 kg</td><td class="n">−4 cm</td><td>La ropa sienta distinto; fuerza muy arriba</td></tr>
+          <tr><td class="k">Mes 8</td><td class="n">78,5 kg</td><td class="n">~16 %</td><td class="n">66,0 kg</td><td class="n">−7 cm</td><td>Hombros y espalda visibles; abdomen plano</td></tr>
+          <tr><td class="k">Mes 12</td><td class="n">78,5 kg</td><td class="n">~13 %</td><td class="n">68,0 kg</td><td class="n">−9 cm</td><td>Silueta en V; abdominales marcados</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Fíjate en la columna del peso: entre el mes 4 y el mes 12 apenas se mueve, y sin embargo es donde ocurre casi todo el cambio. <strong>Si te vas a obsesionar con un número, que sea el de la cintura.</strong></p>
+
+    <hr class="tick">
+
+    <h4>Material disponible · inventario real</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla R.3 · Qué cubre tu equipamiento y qué no</caption>
+        <thead><tr><th>Material</th><th>Qué te permite</th><th>Valoración</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Mancuernas de discos</td><td>Los seis patrones básicos con carga progresiva real</td><td>Es el 80 % del programa. Suficiente durante años</td></tr>
+          <tr><td class="k">Silla / banco de pesas</td><td>Press de banca, remo con apoyo, hip thrust, búlgaras, press inclinado, pullover</td><td>Multiplica lo que puedes hacer con las mancuernas</td></tr>
+          <tr><td class="k">Bici estática</td><td>Cardio de impacto cero, calentamiento, recuperación activa</td><td><strong>Tu mejor herramienta de cardio</strong> dado tu historial de dolor</td></tr>
+          <tr><td class="k">Tobilleras / cinta</td><td>Trabajo de glúteo, femoral y abductor sin cargar la columna</td><td>Accesorio útil, no principal</td></tr>
+          <tr><td class="k">Esterilla</td><td>Core, movilidad, press en suelo, hip thrust</td><td>Suficiente</td></tr>
+          <tr><td class="k">Correr</td><td>Cardio y salud cardiovascular</td><td>Opcional y <strong>aplazado</strong>: es donde te has lesionado antes</td></tr>
+          <tr><td class="k"><em>Ausente:</em> barra de dominadas</td><td>Tirón vertical, anchura dorsal</td><td><strong>La única laguna real.</strong> Ver recuadro</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="tag">La única compra que te recomiendo</span>
+      <p>Una <strong>barra de dominadas de marco de puerta</strong>, 20–30 €. Es el hueco real de tu equipamiento: sin tirón vertical no hay forma eficiente de desarrollar la anchura del dorsal, que es exactamente el músculo que crea la silueta en V y que hace que la cintura <em>parezca</em> más estrecha aunque no cambie ni un centímetro. En tu caso concreto —hombros estrechos respecto a la cintura— es el músculo de mayor impacto visual por euro invertido.</p>
+      <p>Mientras tanto, el programa usa <strong>pullover con mancuerna</strong> y <strong>remo invertido bajo una mesa robusta</strong> como sustitutos parciales. Funcionan, pero no igual de bien.</p>
+      <p>Segunda compra, opcional y también barata: un <strong>juego de bandas elásticas</strong> (10–15 €) para <em>face pulls</em> y rotación externa de hombro — el trabajo preventivo del manguito rotador, especialmente relevante con hombros adelantados.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s1">
+  <h3 class="ch" data-n="01">Perfil antropométrico</h3>
+  <p class="deck">Qué dicen y qué no dicen tus números</p>
+  <div class="prose">
+    <p>Con 81,5 kg y 1,85 m tu índice de masa corporal es <span class="num">81,5 ÷ 1,85² = 23,8</span>. Está en la mitad alta del rango normal (18,5–24,9) y lejos del sobrepeso, que en tu altura empezaría en <span class="num">85,3 kg</span>. Traducido: no tienes un problema de peso, tienes una pregunta de composición.</p>
+
+    <p>El IMC es una herramienta de población, no de individuo. No distingue un kilo de músculo de un kilo de grasa, y en un hombre joven que entrena tiende a exagerar. Sirve para descartar extremos —y aquí los descarta— y poco más. Las tres medidas que sí te van a decir algo son el <strong>perímetro de cintura</strong>, el <strong>porcentaje de grasa estimado</strong> y el <strong>FFMI</strong> (índice de masa libre de grasa).</p>
+
+    <h4>Perímetro de cintura: tu métrica principal</h4>
+    <p>Es la medida con mejor relación entre lo barato que es tomarla y lo mucho que informa. El indicador que se usa es el <strong>ratio cintura/altura</strong>, y el umbral es simple: mantenerlo por debajo de <span class="num">0,50</span>. En tu caso eso significa cintura por debajo de <span class="num">92,5 cm</span>. Por debajo de <span class="num">0,45</span> (≈ <span class="num">83 cm</span>) ya estás en territorio claramente atlético.</p>
+
+    <p><strong>Cómo medirla bien</strong>: de pie, en ayunas por la mañana, cinta a la altura del ombligo, paralela al suelo, al final de una espiración normal (sin meter tripa, sin sacarla), cinta ceñida pero sin hundir la piel. Una vez por semana, siempre el mismo día y en las mismas condiciones. Anótala.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 1.1 · Interpretación del ratio cintura/altura para 185 cm</caption>
+        <thead><tr><th>Cintura</th><th class="n">Ratio</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td class="k">&gt; 100 cm</td><td class="n">&gt; 0,54</td><td>Riesgo cardiometabólico elevado</td></tr>
+          <tr><td class="k">93–100 cm</td><td class="n">0,50–0,54</td><td>Zona de aviso</td></tr>
+          <tr><td class="k">86–92 cm</td><td class="n">0,46–0,50</td><td>Normal, margen de mejora</td></tr>
+          <tr><td class="k">80–85 cm</td><td class="n">0,43–0,46</td><td>Atlético</td></tr>
+          <tr><td class="k">&lt; 80 cm</td><td class="n">&lt; 0,43</td><td>Muy definido</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Porcentaje de grasa: estímalo, no lo persigas</h4>
+    <p>No me has dado perímetros, así que no puedo calcularlo. Puedes hacerlo tú en dos minutos con el <strong>método antropométrico de la Marina de EE.UU.</strong>, que solo necesita cintura, cuello y altura y tiene un error de ±3–4 puntos frente a un DEXA. Es suficiente para seguir una tendencia, que es para lo único que lo vas a usar.</p>
+
+    <div class="formula">
+      %Grasa = 495 ÷ [ 1,0324 − 0,19077 × log₁₀(cintura − cuello) + 0,15456 × log₁₀(altura) ] − 450<br>
+      <span style="color:var(--ink-3)">medidas en centímetros · cuello justo por debajo de la laringe · cintura a la altura del ombligo</span>
+    </div>
+
+    <p>Un hombre de 25 años sedentario-intermitente con IMC 23,8 suele caer entre el <strong>15 % y el 20 %</strong> de grasa. Estos son los escenarios y lo que implican:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 1.2 · Escenarios de composición a 81,5 kg</caption>
+        <thead><tr><th>% grasa</th><th class="n">Masa grasa</th><th class="n">Masa magra</th><th class="n">FFMI</th><th>Lectura</th></tr></thead>
+        <tbody>
+          <tr><td class="k">12 %</td><td class="n">9,8 kg</td><td class="n">71,7 kg</td><td class="n">20,9</td><td>Ya definido; el objetivo sería solo ganar músculo</td></tr>
+          <tr><td class="k">15 %</td><td class="n">12,2 kg</td><td class="n">69,3 kg</td><td class="n">20,3</td><td>Buen punto de partida</td></tr>
+          <tr><td class="k">18 %</td><td class="n">14,7 kg</td><td class="n">66,8 kg</td><td class="n">19,5</td><td>Descartado tras ver las fotos</td></tr>
+          <tr><td class="k">20 %</td><td class="n">16,3 kg</td><td class="n">65,2 kg</td><td class="n">19,1</td><td>Límite inferior de la franja real</td></tr>
+          <tr><td class="k">22 %</td><td class="n">17,9 kg</td><td class="n">63,6 kg</td><td class="n">18,6</td><td><strong>Estimación de trabajo</strong> <span class="pill acc">revisada</span></td></tr>
+          <tr><td class="k">24 %</td><td class="n">19,6 kg</td><td class="n">61,9 kg</td><td class="n">18,1</td><td>Límite superior de la franja real</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>FFMI: cuánto músculo te queda por construir</h4>
+    <p>El FFMI es el IMC calculado solo con la masa libre de grasa: <code>masa magra (kg) ÷ altura²(m)</code>. Sirve para saber dónde estás respecto a tu techo. Referencias orientativas en hombres: <span class="num">18–19</span> es un hombre sin entrenar, <span class="num">20–21</span> alguien que ha entrenado algo, <span class="num">22–23</span> varios años de entrenamiento serio, y <span class="num">~25</span> se considera el límite práctico natural.</p>
+
+    <p>Con la revisión visual, estás en torno a <strong>18,6</strong>: rango de hombre sin entrenar. Eso significa que tienes por delante, sin exagerar, entre <strong>12 y 16 kg de músculo</strong> alcanzables a lo largo de años de entrenamiento consistente, de los cuales los primeros 4–6 kg llegan relativamente rápido. Es muchísimo margen — más del que suponía la estimación inicial. Es también la razón por la que este documento dedica más espacio a construir que a restar.</p>
+
+    <div class="card good">
+      <span class="tag">Conclusión del diagnóstico</span>
+      <p>No eres un caso de pérdida de peso. Eres un caso de <strong>recomposición corporal</strong>: alguien delgado-medio con poca masa muscular acumulada y mucho recorrido. La estrategia correcta no es un déficit agresivo, es un déficit mínimo mientras entrenas fuerza por primera vez de forma consistente. En tu situación —joven, con poco historial de entrenamiento, IMC normal— es literalmente el mejor escenario posible para ganar músculo y perder grasa a la vez.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <h3 class="ch" data-n="02">Tu motor metabólico</h3>
+  <p class="deck">Cuánta energía gastas realmente al día</p>
+  <div class="prose">
+    <p>El gasto energético total diario (<strong>GET</strong>, o TDEE en inglés) tiene cuatro componentes. Entenderlos importa porque tres de los cuatro se pueden mover, y no son los que la gente cree.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.1 · Componentes del gasto energético diario</caption>
+        <thead><tr><th>Componente</th><th class="n">% del total</th><th>Qué es</th><th>¿Controlable?</th></tr></thead>
+        <tbody>
+          <tr><td class="k">TMB</td><td class="n">60–70 %</td><td>Lo que gastas en reposo absoluto: respirar, bombear sangre, mantener tejidos</td><td>Muy poco, y solo vía masa muscular</td></tr>
+          <tr><td class="k">ETA</td><td class="n">8–12 %</td><td>Efecto térmico de los alimentos: digerir cuesta energía</td><td>Sí, subiendo proteína (20–30 % vs 5–10 % de la grasa)</td></tr>
+          <tr><td class="k">NEAT</td><td class="n">10–25 %</td><td>Todo el movimiento no deportivo: andar, gesticular, no estar quieto</td><td>Sí, y es la palanca más grande</td></tr>
+          <tr><td class="k">EAT</td><td class="n">5–15 %</td><td>El ejercicio propiamente dicho</td><td>Sí, pero es menos de lo que crees</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>El dato incómodo que hay que interiorizar: <strong>el NEAT casi siempre pesa más que el entrenamiento</strong>. La diferencia entre 5.000 y 10.000 pasos diarios son unas 200–250 kcal al día, más que la mayoría de sesiones de gimnasio. Y el NEAT es lo primero que el cuerpo recorta cuando entras en déficit: te mueves menos sin darte cuenta, subes menos escaleras, te quedas más rato sentado. Por eso el plan cuenta pasos explícitamente en vez de dejarlos al azar.</p>
+
+    <h4>Tu tasa metabólica basal</h4>
+    <p>Tres ecuaciones validadas, aplicadas a tus datos:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.2 · TMB estimada · varón, 25 años, 185 cm, 81,5 kg</caption>
+        <thead><tr><th>Ecuación</th><th>Cálculo</th><th class="n">Resultado</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Mifflin–St Jeor</td><td>10×81,5 + 6,25×185 − 5×25 + 5</td><td class="n">1.851 kcal</td></tr>
+          <tr><td class="k">Harris–Benedict rev.</td><td>88,36 + 13,40×81,5 + 4,80×185 − 5,68×25</td><td class="n">1.926 kcal</td></tr>
+          <tr><td class="k">Katch–McArdle <small>(15 % grasa)</small></td><td>370 + 21,6 × 69,3</td><td class="n">1.867 kcal</td></tr>
+          <tr class="total"><td>Referencia de trabajo</td><td>Mifflin–St Jeor, la más precisa en normopeso</td><td class="n">1.850 kcal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Esos ~1.850 kcal son lo que gastarías tumbado 24 horas. Nadie come a ese nivel; es solo la base sobre la que se multiplica la actividad.</p>
+
+    <h4>Tu gasto total</h4>
+    <p>Aplicando factores de actividad sobre la TMB de Mifflin:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 2.3 · Gasto energético total según nivel de actividad</caption>
+        <thead><tr><th>Nivel</th><th class="n">Factor</th><th class="n">GET</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sedentario</td><td class="n">1,20</td><td class="n">2.220</td><td>Escritorio, &lt;5.000 pasos, sin ejercicio</td></tr>
+          <tr><td class="k">Ligero</td><td class="n">1,35</td><td class="n">2.500</td><td>1–3 sesiones/sem o 7.000–8.000 pasos <span class="pill acc">tú hoy</span></td></tr>
+          <tr><td class="k">Moderado</td><td class="n">1,55</td><td class="n">2.870</td><td>3–5 sesiones/sem + 10.000 pasos <span class="pill good">tú en fase 1</span></td></tr>
+          <tr><td class="k">Alto</td><td class="n">1,725</td><td class="n">3.190</td><td>6–7 sesiones/sem, deporte regular</td></tr>
+          <tr><td class="k">Muy alto</td><td class="n">1,90</td><td class="n">3.515</td><td>Doble sesión o trabajo físico</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Me has dicho que ahora mismo haces poco o nada: entrenas a rachas, una clase de tenis semanal que en agosto está parada. Eso te sitúa entre sedentario y ligero. <strong>Estimación de trabajo: 2.450 kcal/día</strong>, con un rango realista de 2.250 a 2.650.</p>
+
+    <div class="card warn">
+      <span class="tag">Lo importante de este capítulo</span>
+      <p>Ese 2.450 es una <em>hipótesis</em>, no un dato. Las ecuaciones tienen un error individual de ±10–15 %, lo que en tu caso son ±300 kcal — suficiente para que un plan funcione o no funcione. Por eso la Fase 0 existe: dos semanas comiendo una cantidad conocida y midiendo qué hace el peso te dan tu gasto real, que es un dato que ninguna calculadora te puede dar. <strong>Tu báscula es un calorímetro mejor que cualquier fórmula.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <h3 class="ch" data-n="03">Por qué fallaron los intentos anteriores</h3>
+  <p class="deck">El diagnóstico más importante del documento</p>
+  <div class="prose">
+    <p>Me has descrito un patrón muy concreto: épocas de correr 20 minutos, épocas de pesas en casa, <em>«lo acabo dejando ya sea por algún dolor o lo que sea»</em>. Ese patrón no es falta de disciplina. Es un problema de diseño del programa, y tiene tres causas identificables.</p>
+
+    <h4>Causa 1 · La curva de adaptación del tejido conectivo</h4>
+    <p>El músculo se adapta rápido: en 3–4 semanas de entrenamiento ya puedes mover bastante más peso, en buena parte por mejoras neurales. Los <strong>tendones, ligamentos y cartílagos se adaptan entre dos y tres veces más despacio</strong>, porque están mucho menos vascularizados. El resultado es una trampa perfecta: en la semana 4 o 5 te sientes fuerte, subes carga o volumen con confianza, y el tejido que no ha tenido tiempo de adaptarse es el que protesta. Aparece la tendinopatía de hombro, la rodilla del corredor, el codo. Y abandonas.</p>
+
+    <p>Lo mismo pasa al correr: 20 minutos son fáciles para el sistema cardiovascular mucho antes de que la tibia, el tendón de Aquiles y la fascia plantar estén listas para el impacto repetido.</p>
+
+    <h4>Causa 2 · Empezar por encima del punto sostenible</h4>
+    <p>El error clásico es arrancar con la motivación del día 1 y programar lo que se puede hacer <em>en el mejor día</em>, no lo que se puede hacer un martes de noviembre con frío, trabajo y pocas ganas. Un plan de 5 días a la semana con el que cumples 3 semanas y luego 0 es peor que uno de 3 días que sostienes 12 meses.</p>
+
+    <h4>Causa 3 · Todo o nada</h4>
+    <p>Un dolor de hombro no debería parar tu entrenamiento; debería parar <em>el press de banca</em>. Pero sin un protocolo escrito de sustitución, un dolor localizado acaba deteniendo el programa entero, y de ahí a las seis semanas sin entrenar hay un paso.</p>
+
+    <div class="card">
+      <span class="tag">Contramedidas incorporadas al plan</span>
+      <ul class="tight">
+        <li><strong>Fase 0 deliberadamente fácil</strong> (cap. 9): dos semanas de volumen bajo y esfuerzo submáximo. Ganarás menos en ese arranque; llegarás a la semana 12.</li>
+        <li><strong>Progresión limitada al 5 % semanal</strong> (cap. 14), no la que te pida el cuerpo el día que te sientes fuerte.</li>
+        <li><strong>Semáforo del dolor</strong> (cap. 15): un protocolo escrito con tres respuestas según el tipo de molestia, y una regla clave — se sustituye el ejercicio, nunca se cancela la sesión.</li>
+        <li><strong>Descarga programada cada 6–8 semanas</strong>: una semana a la mitad de volumen, antes de que el cuerpo te la pida.</li>
+        <li><strong>Solo 3 sesiones semanales</strong>, de 45–55 minutos. Es la dosis mínima que produce resultados claros, y por tanto la más fácil de mantener.</li>
+        <li><strong>Vuelta a correr por protocolo caminar/correr</strong> (cap. 14), no arrancando en 20 minutos continuos.</li>
+      </ul>
+    </div>
+
+    <p>Dicho de otro modo: el objetivo real del primer mes no es perder 2 kg ni ganar fuerza. Es <strong>llegar a la semana 8 sin haber parado</strong>. Todo lo demás es consecuencia de eso.</p>
+  </div>
+</section>
+
+<!-- ================== PARTE II ================== -->
+<div class="part-head">
+  <span class="lbl">Parte II</span>
+  <h2>Teoría: los tres mecanismos que hay que entender</h2>
+</div>
+
+<section id="s4">
+  <h3 class="ch" data-n="04">Cómo se pierde grasa</h3>
+  <p class="deck">Balance energético, y todo lo que la regla de las 7.700 kcal no te cuenta</p>
+  <div class="prose">
+    <p>La grasa corporal es energía almacenada. Para movilizarla hace falta una única condición: <strong>ingerir menos energía de la que gastas</strong>, sostenido en el tiempo. No hay excepción a esto, y ninguna combinación de alimentos, horarios o ayunos lo evita. Todo lo demás —qué comes, cuándo, cómo entrenas— determina de qué tejido sale ese déficit, cómo te sientes durante el proceso y si eres capaz de mantenerlo. Que no es poco: es prácticamente todo lo que importa en la práctica.</p>
+
+    <h4>La cifra de las 7.700 kcal y por qué es solo una aproximación</h4>
+    <p>Un kilo de tejido adiposo almacena unas 7.700 kcal. De ahí la regla clásica: 7.700 kcal de déficit = 1 kg perdido. Es una primera aproximación útil, pero sobreestima la pérdida a medio plazo por dos motivos: parte de lo que pierdes es masa magra y agua (menos densas en energía), y el gasto <em>baja</em> conforme adelgazas, porque un cuerpo más ligero cuesta menos de mantener y de mover. Los modelos dinámicos de balance energético —el de Kevin Hall es el estándar— predicen curvas que se aplanan, no líneas rectas.</p>
+
+    <p>Consecuencia práctica: <strong>la pérdida no es lineal</strong>. Las primeras semanas caen más rápido (glucógeno y agua), luego se estabiliza en el ritmo real, y periódicamente hay mesetas de 7–10 días en los que no se mueve nada aunque el déficit siga ahí. Eso es normal y no significa que el plan haya dejado de funcionar.</p>
+
+    <h4>A qué ritmo perder</h4>
+    <p>El consenso en la literatura de composición corporal sitúa la pérdida óptima entre el <strong>0,5 % y el 1 % del peso corporal por semana</strong>. Por encima de eso, la proporción de masa magra perdida sube rápido y el rendimiento cae. El trabajo de Garthe y colaboradores comparando pérdida lenta (0,7 %/sem) frente a rápida (1,4 %/sem) en atletas encontró la misma pérdida de grasa, pero solo el grupo lento <em>ganó</em> masa magra y fuerza.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 4.1 · Ritmos de pérdida aplicados a 81,5 kg</caption>
+        <thead><tr><th>Ritmo</th><th class="n">kg/sem</th><th class="n">Déficit diario</th><th class="n">Semanas para −2 kg</th><th>Valoración</th></tr></thead>
+        <tbody>
+          <tr><td class="k">0,25 %</td><td class="n">0,20</td><td class="n">−220 kcal</td><td class="n">10</td><td>Muy conservador; casi imperceptible</td></tr>
+          <tr><td class="k">0,35 %</td><td class="n">0,29</td><td class="n">−300 kcal</td><td class="n">7</td><td><strong>Recomendado</strong> <span class="pill acc">tu plan</span></td></tr>
+          <tr><td class="k">0,50 %</td><td class="n">0,41</td><td class="n">−450 kcal</td><td class="n">5</td><td>Válido, algo más de hambre</td></tr>
+          <tr><td class="k">1,00 %</td><td class="n">0,82</td><td class="n">−900 kcal</td><td class="n">2,5</td><td>Innecesario aquí; coste en músculo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Has pedido explícitamente «bien y con calma». El déficit de <strong>−300 kcal</strong> es exactamente eso: pequeño, casi invisible en el plato, compatible con entrenar bien y con salir a cenar.</p>
+
+    <h4>Adaptación metabólica</h4>
+    <p>Cuando comes menos durante semanas, el gasto baja algo más de lo que explica la pérdida de peso. Ocurre por tres vías: menos masa corporal que mantener, menos NEAT (te mueves menos de forma inconsciente) y ajustes hormonales —leptina baja, tiroides ligeramente a la baja, cortisol arriba—. En déficits moderados y cortos como el tuyo el efecto es pequeño, del orden del 5–10 %. En dietas agresivas y prolongadas es grande y explica por qué la gente se estanca comiendo cada vez menos.</p>
+
+    <p>Se contrarresta con tres cosas, todas incorporadas al plan: <strong>déficit pequeño</strong>, <strong>proteína alta</strong>, <strong>entrenamiento de fuerza</strong>, y una <strong>fase de estabilización</strong> al terminar (cap. 11) en la que vuelves a mantenimiento de forma progresiva en lugar de pegar el salto de golpe.</p>
+
+    <h4>Por qué el peso sube 1,5 kg de un día para otro</h4>
+    <p>Porque la báscula pesa todo el cuerpo, no solo grasa. Las fuentes de ruido diario:</p>
+    <ul>
+      <li><strong>Glucógeno</strong>: cada gramo almacenado retiene ~3 g de agua. Una comida alta en carbohidratos puede sumar 1–2 kg de báscula en 24 h sin un solo gramo de grasa nueva.</li>
+      <li><strong>Sodio</strong>: una cena salada retiene agua durante 24–48 h.</li>
+      <li><strong>Contenido digestivo</strong>: 300–800 g en tránsito en cualquier momento.</li>
+      <li><strong>Cortisol</strong>: estrés y falta de sueño aumentan la retención de líquido.</li>
+      <li><strong>Entrenamiento reciente</strong>: la inflamación post-esfuerzo retiene agua en el músculo.</li>
+    </ul>
+    <p>La respuesta a todo esto no es dejar de pesarse: es <strong>pesarse todos los días y mirar solo la media de 7 días</strong>. El ruido diario se cancela; la señal semanal es limpia.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <h3 class="ch" data-n="05">Cómo se gana músculo</h3>
+  <p class="deck">Estímulo, proteína, descanso — y cuánto es realista esperar</p>
+  <div class="prose">
+    <p>El músculo crece cuando la síntesis de proteína muscular supera de forma sostenida a su degradación. Eso requiere tres cosas simultáneas, y las tres son necesarias: un <strong>estímulo mecánico</strong> suficiente, <strong>sustrato</strong> (aminoácidos) y <strong>recuperación</strong>.</p>
+
+    <h4>El estímulo: tensión mecánica y proximidad al fallo</h4>
+    <p>El principal impulsor de la hipertrofia es la tensión mecánica sobre la fibra, y esta depende sobre todo de <strong>cuánto te acercas al fallo muscular</strong>, no del peso absoluto. Una serie de 12 repeticiones con mancuernas llevada a 2 repeticiones del fallo estimula tanto como una de 6 con barra pesada llevada al mismo punto. Esto es una noticia excelente para quien entrena en casa: el rango útil es amplio, aproximadamente de 5 a 30 repeticiones, siempre que el esfuerzo sea real.</p>
+
+    <p>La forma de medir ese esfuerzo es el <strong>RIR</strong> (<em>repetitions in reserve</em>, repeticiones en reserva): cuántas repeticiones más podrías haber hecho al terminar la serie. RIR 2 significa que te quedaban dos. El punto dulce para hipertrofia está entre <strong>RIR 0 y RIR 3</strong>; por encima de RIR 4 las series estimulan poco. En tu caso empezaremos en RIR 4 a propósito y bajaremos progresivamente.</p>
+
+    <h4>El volumen: series efectivas por semana</h4>
+    <p>La variable que mejor predice la ganancia es el número de <strong>series efectivas por grupo muscular y semana</strong> (series duras, en el rango RIR 0–3). La relación es dosis-respuesta con rendimientos decrecientes:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 5.1 · Volumen semanal por grupo muscular</caption>
+        <thead><tr><th>Series/sem</th><th>Efecto</th><th>Para quién</th></tr></thead>
+        <tbody>
+          <tr><td class="k">&lt; 4</td><td>Mantenimiento; poca ganancia</td><td>Fases de descarga o lesión</td></tr>
+          <tr><td class="k">6–10</td><td>Ganancia clara en principiantes</td><td><span class="pill acc">Fases 0–1</span></td></tr>
+          <tr><td class="k">10–20</td><td>Zona óptima para la mayoría</td><td><span class="pill good">Fases 2–3</span></td></tr>
+          <tr><td class="k">&gt; 20</td><td>Retornos decrecientes; riesgo de no recuperar</td><td>Avanzados en bloques puntuales</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Frecuencia</strong>: repartir ese volumen en 2 sesiones por grupo muscular a la semana da algo más de resultado que concentrarlo en 1, a igualdad de series totales. Por eso el programa es de cuerpo completo tres veces por semana y no una rutina dividida por músculos.</p>
+
+    <h4>La sobrecarga progresiva</h4>
+    <p>Si el estímulo no aumenta, el cuerpo no tiene razón para adaptarse. Progresar no significa solo añadir kilos —con mancuernas ajustables los saltos son grandes—; hay cinco palancas:</p>
+    <ol class="tight">
+      <li>Más peso con las mismas repeticiones</li>
+      <li>Más repeticiones con el mismo peso <span class="pill">principal en casa</span></li>
+      <li>Más series</li>
+      <li>Mejor técnica: más rango de movimiento, control de la fase excéntrica</li>
+      <li>Menos descanso entre series (útil, pero limitado como palanca de hipertrofia)</li>
+    </ol>
+    <p>El método operativo se llama <strong>doble progresión</strong> y se explica en el capítulo 14.</p>
+
+    <h4>Cuánto músculo puedes ganar, de verdad</h4>
+    <p>Las tasas realistas, en condiciones buenas —entrenamiento correcto, proteína suficiente, sueño suficiente, energía suficiente— siguen aproximadamente el modelo de Alan Aragon:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 5.2 · Ganancia muscular mensual esperable</caption>
+        <thead><tr><th>Nivel</th><th class="n">% peso/mes</th><th class="n">Para 81,5 kg</th><th class="n">Al año</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Principiante <small>(0–1 año)</small></td><td class="n">1,0–1,5 %</td><td class="n">0,8–1,2 kg</td><td class="n">6–10 kg</td></tr>
+          <tr><td class="k">Intermedio <small>(1–3 años)</small></td><td class="n">0,5–1,0 %</td><td class="n">0,4–0,8 kg</td><td class="n">3–6 kg</td></tr>
+          <tr><td class="k">Avanzado <small>(3+ años)</small></td><td class="n">0,25–0,5 %</td><td class="n">0,2–0,4 kg</td><td class="n">1–3 kg</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Entrenar «a rachas» durante años no te convierte en intermedio: te deja en un punto de <strong>principiante con algo de memoria muscular</strong>, que es un lugar privilegiado. Es razonable esperar entre <strong>0,4 y 0,8 kg de músculo al mes</strong> durante los primeros 6–9 meses de consistencia real. Con la matización de que en la Fase 1, al estar en déficit, la ganancia irá por la parte baja del rango: quizá 0,2–0,4 kg/mes.</p>
+
+    <h4>Recomposición: perder grasa y ganar músculo a la vez</h4>
+    <p>Suele decirse que es imposible. No lo es — es <em>difícil</em>, y solo funciona bien en cuatro perfiles: principiantes, personas que retoman tras un parón, personas con grasa corporal alta, y usuarios de fármacos. <strong>Tú entras en los dos primeros a la vez.</strong> Por eso el plan usa un déficit deliberadamente pequeño en lugar de uno agresivo: quieres que el cuerpo tenga margen para construir mientras resta.</p>
+
+    <div class="card good">
+      <span class="tag">Expectativa realista a 8 semanas</span>
+      <p>Peso en la báscula: <strong>−1,5 a −2,5 kg</strong>. Debajo de esa cifra, un cambio de composición mayor: aproximadamente <strong>−2,5 a −3 kg de grasa</strong> y <strong>+0,5 a +1 kg de músculo</strong>. Cintura: <strong>−2 a −4 cm</strong>. Fuerza: subidas del 20–40 % en los ejercicios principales, casi todo por adaptación neural. Si tomas creatina, réstale 1–1,5 kg de «pérdida aparente» al primer mes: es agua dentro del músculo, y es buena.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <h3 class="ch" data-n="06">Cómo medir calorías sin engañarte</h3>
+  <p class="deck">El capítulo más práctico del documento</p>
+  <div class="prose">
+    <p>Este es el punto donde la mayoría de planes se rompen en silencio. No porque la gente mienta, sino porque medir comida es genuinamente difícil. El estudio clásico de Lichtman y colaboradores en <em>NEJM</em> (1992) tomó a personas que juraban no adelgazar «comiendo 1.200 kcal», midió su ingesta real con agua doblemente marcada, y encontró que <strong>infrarregistraban en torno a un 47 %</strong> y sobreestimaban su actividad en un 51 %. No eran mentirosos: eran humanos estimando.</p>
+
+    <p>La conclusión operativa es que necesitas un sistema, y que ese sistema debe tener un mecanismo de autocorrección.</p>
+
+    <h4>Las cinco fuentes de error, por tamaño</h4>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.1 · Errores de medición ordenados por impacto</caption>
+        <thead><tr><th>Error</th><th class="n">Coste típico</th><th>Solución</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Aceite «a ojo»</td><td class="n">100–250 kcal/día</td><td>Pesarlo o usar cuchara medidora. Un chorro son 15–25 g = 135–225 kcal</td></tr>
+          <tr><td class="k">Picoteos no registrados</td><td class="n">100–300 kcal/día</td><td>Registrar en el momento, no por la noche de memoria</td></tr>
+          <tr><td class="k">Crudo vs cocinado</td><td class="n">100–400 kcal/comida</td><td>Pesar siempre en crudo; ver tabla 6.2</td></tr>
+          <tr><td class="k">Fin de semana no contado</td><td class="n">500–1.500 kcal/sem</td><td>Registrar sábado y domingo igual que el resto</td></tr>
+          <tr><td class="k">Salsas, bebidas, «cositas»</td><td class="n">50–200 kcal/día</td><td>Entran en el registro o no cuentan como plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Súmalos: es perfectamente posible errar por <strong>500 kcal al día</strong> creyendo que llevas la cuenta. Eso convierte un déficit de 300 en un superávit de 200, y explica por qué «como bien y no adelgazo».</p>
+
+    <h4>La regla del crudo</h4>
+    <p>Los valores nutricionales de las tablas se refieren al alimento crudo. Al cocinar, los cereales y legumbres absorben agua (más peso, mismas calorías) y las carnes la pierden (menos peso, mismas calorías). Pesar cocinado usando datos de crudo es el error silencioso más grande.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.2 · Factores de conversión crudo → cocinado</caption>
+        <thead><tr><th>Alimento</th><th class="n">Factor</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Arroz</td><td class="n">× 2,5–3,0</td><td>80 g crudo → ~220 g cocido (285 kcal)</td></tr>
+          <tr><td class="k">Pasta</td><td class="n">× 2,2–2,5</td><td>80 g cruda → ~185 g cocida (280 kcal)</td></tr>
+          <tr><td class="k">Legumbre seca</td><td class="n">× 2,5–2,7</td><td>70 g seca → ~180 g cocida (240 kcal)</td></tr>
+          <tr><td class="k">Quinoa</td><td class="n">× 2,7–3,0</td><td>70 g cruda → ~200 g cocida (265 kcal)</td></tr>
+          <tr><td class="k">Carne / pescado</td><td class="n">× 0,70–0,75</td><td>200 g crudo → ~145 g cocinado</td></tr>
+          <tr><td class="k">Avena</td><td class="n">× 3,0–4,0</td><td>Depende del líquido añadido</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Atajo:</strong> pesa siempre en crudo y registra en crudo. Si te toca pesar algo ya cocinado (un táper, comida de casa), divide por el factor y regístralo como crudo.</p>
+
+    <h4>Leer etiquetas</h4>
+    <ul>
+      <li>Mira siempre la columna <strong>por 100 g</strong>, no la «por ración»: las raciones del fabricante suelen ser irrealmente pequeñas.</li>
+      <li>En la UE, la tolerancia legal de los valores declarados es de aproximadamente <strong>±20 %</strong>. Otra razón para no obsesionarse con la precisión decimal.</li>
+      <li>«Hidratos de carbono» en el etiquetado europeo ya excluye la fibra (a diferencia de EE.UU.). Los «de los cuales azúcares» son informativos, no un macro aparte.</li>
+      <li>«Light» significa 30 % menos que el producto de referencia, no «poco calórico».</li>
+      <li>«0 % materia grasa» a menudo compensa con azúcar. Mira las kcal totales.</li>
+    </ul>
+
+    <h4>El sistema que te propongo</h4>
+    <p>No hace falta pesar toda la vida. Hace falta pesar el tiempo suficiente para calibrar el ojo.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.3 · Progresión del sistema de medición</caption>
+        <thead><tr><th>Periodo</th><th>Método</th><th>Esfuerzo</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Semanas 1–4</td><td>Pesar y registrar <strong>todo</strong> en app. Incluido el aceite. Incluido el finde.</td><td>10–15 min/día</td></tr>
+          <tr><td class="k">Semanas 5–8</td><td>Pesar proteína, cereales y grasas. Verdura y fruta a ojo.</td><td>5 min/día</td></tr>
+          <tr><td class="k">Semanas 9–16</td><td>Registrar sin pesar, con porciones ya calibradas. Pesar solo el aceite.</td><td>2–3 min/día</td></tr>
+          <tr><td class="k">A partir de ahí</td><td>Método de la mano + control por báscula corporal. Volver a pesar 1 semana cada 2–3 meses para recalibrar.</td><td>Casi nulo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Herramientas</strong>: una báscula de cocina digital al gramo (10–15 €, es la mejor inversión del plan) y una app de registro. MyFitnessPal tiene la base de datos más grande pero llena de entradas erróneas de usuarios; <strong>Cronometer</strong> es más preciso y da micronutrientes; <strong>Yazio</strong> o <strong>FatSecret</strong> están bien en producto español. Regla en cualquiera: prefiere entradas verificadas y desconfía de valores redondos sospechosos.</p>
+
+    <h4>El método de la mano, para cuando no puedes pesar</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 6.4 · Porciones por referencia anatómica</caption>
+        <thead><tr><th>Referencia</th><th>Equivale a</th><th class="n">Aprox.</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1 palma</td><td>Proteína (carne, pescado)</td><td class="n">100–120 g · 25 g proteína</td></tr>
+          <tr><td class="k">1 puño</td><td>Verdura</td><td class="n">~150 g</td></tr>
+          <tr><td class="k">1 mano ahuecada</td><td>Carbohidrato cocinado</td><td class="n">~150 g · 30 g HC</td></tr>
+          <tr><td class="k">1 pulgar</td><td>Grasa (aceite, mantequilla, frutos secos)</td><td class="n">~12 g · 100 kcal</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Tu comida estándar: <strong>2 palmas de proteína + 2 puños de verdura + 1–2 manos de carbohidrato + 1 pulgar de grasa</strong>.</p>
+
+    <div class="card">
+      <span class="tag">El mecanismo de autocorrección</span>
+      <p>Ninguna app conoce tu metabolismo. Lo que sí lo conoce es la tendencia de tu peso. El bucle de control es este: <strong>comes una cantidad conocida durante 14 días → comparas la media de peso de la semana 1 con la de la semana 3 → ajustas</strong>. Si la media no ha bajado unos 0,3 kg/semana, resta 150 kcal y repite. Si baja más de 0,5 kg/semana, suma 150. Ese bucle corrige automáticamente cualquier error de medición sistemático, y es la razón por la que el plan no depende de que tus etiquetas sean exactas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <h3 class="ch" data-n="07">Macronutrientes y micronutrientes</h3>
+  <p class="deck">Cuánto de cada cosa y por qué</p>
+  <div class="prose">
+    <h4>Proteína · 165 g/día (2,0 g/kg)</h4>
+    <p>Es el macro prioritario y el único que conviene perseguir activamente. Cumple tres funciones que importan aquí: aporta los aminoácidos para construir y reparar músculo, es el macronutriente más saciante, y tiene el efecto térmico más alto (se gasta un 20–30 % de sus calorías en digerirla, frente al 5–10 % de la grasa).</p>
+    <p>El metaanálisis de Morton y colaboradores (<em>BJSM</em>, 2018) sitúa la meseta de beneficio en torno a <strong>1,6 g/kg/día</strong> para maximizar hipertrofia. En déficit calórico conviene subir, porque la proteína protege la masa magra cuando la energía escasea: las recomendaciones para atletas naturales en déficit (Helms et al., 2014) llegan a 2,3–3,1 g por kg de <em>masa magra</em>. Con tu composición estimada, <strong>2,0 g por kg de peso total = 165 g</strong> cae con holgura en zona óptima.</p>
+    <p><strong>Reparto</strong>: 4 tomas de unos 40 g. Cada toma debe superar el umbral de leucina (~2,5–3 g) que dispara la síntesis proteica, lo que se consigue con unos 30–40 g de proteína de buena calidad. Repartir mejor que concentrar.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 7.1 · Fuentes de proteína · por 100 g de alimento</caption>
+        <thead><tr><th>Alimento</th><th class="n">Proteína</th><th class="n">kcal</th><th class="n">g por 30 g prot.</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Whey en polvo</td><td class="n">78 g</td><td class="n">390</td><td class="n">38 g</td></tr>
+          <tr><td class="k">Pechuga de pollo</td><td class="n">23 g</td><td class="n">110</td><td class="n">130 g</td></tr>
+          <tr><td class="k">Pechuga de pavo</td><td class="n">24 g</td><td class="n">108</td><td class="n">125 g</td></tr>
+          <tr><td class="k">Atún al natural</td><td class="n">26 g</td><td class="n">116</td><td class="n">115 g</td></tr>
+          <tr><td class="k">Merluza / bacalao</td><td class="n">18 g</td><td class="n">86</td><td class="n">165 g</td></tr>
+          <tr><td class="k">Salmón</td><td class="n">20 g</td><td class="n">205</td><td class="n">150 g</td></tr>
+          <tr><td class="k">Ternera magra</td><td class="n">21 g</td><td class="n">140</td><td class="n">145 g</td></tr>
+          <tr><td class="k">Huevo entero</td><td class="n">13 g</td><td class="n">143</td><td class="n">230 g <small>(4 huevos)</small></td></tr>
+          <tr><td class="k">Clara de huevo</td><td class="n">11 g</td><td class="n">52</td><td class="n">270 g</td></tr>
+          <tr><td class="k">Yogur griego 0 %</td><td class="n">10 g</td><td class="n">59</td><td class="n">300 g</td></tr>
+          <tr><td class="k">Requesón / cottage</td><td class="n">12 g</td><td class="n">90</td><td class="n">250 g</td></tr>
+          <tr><td class="k">Lentejas cocidas</td><td class="n">7 g</td><td class="n">100</td><td class="n">430 g</td></tr>
+          <tr><td class="k">Garbanzos cocidos</td><td class="n">8 g</td><td class="n">120</td><td class="n">375 g</td></tr>
+          <tr><td class="k">Tofu firme</td><td class="n">12 g</td><td class="n">120</td><td class="n">250 g</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Grasa · 70 g/día (0,86 g/kg)</h4>
+    <p>No es opcional: se necesita para la producción hormonal —testosterona incluida—, para absorber las vitaminas A, D, E y K y para la integridad celular. El <strong>mínimo funcional es 0,6–0,8 g/kg</strong>; bajar de ahí de forma sostenida es contraproducente. 70 g es un punto cómodo que deja sitio a los carbohidratos.</p>
+    <ul class="tight">
+      <li><strong>Prioriza</strong>: aceite de oliva virgen extra, pescado azul, frutos secos, aguacate, huevo entero.</li>
+      <li><strong>Omega-3</strong>: apunta a 2 raciones de pescado azul por semana (salmón, sardina, caballa, boquerón). Efecto real sobre inflamación y perfil lipídico.</li>
+      <li><strong>Limita</strong>: grasas trans industriales (bollería, fritos de restauración rápida). Las grasas saturadas de alimentos enteros no son el villano que se dijo, pero tampoco el objetivo.</li>
+      <li><strong>Ojo</strong>: 1 g de grasa son 9 kcal frente a 4 del resto. Es el macro donde un error de pesada duele el doble.</li>
+    </ul>
+
+    <h4>Carbohidratos · 227 g/día</h4>
+    <p>Son la variable de ajuste: una vez fijadas proteína y grasa, los carbohidratos rellenan las calorías restantes. No engordan por sí mismos y no hay ninguna necesidad de eliminarlos. Lo que sí hacen es <strong>rendir</strong>: llenan el glucógeno muscular, y entrenar con el glucógeno bajo significa menos series, menos repeticiones, menos estímulo.</p>
+    <ul class="tight">
+      <li><strong>Base</strong>: arroz, patata, boniato, pasta, avena, pan, legumbre, fruta.</li>
+      <li><strong>Timing</strong>: importa mucho menos que el total. Dicho eso, colocar más carbohidrato alrededor del entrenamiento es gratis y ayuda al rendimiento.</li>
+      <li><strong>Fibra</strong>: objetivo <strong>30–35 g/día</strong> (referencia: 14 g por cada 1.000 kcal). Saciedad, salud digestiva y control glucémico. Viene sola si comes verdura en las dos comidas principales, fruta 2–3 veces al día, y eliges integrales y legumbres.</li>
+    </ul>
+
+    <h4>Micronutrientes y agua</h4>
+    <ul class="tight">
+      <li><strong>Vitamina D</strong>: el déficit es sorprendentemente común incluso en España, sobre todo con vida de interior. Mídela en analítica; si está baja, suplementa (cap. 20).</li>
+      <li><strong>Calcio</strong>: ~1.000 mg/día. Con 2–3 lácteos diarios lo cubres.</li>
+      <li><strong>Hierro</strong>: carne roja 1–2 veces por semana, legumbre con vitamina C (un chorro de limón sobre las lentejas multiplica la absorción del hierro vegetal).</li>
+      <li><strong>Magnesio y potasio</strong>: frutos secos, verdura de hoja, plátano, patata.</li>
+      <li><strong>Sodio</strong>: no lo elimines si entrenas y sudas. Sal con moderación normal.</li>
+      <li><strong>Agua</strong>: <strong>2,5–3 litros al día</strong>, más en días de entreno o calor. Un 2 % de deshidratación ya reduce el rendimiento de forma medible. La orina debe ser amarillo pálido.</li>
+    </ul>
+
+    <div class="card good">
+      <span class="tag">Regla de reparto</span>
+      <p><strong>1.</strong> Fija la proteína: 2,0 g/kg → 165 g → 660 kcal.<br>
+      <strong>2.</strong> Fija la grasa: 0,8–1,0 g/kg → 70 g → 630 kcal.<br>
+      <strong>3.</strong> El resto son carbohidratos: 2.200 − 1.290 = 910 kcal → 227 g.<br>
+      Si cambias las calorías objetivo, la proteína se queda fija y ajustas carbohidratos primero, grasa después (nunca por debajo de 60 g).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================== PARTE III ================== -->
+<div class="part-head">
+  <span class="lbl">Parte III</span>
+  <h2>El plan, fase a fase</h2>
+</div>
+
+<section id="s8">
+  <h3 class="ch" data-n="08">Mapa de fases</h3>
+  <p class="deck">De agosto de 2026 a la primavera de 2027</p>
+  <div class="prose">
+    <p>El plan tiene cinco fases. Las tres primeras ocupan unas 14 semanas y llevan del punto de partida al objetivo. Las dos últimas son donde está el resultado real, porque construir músculo es un proyecto de años, no de meses.</p>
+  </div>
+
+  <div class="phases">
+    <div class="ph p0">
+      <p class="n">Fase 0</p>
+      <h4>Calibración</h4>
+      <p class="when">10 – 23 ago · 2 sem</p>
+      <p>Medir, registrar, entrenar fácil. Sin déficit. Salida: tu gasto real.</p>
+    </div>
+    <div class="ph p1">
+      <p class="n">Fase 1</p>
+      <h4>Déficit</h4>
+      <p class="when">24 ago – 18 oct · 8 sem</p>
+      <p>2.200 kcal, 3 sesiones de fuerza, 9.000 pasos. Objetivo: 79,5 kg.</p>
+    </div>
+    <div class="ph p2">
+      <p class="n">Fase 2</p>
+      <h4>Estabilización</h4>
+      <p class="when">19 oct – 15 nov · 4 sem</p>
+      <p>Subir a mantenimiento +100 kcal/semana. Consolidar el peso nuevo.</p>
+    </div>
+    <div class="ph p3">
+      <p class="n">Fase 3</p>
+      <h4>Construcción</h4>
+      <p class="when">16 nov – mar · 16+ sem</p>
+      <p>Mantenimiento o ligero superávit. 4 sesiones. Aquí se gana el músculo.</p>
+    </div>
+    <div class="ph p4">
+      <p class="n">Fase 4</p>
+      <h4>Sostenimiento</h4>
+      <p class="when">Indefinido</p>
+      <p>Cinco reglas mínimas y revisión mensual. Sin plan que abandonar.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 8.1 · Parámetros por fase</caption>
+        <thead><tr><th>Fase</th><th class="n">kcal</th><th class="n">Proteína</th><th>Entreno</th><th class="n">Pasos/día</th><th>Métrica de éxito</th></tr></thead>
+        <tbody>
+          <tr><td class="k">0 · Calibración</td><td class="n">2.450</td><td class="n">160 g</td><td>2 × full body suave</td><td class="n">7.000</td><td>14 días registrados sin fallo</td></tr>
+          <tr><td class="k">1 · Déficit</td><td class="n">2.200</td><td class="n">165 g</td><td>3 × full body</td><td class="n">9.000</td><td>−0,3 kg/sem de media</td></tr>
+          <tr><td class="k">2 · Estabilización</td><td class="n">2.300 → 2.500</td><td class="n">165 g</td><td>3 × full body</td><td class="n">9.000</td><td>Peso ±0,5 kg</td></tr>
+          <tr><td class="k">3 · Construcción</td><td class="n">2.550–2.700</td><td class="n">165 g</td><td>4 × torso/pierna + tenis</td><td class="n">8.000</td><td>Fuerza ↑, cintura estable</td></tr>
+          <tr><td class="k">4 · Sostenimiento</td><td class="n">Intuitivo</td><td class="n">≥ 1,6 g/kg</td><td>3–4 sesiones</td><td class="n">8.000</td><td>Cintura &lt; 88 cm</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><em>Nota de calendario:</em> tu clase de tenis vuelve previsiblemente en septiembre, en plena Fase 1. Eso está contemplado: los días de tenis suma <strong>+150 kcal</strong> (una pieza de fruta y un puñado de frutos secos, o una ración extra de carbohidrato en la cena).</p>
+  </div>
+</section>
+
+<section id="s9">
+  <h3 class="ch" data-n="09">Fase 0 · Calibración</h3>
+  <p class="deck">Semanas 1–2 · 10 al 23 de agosto · sin déficit</p>
+  <div class="prose">
+    <p class="lead">Dos semanas sin restringir nada. El objetivo no es perder peso: es obtener datos y construir el hábito antes de pedirle nada al cuerpo.</p>
+
+    <p>Parece tiempo perdido. No lo es: es lo que convierte un plan genérico en tu plan. Al terminar sabrás tu gasto real con un margen de ±100 kcal, tendrás una línea base de medidas y —lo más importante— habrás demostrado que puedes registrar comida catorce días seguidos, que es el hábito del que depende todo lo demás.</p>
+
+    <h4>Nutrición</h4>
+    <ul>
+      <li>Come <strong>2.450 kcal</strong> al día, con <strong>160 g de proteína</strong>. Sí, es más de lo que comerás en Fase 1: esto es mantenimiento estimado, no dieta.</li>
+      <li><strong>Pesa y registra absolutamente todo</strong>, incluidos el aceite, las bebidas, los picoteos y el fin de semana. La precisión de estas dos semanas determina la calidad de todo el plan.</li>
+      <li>Si un día te pasas, regístralo igual. Un dato incómodo vale más que un hueco.</li>
+    </ul>
+
+    <h4>Entrenamiento</h4>
+    <ul>
+      <li><strong>2 sesiones</strong> de cuerpo completo, con al menos 48 h entre ellas. Rutina A del capítulo 14.</li>
+      <li><strong>2 series por ejercicio</strong>, no 3. <strong>RIR 4–5</strong>: al terminar cada serie deberías poder hacer 4 o 5 repeticiones más. Te vas a quedar con ganas. Ese es el objetivo.</li>
+      <li>Es normal tener agujetas la primera semana. No deberían impedirte bajar escaleras. Si lo hacen, has empezado demasiado fuerte.</li>
+      <li><strong>7.000 pasos diarios</strong>. Si ahora haces 4.000, sube gradualmente.</li>
+      <li>Nada de correr todavía. Empieza en la semana 3.</li>
+    </ul>
+
+    <h4>Mediciones de línea base <span class="pill acc">día 1</span></h4>
+    <ul class="checklist">
+      <li>Peso en ayunas, después de orinar, sin ropa. Y luego <strong>cada mañana</strong>.</li>
+      <li>Cintura a la altura del ombligo, en espiración normal.</li>
+      <li>Cuello justo debajo de la laringe (para la fórmula del capítulo 1).</li>
+      <li>Cadera en su punto más ancho, y muslo y brazo si quieres seguir hipertrofia.</li>
+      <li>Fotos: frente, perfil y espalda. Misma luz, misma hora, mismo sitio, relajado.</li>
+      <li>Test de fuerza: máximas repeticiones en flexiones, en sentadilla goblet con tu mancuerna más pesada, y en remo. Anótalo.</li>
+      <li>Analítica básica si hace más de un año de la última.</li>
+    </ul>
+
+    <div class="card">
+      <span class="tag">Cálculo al terminar la fase</span>
+      <p>Media de peso días 1–7 = <strong>A</strong>. Media de peso días 8–14 = <strong>B</strong>.</p>
+      <p>Un kilo de diferencia repartido en 14 días equivale a <span class="num">7.700 ÷ 14 = 550 kcal/día</span>. De ahí:</p>
+      <ul class="tight">
+        <li>Si <strong>B ≈ A</strong> (±0,3 kg): tu mantenimiento son ~2.450 kcal. <strong>Fase 1 = 2.200 kcal.</strong></li>
+        <li>Si <strong>B &lt; A</strong>: comías por debajo de tu gasto. Mantenimiento real ≈ 2.450 + (kg perdidos × 550). <strong>Fase 1 = ese número − 300.</strong></li>
+        <li>Si <strong>B &gt; A</strong>: mantenimiento real ≈ 2.450 − (kg ganados × 550). <strong>Fase 1 = ese número − 300.</strong></li>
+      </ul>
+      <p style="margin-top:12px"><em>Ejemplo:</em> pierdes 0,5 kg en las dos semanas. Eso son <span class="num">0,5 × 550 = 275 kcal/día</span> de déficit involuntario, luego tu mantenimiento real es <strong>2.725 kcal</strong> y tu Fase 1 debería ser <strong>2.425 kcal</strong>, no 2.200. Comer las 2.200 «del plan genérico» te habría puesto en un déficit de 525 kcal — casi el doble del previsto. Ese es exactamente el tipo de corrección que justifica estas dos semanas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <h3 class="ch" data-n="10">Fase 1 · Déficit</h3>
+  <p class="deck">Semanas 3–10 · 24 de agosto al 18 de octubre · el bloque principal</p>
+  <div class="prose">
+    <p class="lead">Ocho semanas a 2.200 kcal con 165 g de proteína, tres sesiones de fuerza semanales y 9.000 pasos. Objetivo: pasar de 81,5 a 79,5 kg perdiendo grasa, no músculo.</p>
+
+    <div class="stats">
+      <div><dt>Calorías</dt><dd class="acc">2.200</dd></div>
+      <div><dt>Proteína</dt><dd>165<small> g</small></dd></div>
+      <div><dt>Grasa</dt><dd>70<small> g</small></dd></div>
+      <div><dt>Carbohidrato</dt><dd>227<small> g</small></dd></div>
+      <div><dt>Fibra</dt><dd>≥30<small> g</small></dd></div>
+      <div><dt>Agua</dt><dd>2,5<small> L</small></dd></div>
+    </div>
+
+    <h4>Opción de ciclado calórico</h4>
+    <p>Comer lo mismo todos los días es lo más simple y funciona perfectamente. Si prefieres tener más comida los días que entrenas, este reparto da la misma media semanal:</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 10.1 · Ciclado semanal opcional</caption>
+        <thead><tr><th>Tipo de día</th><th class="n">Días</th><th class="n">kcal</th><th class="n">Proteína</th><th class="n">HC</th><th class="n">Grasa</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Entreno</td><td class="n">3</td><td class="n">2.350</td><td class="n">165 g</td><td class="n">265 g</td><td class="n">68 g</td></tr>
+          <tr><td class="k">Descanso</td><td class="n">4</td><td class="n">2.100</td><td class="n">165 g</td><td class="n">195 g</td><td class="n">72 g</td></tr>
+          <tr class="total"><td>Media</td><td class="n">7</td><td class="n">2.207</td><td class="n">165 g</td><td class="n">225 g</td><td class="n">70 g</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Cronograma semana a semana</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 10.2 · Progresión prevista</caption>
+        <thead><tr><th>Semana</th><th>Fechas</th><th class="n">Peso previsto</th><th>Foco de entrenamiento</th></tr></thead>
+        <tbody>
+          <tr><td class="k">3</td><td>24–30 ago</td><td class="n">81,2 kg</td><td>3 sesiones · 2 series · RIR 3–4 · empieza el registro de cargas</td></tr>
+          <tr><td class="k">4</td><td>31 ago – 6 sep</td><td class="n">80,9 kg</td><td>3 series en los básicos · RIR 3 · vuelve el tenis</td></tr>
+          <tr><td class="k">5</td><td>7–13 sep</td><td class="n">80,6 kg</td><td>Primera subida de carga · <strong>semana de riesgo: vigila articulaciones</strong></td></tr>
+          <tr><td class="k">6</td><td>14–20 sep</td><td class="n">80,4 kg</td><td>RIR 2–3 · añade caminar/correr si no hay molestias</td></tr>
+          <tr><td class="k">7</td><td>21–27 sep</td><td class="n">80,2 kg</td><td>Consolidar · posible meseta de báscula, es normal</td></tr>
+          <tr><td class="k">8</td><td>28 sep – 4 oct</td><td class="n">80,0 kg</td><td><span class="pill">Descarga</span> mitad de series, mismo peso</td></tr>
+          <tr><td class="k">9</td><td>5–11 oct</td><td class="n">79,7 kg</td><td>Rutina B · RIR 2 · nuevos registros de fuerza</td></tr>
+          <tr><td class="k">10</td><td>12–18 oct</td><td class="n">79,5 kg</td><td>Cierre · <strong>repetir todas las mediciones del día 1</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Reglas de ajuste</h4>
+    <p>Revisión cada domingo, comparando la media de los últimos 7 días con la de los 7 anteriores:</p>
+    <ul>
+      <li><strong>Baja 0,2–0,4 kg</strong> → en zona. No toques nada.</li>
+      <li><strong>Baja menos de 0,2 kg dos semanas seguidas</strong> → primero revisa el registro (aceite, fines de semana, picoteos). Si el registro es limpio, resta 150 kcal <em>o</em> suma 1.500 pasos. Una cosa, no las dos.</li>
+      <li><strong>Baja más de 0,6 kg</strong> → vas demasiado rápido. Suma 150 kcal. Perder rápido aquí es perder músculo.</li>
+      <li><strong>Una semana rara</strong> (viaje, cena, mal sueño) → no ajustes nada. Espera al siguiente domingo.</li>
+    </ul>
+
+    <div class="card warn">
+      <span class="tag">Semanas 5 y 6 · el punto crítico</span>
+      <p>Estadísticamente es donde abandonas. Coinciden tres cosas: la novedad se ha ido, el tejido conectivo empieza a quejarse, y la báscula suele dar su primera meseta larga. Tres medidas preventivas concretas:</p>
+      <ul class="tight">
+        <li>La progresión de carga de la semana 5 se limita al <strong>5 %</strong>, aunque te sobre fuerza.</li>
+        <li>Si aparece molestia articular, aplica el semáforo del capítulo 15 <em>ese mismo día</em>. No esperes a ver si se pasa.</li>
+        <li>Si la báscula no se mueve pero la cintura sí, vas bien. Fíate de la cinta métrica.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <h3 class="ch" data-n="11">Fase 2 · Estabilización</h3>
+  <p class="deck">Semanas 11–14 · 19 de octubre al 15 de noviembre</p>
+  <div class="prose">
+    <p class="lead">La fase que casi todo el mundo se salta, y la razón por la que casi todo el mundo recupera el peso.</p>
+
+    <p>Al terminar un déficit hay dos tentaciones: seguir restringiendo («ya que estoy») o volver de golpe a comer como antes. La primera lleva a estancamiento y a adaptación metabólica acumulada; la segunda, a recuperar 2 kg en tres semanas. Lo correcto es <strong>subir las calorías de forma progresiva</strong> hasta el nuevo mantenimiento, dejando que el cuerpo reajuste hormonas, glucógeno y NEAT sin sobresaltos.</p>
+
+    <h4>Protocolo</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 11.1 · Subida progresiva a mantenimiento</caption>
+        <thead><tr><th>Semana</th><th class="n">kcal</th><th class="n">HC</th><th>Qué esperar</th></tr></thead>
+        <tbody>
+          <tr><td class="k">11</td><td class="n">2.300</td><td class="n">250 g</td><td>Sube 0,3–0,5 kg de báscula: es glucógeno y agua, no grasa</td></tr>
+          <tr><td class="k">12</td><td class="n">2.400</td><td class="n">275 g</td><td>Peso estable. Notarás más fuerza en el entrenamiento</td></tr>
+          <tr><td class="k">13</td><td class="n">2.500</td><td class="n">300 g</td><td>Peso estable. Mejor descanso y estado de ánimo</td></tr>
+          <tr><td class="k">14</td><td class="n">2.500</td><td class="n">300 g</td><td>Confirmar: si el peso sigue plano, ese es tu mantenimiento nuevo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>La proteína se queda en 165 g todo el tiempo. Las calorías nuevas entran como carbohidrato, que es lo que rinde en el entrenamiento.</p>
+
+    <p><strong>Criterio de éxito</strong>: peso dentro de ±0,5 kg de los 79,5 kg durante las cuatro semanas, comiendo unas 300 kcal más al día que en Fase 1. Si al llegar a 2.500 el peso empieza a subir de forma sostenida, tu mantenimiento está algo más abajo: quédate en 2.400.</p>
+
+    <p>El entrenamiento no cambia: mismas tres sesiones, pero ahora con energía disponible, así que es donde deberías ver los saltos de fuerza más claros de todo el plan.</p>
+  </div>
+</section>
+
+<section id="s12">
+  <h3 class="ch" data-n="12">Fase 3 · Construcción</h3>
+  <p class="deck">Semana 15 en adelante · desde el 16 de noviembre</p>
+  <div class="prose">
+    <p class="lead">Aquí está el resultado que realmente buscabas. Perder 2 kg cambia poco tu aspecto; ganar 3 kg de músculo lo cambia todo.</p>
+
+    <p>Con la grasa ya en buen sitio y el hábito instalado, el objetivo pasa a ser construir. Tienes 25 años, poco historial de entrenamiento y un FFMI de ~20: las condiciones son inmejorables.</p>
+
+    <h4>Dos estrategias, elige una</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 12.1 · Recomposición frente a superávit</caption>
+        <thead><tr><th></th><th>Recomposición</th><th>Superávit ligero</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Calorías</td><td class="n">2.500 <small>(mantenimiento)</small></td><td class="n">2.700 <small>(+200)</small></td></tr>
+          <tr><td class="k">Peso a 4 meses</td><td>79,5 → 80 kg</td><td>79,5 → 82,5 kg</td></tr>
+          <tr><td class="k">Músculo estimado</td><td>+1,5 a 2 kg</td><td>+2,5 a 3,5 kg</td></tr>
+          <tr><td class="k">Grasa</td><td>−1 a −1,5 kg</td><td>+0,5 a 1 kg</td></tr>
+          <tr><td class="k">Ventaja</td><td>Nunca dejas de verte bien</td><td>Ganas más rápido</td></tr>
+          <tr><td class="k">Inconveniente</td><td>Progreso lento y difícil de percibir</td><td>Toca volver a un déficit en primavera</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Mi recomendación para ti: recomposición a mantenimiento (2.500 kcal).</strong> Dado tu historial de abandonos, ver la báscula subir sería un factor de riesgo psicológico innecesario, y tu perfil de re-principiante es precisamente el que mejor responde a la recomposición. Si a los 3 meses la fuerza se ha estancado y quieres acelerar, entonces sí: sube a 2.700.</p>
+
+    <h4>Entrenamiento</h4>
+    <ul>
+      <li><strong>4 sesiones semanales</strong>, división torso/pierna (cap. 14, programa C), más tenis el día que toque.</li>
+      <li>Volumen: de 10 a 16 series efectivas por grupo muscular y semana.</li>
+      <li>RIR 1–2 en las series principales; RIR 0–1 en la última serie de aislamiento.</li>
+      <li>Descarga cada 6–8 semanas, sin excepción.</li>
+      <li>Cambio de ejercicios cada 8–12 semanas, manteniendo los patrones (empuje, tirón, rodilla, cadera).</li>
+    </ul>
+
+    <h4>Cuándo saber que va bien</h4>
+    <p>La báscula ya no es la métrica. Estas sí:</p>
+    <ul class="tight">
+      <li><strong>Fuerza</strong>: repeticiones o carga subiendo en al menos 2 de los 4 patrones cada mes.</li>
+      <li><strong>Cintura estable</strong> mientras el peso sube: eso es músculo.</li>
+      <li><strong>Perímetros de brazo y muslo</strong> subiendo 0,5–1 cm cada 8 semanas.</li>
+      <li><strong>Fotos cada 4 semanas</strong>: es donde se ve lo que el día a día esconde.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s13">
+  <h3 class="ch" data-n="13">Fase 4 · Sostenimiento</h3>
+  <p class="deck">Indefinida · el único plan que importa a largo plazo</p>
+  <div class="prose">
+    <p>Un plan que solo funciona mientras lo sigues no ha funcionado. La fase final no tiene calendario ni menú: son cinco reglas que caben en la cabeza sin esfuerzo.</p>
+
+    <div class="card good">
+      <span class="tag">Las cinco reglas</span>
+      <ol class="tight">
+        <li><strong>Proteína en las cuatro comidas.</strong> Una palma como mínimo. Si solo mantienes una regla, que sea esta.</li>
+        <li><strong>Fuerza tres veces por semana.</strong> Aunque sea corto. Aunque sea flojo. La consistencia gana a la intensidad por goleada.</li>
+        <li><strong>8.000 pasos al día.</strong> Es la palanca de gasto más barata que existe.</li>
+        <li><strong>Verdura en las dos comidas principales.</strong> Resuelve fibra, micronutrientes y saciedad de una vez.</li>
+        <li><strong>Pesarte a diario, mirar la media semanal.</strong> Si sube 2 kg sobre tu línea base, vuelves a 2.200 kcal durante 3–4 semanas. Nunca más allá de eso.</li>
+      </ol>
+    </div>
+
+    <p><strong>Revisión mensual</strong> (quince minutos, el primer domingo de cada mes): media de peso, cintura, fotos, registro de fuerza. Si dos de las cuatro van en la dirección equivocada, entras en un ciclo corto de 4 semanas de Fase 1. Si no, sigues.</p>
+
+    <p><strong>Ciclado anual sugerido</strong>: 8–12 semanas de construcción, 4–6 de déficit ligero, y así sucesivamente. Es lo que hace la gente que se mantiene en forma durante años, y es mucho más llevadero que un único empujón anual.</p>
+  </div>
+</section>
+
+<!-- ================== PARTE IV ================== -->
+<div class="part-head">
+  <span class="lbl">Parte IV</span>
+  <h2>Ejecución: entrenamiento y comida</h2>
+</div>
+
+<section id="s14">
+  <h3 class="ch" data-n="14">Entrenamiento en casa</h3>
+  <p class="deck">Tres programas progresivos con mancuernas, bandas y barra de dominadas</p>
+  <div class="prose">
+    <p>Todo lo que sigue está construido sobre seis <strong>patrones de movimiento</strong>, no sobre músculos sueltos. Si cada sesión contiene un empuje, un tirón, una dominante de rodilla y una dominante de cadera, has cubierto el cuerpo entero. Los aislamientos son un extra, no la base.</p>
+    <p>Todos los ejercicios de este capítulo se hacen con <strong>tu material real</strong>: mancuernas de discos, banco/silla de pesas, esterilla, tobilleras y bici estática. Los que requieren barra de dominadas están marcados como opcionales.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.1 · Patrones y ejercicios con tu equipamiento</caption>
+        <thead><tr><th>Patrón</th><th>Ejercicios disponibles</th><th>Músculos</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Empuje horizontal</td><td>Press con mancuernas en banco · press en suelo · flexiones · aperturas</td><td>Pectoral, tríceps, deltoides anterior</td></tr>
+          <tr><td class="k">Empuje vertical</td><td>Press militar sentado en banco · press Arnold · elevaciones laterales</td><td>Deltoides, tríceps</td></tr>
+          <tr><td class="k">Tirón horizontal</td><td>Remo a una mano con apoyo en banco · remo con dos mancuernas · remo invertido bajo mesa</td><td>Dorsal, romboides, trapecio, bíceps</td></tr>
+          <tr><td class="k">Tirón vertical</td><td>Pullover con mancuerna · <em>dominadas si compras la barra</em></td><td>Dorsal (anchura) <span class="pill acc">punto débil</span></td></tr>
+          <tr><td class="k">Dominante de rodilla</td><td>Sentadilla goblet · zancada · búlgara con pie en la silla · step-up</td><td>Cuádriceps, glúteo</td></tr>
+          <tr><td class="k">Dominante de cadera</td><td>Peso muerto rumano · hip thrust con espalda en el banco · femoral con tobilleras</td><td>Isquiotibiales, glúteo, lumbar</td></tr>
+          <tr><td class="k">Core</td><td>Plancha · dead bug · hollow hold · elevación de piernas con tobilleras</td><td>Abdomen, estabilizadores</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Programa A · Fases 0–1 · cuerpo completo</h4>
+    <p>Lunes, miércoles y viernes (o cualquier patrón con 48 h entre sesiones). Duración: 45–55 minutos. Descanso: 90 s en compuestos, 60 s en aislamientos. Alterna A1 / A2 / A1 una semana, A2 / A1 / A2 la siguiente.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.2 · Sesión A1</caption>
+        <thead><tr><th>Ejercicio</th><th class="n">Series</th><th class="n">Reps</th><th class="n">RIR</th><th>Ejecución</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sentadilla goblet</td><td class="n">3</td><td class="n">8–12</td><td class="n">2–3</td><td>Mancuerna vertical contra el pecho. Talones en el suelo, pecho alto, bajar hasta donde la pelvis no se retroverse</td></tr>
+          <tr><td class="k">Press con mancuernas en banco</td><td class="n">3</td><td class="n">8–12</td><td class="n">2–3</td><td>Codos a 45°, no abiertos. <strong>Semanas 1–4: hazlo en el suelo</strong> — el rango limitado protege el hombro mientras te adaptas</td></tr>
+          <tr><td class="k">Remo a una mano con apoyo</td><td class="n">3</td><td class="n">10–12</td><td class="n">2</td><td>Rodilla y mano en el banco, espalda plana. Tirar con el codo hacia la cadera, no con la mano</td></tr>
+          <tr><td class="k">Peso muerto rumano</td><td class="n">3</td><td class="n">10–12</td><td class="n">3</td><td>Mancuernas pegadas a las piernas, rodillas casi fijas, cadera atrás. Debe estirar el isquio, no la lumbar</td></tr>
+          <tr><td class="k">Press militar sentado</td><td class="n">2</td><td class="n">10–12</td><td class="n">2</td><td>Con respaldo. Sin arquear la lumbar para levantar el peso</td></tr>
+          <tr><td class="k">Plancha frontal</td><td class="n">3</td><td class="n">30–45 s</td><td class="n">—</td><td>Glúteo apretado, costillas hacia abajo. <strong>Directamente contra la anteversión pélvica</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.3 · Sesión A2</caption>
+        <thead><tr><th>Ejercicio</th><th class="n">Series</th><th class="n">Reps</th><th class="n">RIR</th><th>Ejecución</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Sentadilla búlgara</td><td class="n">3</td><td class="n">10 / pierna</td><td class="n">2–3</td><td>Empeine trasero en la silla. Empezar sin peso hasta dominar el equilibrio</td></tr>
+          <tr><td class="k">Pullover con mancuerna</td><td class="n">3</td><td class="n">12–15</td><td class="n">2</td><td>Tumbado en el banco, mancuerna sobre el pecho, bajar por detrás de la cabeza con codos semiflexionados. <strong>Tu mejor sustituto del tirón vertical</strong></td></tr>
+          <tr><td class="k">Flexiones <small>(pies en la silla si son fáciles)</small></td><td class="n">3</td><td class="n">10–20</td><td class="n">2</td><td>Cuerpo en línea recta, codos a 45°</td></tr>
+          <tr><td class="k">Hip thrust con mancuerna</td><td class="n">3</td><td class="n">12–15</td><td class="n">2</td><td>Escápulas apoyadas en el banco, mancuerna en la cadera, barbilla al pecho. Apretar glúteo arriba 1 s</td></tr>
+          <tr><td class="k">Pájaro <small>(elevación posterior)</small></td><td class="n">3</td><td class="n">15</td><td class="n">1–2</td><td>Tumbado boca abajo en el banco inclinado o de pie con torso a 90°. Peso ligero. <strong>Contra los hombros adelantados</strong></td></tr>
+          <tr><td class="k">Curl de bíceps</td><td class="n">2</td><td class="n">10–12</td><td class="n">1–2</td><td>Sin balanceo. Opcional pero satisfactorio</td></tr>
+          <tr><td class="k">Dead bug</td><td class="n">3</td><td class="n">10 / lado</td><td class="n">—</td><td>Lumbar pegada al suelo durante todo el movimiento</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="tag">Sesión A1 y A2 · qué priorizar en tu caso</span>
+      <p>Los cuatro ejercicios que más van a cambiar tu silueta, por este orden: <strong>remo a una mano</strong> (anchura y grosor de espalda), <strong>press militar</strong> y <strong>elevaciones laterales</strong> (anchura de hombros), y <strong>pullover</strong> o dominadas (dorsal). Todos atacan el mismo problema: la falta de contraste entre hombros y cintura que se ve en las fotos.</p>
+      <p>Si un día vas corto de tiempo, sacrifica el curl y el core antes que cualquiera de esos cuatro.</p>
+    </div>
+
+    <h4>Programa B · Fase 2</h4>
+    <p>Mismas sesiones, con tres cambios: <strong>4 series</strong> en los dos primeros ejercicios de cada sesión, <strong>RIR 1–2</strong> en las series finales, y sustituye el press plano por <strong>press inclinado</strong> (si tu banco se regula) y el goblet por <strong>sentadilla con mancuernas a los lados</strong>, que permite más carga.</p>
+
+    <h4>Programa C · Fase 3 · torso / pierna</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.4 · Distribución semanal en fase de construcción</caption>
+        <thead><tr><th>Día</th><th>Sesión</th><th>Contenido</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Lunes</td><td>Torso A</td><td>Press banca · remo a una mano · press militar · pullover · elevaciones laterales · tríceps</td></tr>
+          <tr><td class="k">Martes</td><td>Pierna A</td><td>Sentadilla · peso muerto rumano · zancada · gemelo de pie · plancha</td></tr>
+          <tr><td class="k">Miércoles</td><td>Bici</td><td>30–40 min Z2 · movilidad</td></tr>
+          <tr><td class="k">Jueves</td><td>Torso B</td><td>Press inclinado · remo con dos mancuernas · press Arnold · pájaro · curl · dead bug</td></tr>
+          <tr><td class="k">Viernes</td><td>Pierna B</td><td>Búlgara · hip thrust · femoral con tobilleras · gemelo · elevación de piernas</td></tr>
+          <tr><td class="k">Sáb / Dom</td><td>Tenis + caminar</td><td>Uno de los dos días completamente libre</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Doble progresión: cómo subir sin pasarte</h4>
+    <p>Con mancuernas ajustables los saltos de peso son grandes (2–2,5 kg), así que se progresa primero en repeticiones y luego en carga:</p>
+    <ol>
+      <li>Elige un rango, por ejemplo 8–12 repeticiones.</li>
+      <li>Empieza con un peso con el que hagas 8 al RIR objetivo.</li>
+      <li>Cada sesión intenta sumar una repetición en alguna serie.</li>
+      <li>Cuando completes <strong>todas</strong> las series a 12 repeticiones, sube el peso al mínimo salto posible.</li>
+      <li>Volverás a 8 repeticiones con el peso nuevo. Repite el ciclo.</li>
+    </ol>
+    <p><strong>Límite de seguridad:</strong> nunca más de un <strong>5 % de incremento semanal</strong> en un mismo ejercicio, aunque te sobre fuerza. Este es el freno que evita el ciclo de lesión-abandono del capítulo 3.</p>
+
+    <h4>Calentamiento · 8 minutos, no negociable</h4>
+    <ol class="tight">
+      <li>5 min de bici estática, suave y subiendo poco a poco.</li>
+      <li>Movilidad dinámica: círculos de hombro, rotaciones de cadera, sentadillas sin peso, buenos días sin peso.</li>
+      <li><strong>Series de aproximación</strong>: en el primer ejercicio de cada patrón, 1–2 series con el 50–70 % del peso de trabajo. Es lo que más protege articulaciones y tendones.</li>
+    </ol>
+
+    <h4>Cardio · la bici es tu herramienta, no la carrera</h4>
+    <p>El cardio no es imprescindible para perder grasa —eso lo hace el déficit—, pero mejora la salud cardiovascular, la recuperación y el gasto. La base son los <strong>pasos</strong>: 9.000 al día en Fase 1.</p>
+    <p>Y aquí hay una decisión concreta que quiero justificar: <strong>usa la bici estática como cardio principal y aparca la carrera al menos hasta el mes 3.</strong> Correr genera entre 2 y 3 veces tu peso corporal de impacto en cada zancada; la bici, cero. Tu historial dice que has abandonado por dolor más de una vez, y ahora mismo cargas 81,5 kg sobre un sistema musculoesquelético sin entrenar. La bici te da el mismo beneficio cardiovascular y el mismo gasto energético sin ninguno de esos riesgos. Cuando peses menos y lleves tres meses de fuerza en las piernas, correr será mucho más seguro.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.5 · Uso de la bici estática</caption>
+        <thead><tr><th>Uso</th><th class="n">Duración</th><th>Intensidad</th><th>Cuándo</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Calentamiento</td><td class="n">5 min</td><td>Suave, subiendo</td><td>Antes de cada sesión de fuerza</td></tr>
+          <tr><td class="k">Cardio Z2</td><td class="n">25–40 min</td><td>Ritmo conversacional: podrías hablar sin ahogarte</td><td>2–3 días por semana, sin fuerza ese día</td></tr>
+          <tr><td class="k">Recuperación activa</td><td class="n">15–20 min</td><td>Muy suave</td><td>Día siguiente a una sesión dura</td></tr>
+          <tr><td class="k">Intervalos <small>(desde mes 3)</small></td><td class="n">15–20 min</td><td>8 × (1 min fuerte + 1 min suave)</td><td>1 día por semana como máximo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Una sesión de 30 minutos de bici en Z2 te gasta aproximadamente <strong>250–350 kcal</strong>. No la uses para «compensar» comidas: úsala porque mejora tu capacidad de recuperación y tu salud cardiovascular, que es lo que hace sostenible todo lo demás.</p>
+
+    <h4>Vuelta a correr · a partir del mes 3, si te apetece</h4>
+    <p>Cuando llegue el momento, hazlo con este protocolo y no arrancando en 20 minutos continuos:</p>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 14.6 · Progresión caminar / correr</caption>
+        <thead><tr><th>Semana</th><th>Sesión (2×/sem)</th><th class="n">Total</th></tr></thead>
+        <tbody>
+          <tr><td class="k">1</td><td>6 × (1 min corriendo + 2 min andando)</td><td class="n">18 min</td></tr>
+          <tr><td class="k">2</td><td>6 × (2 min corriendo + 2 min andando)</td><td class="n">24 min</td></tr>
+          <tr><td class="k">3</td><td>5 × (3 min corriendo + 2 min andando)</td><td class="n">25 min</td></tr>
+          <tr><td class="k">4</td><td>4 × (5 min corriendo + 2 min andando)</td><td class="n">28 min</td></tr>
+          <tr><td class="k">5</td><td>2 × (10 min corriendo + 3 min andando)</td><td class="n">26 min</td></tr>
+          <tr><td class="k">6</td><td>20 min continuos, ritmo conversacional</td><td class="n">20 min</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>La regla de oro al correr es el <strong>+10 % semanal máximo</strong> de volumen total, y correr a un ritmo en el que puedas mantener una conversación. La mayoría de lesiones de corredor amateur vienen de subir el volumen demasiado rápido, no de la técnica.</p>
+  </div>
+</section>
+
+<section id="s15">
+  <h3 class="ch" data-n="15">Gestión del dolor y prevención del abandono</h3>
+  <p class="deck">El protocolo que convierte una lesión en un ajuste, no en un parón</p>
+  <div class="prose">
+    <p>Regla central, antes que nada: <strong>un dolor sustituye un ejercicio; no cancela una sesión, y mucho menos un programa.</strong> Si te duele el hombro, entrenas piernas y espalda ese día. Si te duele la rodilla, entrenas torso y trabajo de cadera. Prácticamente nunca hay motivo para no entrenar nada.</p>
+
+    <h5>Semáforo del dolor</h5>
+    <div class="tl">
+      <div class="g">
+        <h4><span class="dot"></span>Verde · sigue</h4>
+        <p>Molestia muscular difusa, mal localizada. Aparece durante o después del esfuerzo y desaparece en 24–48 h. Mejora al calentar.</p>
+        <p><strong>Acción:</strong> entrena con normalidad. Son agujetas o fatiga, y son parte del proceso.</p>
+      </div>
+      <div class="a">
+        <h4><span class="dot"></span>Ámbar · modifica</h4>
+        <p>Dolor localizado en una articulación o tendón, de 3–4 sobre 10. Aparece en un movimiento concreto. Puede seguir al día siguiente.</p>
+        <p><strong>Acción:</strong> baja carga un 30–50 %, reduce el rango de movimiento a la zona sin dolor y cambia a un ejercicio del mismo patrón que no moleste. Sigue entrenando. Reevalúa en 5–7 días.</p>
+      </div>
+      <div class="r">
+        <h4><span class="dot"></span>Rojo · para y consulta</h4>
+        <p>Dolor agudo o punzante por encima de 5 sobre 10, hinchazón, bloqueo articular, hormigueo, o dolor que limita la vida diaria.</p>
+        <p><strong>Acción:</strong> retira ese patrón de movimiento. Mantén el resto del entrenamiento. Si no mejora en 7–10 días, fisioterapeuta.</p>
+      </div>
+    </div>
+
+    <h4>Sustituciones rápidas</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 15.1 · Qué hacer cuando duele X</caption>
+        <thead><tr><th>Molestia</th><th>Evita</th><th>Sustituye por</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Hombro <small>(cara anterior)</small></td><td>Press en banco con rango completo, flexiones profundas</td><td>Press en suelo, press con agarre neutro (martillo), pájaro ligero</td></tr>
+          <tr><td class="k">Codo <small>(epicóndilo)</small></td><td>Curl con agarre supino, pullover pesado</td><td>Curl martillo, remo con agarre neutro, excéntricos suaves de muñeca</td></tr>
+          <tr><td class="k">Rodilla <small>(anterior)</small></td><td>Búlgaras, zancadas largas, sentadilla profunda, correr</td><td>Sentadilla parcial, <strong>bici estática suave</strong>, peso muerto rumano, hip thrust</td></tr>
+          <tr><td class="k">Lumbar</td><td>Peso muerto rumano pesado, remo inclinado sin apoyo</td><td>Remo a una mano con apoyo en banco, hip thrust, sentadilla goblet, dead bug</td></tr>
+          <tr><td class="k">Muñeca</td><td>Flexiones sobre la palma, press con agarre pronado</td><td>Flexiones apoyando en las mancuernas, agarre neutro</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Las siete medidas preventivas</h4>
+    <ol>
+      <li><strong>Calienta siempre</strong>, con series de aproximación en el primer ejercicio de cada patrón.</li>
+      <li><strong>Progresa despacio</strong>: máximo 5 % semanal en fuerza, 10 % en volumen de carrera.</li>
+      <li><strong>Rango completo con control</strong>, no rango máximo forzado. Los últimos grados de una articulación son donde ocurren las cosas malas.</li>
+      <li><strong>Descarga cada 6–8 semanas</strong>: una semana con la mitad de series y el mismo peso. Programada, no reactiva.</li>
+      <li><strong>Duerme.</strong> El tejido conectivo se repara durmiendo, y el sueño corto multiplica el riesgo de lesión.</li>
+      <li><strong>Varía los ejercicios cada 8–12 semanas</strong> dentro del mismo patrón, para no cargar siempre la misma estructura.</li>
+      <li><strong>Trabajo específico preventivo</strong>: pájaro con mancuerna ligera y rotación externa de hombro tumbado de lado (o <em>face pulls</em> si compras las bandas) para el manguito rotador; excéntricos de gemelo si vuelves a correr.</li>
+    </ol>
+
+    <div class="card">
+      <span class="tag">Protocolo de recaída</span>
+      <p>Si aun así paras —una semana, un mes, tres meses— la regla es <strong>no retomar donde lo dejaste</strong>. Vuelve al 60–70 % de las cargas anteriores y sube durante 2–3 semanas hasta recuperarlas. La memoria muscular es real y las recuperarás rápido; intentar arrancar directamente en tus mejores números es la vía más rápida a la siguiente lesión. Y si has parado más de un mes, repite dos semanas de Fase 0 antes de volver al déficit.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s16">
+  <h3 class="ch" data-n="16">Menú de 7 días · 2.200 kcal</h3>
+  <p class="deck">Cocina mediterránea, sin restricciones, con los números hechos</p>
+  <div class="prose">
+    <p>Siete días completos con la distribución de Fase 1. Los días de entreno llevan algo más de carbohidrato; el sábado es el día flexible con comida fuera. La media semanal sale en <strong>2.157 kcal</strong> y unos <strong>158 g de proteína</strong> al día.</p>
+    <p>Los pesos son <strong>en crudo</strong> salvo indicación contraria. Las cifras están redondeadas: asume un margen de ±5 %, que es más preciso de lo que necesitas.</p>
+  </div>
+
+  <h5>Día 1 · Lunes <span class="pill acc">entreno</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>Porridge: 80 g avena + 250 ml leche semi + 25 g proteína whey + 1 plátano (120 g) + canela</td><td class="n">625</td><td class="n">41 g</td></tr>
+        <tr><td class="k">Comida</td><td>Pollo al ajillo: 200 g pechuga + 80 g arroz + 200 g pisto de verduras + 10 g AOVE</td><td class="n">660</td><td class="n">52 g</td></tr>
+        <tr><td class="k">Merienda</td><td>250 g yogur griego 0 % + 20 g nueces + 1 manzana</td><td class="n">330</td><td class="n">28 g</td></tr>
+        <tr><td class="k">Cena</td><td>Salmón al horno 160 g + 250 g patata asada + ensalada verde + 5 g AOVE</td><td class="n">590</td><td class="n">39 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 160 g · G 68 g · HC 235 g · fibra 34 g</td><td class="n">2.205</td><td class="n">160 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 2 · Martes <span class="pill">descanso</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>80 g pan integral + 3 huevos revueltos + tomate rallado + 5 g AOVE + café con leche</td><td class="n">545</td><td class="n">32 g</td></tr>
+        <tr><td class="k">Comida</td><td>Lentejas estofadas (350 g cocidas) con verduras + 1 lata de atún al natural escurrida + 10 g AOVE</td><td class="n">610</td><td class="n">42 g</td></tr>
+        <tr><td class="k">Merienda</td><td>250 g requesón + 10 g miel + 150 g fresas</td><td class="n">315</td><td class="n">30 g</td></tr>
+        <tr><td class="k">Cena</td><td>Merluza a la plancha 220 g + 200 g patata cocida + judías verdes + 10 g AOVE</td><td class="n">500</td><td class="n">45 g</td></tr>
+        <tr><td class="k">Antes de dormir</td><td>150 g yogur griego 0 % + 15 g almendras</td><td class="n">180</td><td class="n">17 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 166 g · G 74 g · HC 195 g · fibra 36 g</td><td class="n">2.150</td><td class="n">166 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 3 · Miércoles <span class="pill acc">entreno</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>Tortilla de 3 huevos + 60 g pan integral + 50 g aguacate + café con leche</td><td class="n">600</td><td class="n">32 g</td></tr>
+        <tr><td class="k">Comida</td><td>Ternera magra 180 g + 80 g pasta integral + salsa de tomate casera con verduras + 10 g AOVE</td><td class="n">700</td><td class="n">50 g</td></tr>
+        <tr><td class="k">Post-entreno</td><td>Batido: 30 g whey + 1 plátano + agua</td><td class="n">230</td><td class="n">26 g</td></tr>
+        <tr><td class="k">Cena</td><td>Ensalada grande con 150 g pavo + 2 huevos cocidos + 200 g boniato asado + 10 g AOVE</td><td class="n">630</td><td class="n">47 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 155 g · G 72 g · HC 225 g · fibra 31 g</td><td class="n">2.160</td><td class="n">155 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 4 · Jueves <span class="pill">descanso</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>250 g yogur griego 0 % + 50 g avena + 150 g frutos rojos + 20 g nueces</td><td class="n">570</td><td class="n">34 g</td></tr>
+        <tr><td class="k">Comida</td><td>Garbanzos con espinacas (350 g cocidos) + bacalao desmigado 150 g + 10 g AOVE</td><td class="n">660</td><td class="n">48 g</td></tr>
+        <tr><td class="k">Merienda</td><td>60 g pan integral + 100 g queso fresco + tomate + 1 pieza de fruta</td><td class="n">330</td><td class="n">20 g</td></tr>
+        <tr><td class="k">Cena</td><td>Pollo al horno 200 g + 300 g verduras asadas + 150 g patata + 10 g AOVE</td><td class="n">620</td><td class="n">48 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 150 g · G 71 g · HC 215 g · fibra 42 g</td><td class="n">2.180</td><td class="n">150 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 5 · Viernes <span class="pill acc">entreno</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>Porridge: 80 g avena + 250 ml leche semi + 25 g whey + 100 g arándanos</td><td class="n">600</td><td class="n">41 g</td></tr>
+        <tr><td class="k">Comida</td><td>Salmón 150 g + 80 g quinoa + brócoli y zanahoria al vapor + 10 g AOVE</td><td class="n">680</td><td class="n">42 g</td></tr>
+        <tr><td class="k">Merienda</td><td>Bocadillo: 70 g pan + 100 g pavo + tomate + 5 g AOVE</td><td class="n">330</td><td class="n">28 g</td></tr>
+        <tr><td class="k">Cena</td><td>Wok: 180 g pollo + 60 g arroz + 250 g verduras variadas + 10 g AOVE + salsa de soja</td><td class="n">600</td><td class="n">48 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 159 g · G 73 g · HC 230 g · fibra 33 g</td><td class="n">2.210</td><td class="n">159 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 6 · Sábado <span class="pill">social · comida fuera</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>300 g yogur griego 0 % + 1 pieza de fruta + café. Ligero y alto en proteína a propósito</td><td class="n">280</td><td class="n">32 g</td></tr>
+        <tr><td class="k">Comida fuera</td><td>Presupuesto: 950 kcal. Entrante de verdura o ensalada · proteína a la plancha o al horno · guarnición de verdura o patata · 1 rebanada de pan · 1 caña · café solo de postre</td><td class="n">950</td><td class="n">55 g</td></tr>
+        <tr><td class="k">Merienda</td><td>1 pieza de fruta + 25 g almendras</td><td class="n">230</td><td class="n">7 g</td></tr>
+        <tr><td class="k">Cena</td><td>Revuelto de 3 huevos con gambas (100 g) + ensalada + 60 g pan</td><td class="n">545</td><td class="n">40 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 134 g · G 78 g · HC 210 g · fibra 28 g</td><td class="n">2.005</td><td class="n">134 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h5>Día 7 · Domingo <span class="pill">descanso · batch cooking</span></h5>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Comida</th><th>Contenido</th><th class="n">kcal</th><th class="n">Prot.</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Desayuno</td><td>80 g pan integral + 2 huevos + 1 lata de atún + tomate + 5 g AOVE</td><td class="n">570</td><td class="n">42 g</td></tr>
+        <tr><td class="k">Comida</td><td>Arroz con pollo: 200 g pollo + 80 g arroz + pimiento, cebolla, guisantes + 10 g AOVE</td><td class="n">680</td><td class="n">52 g</td></tr>
+        <tr><td class="k">Merienda</td><td>250 g yogur griego 0 % + 1 plátano + 10 g miel</td><td class="n">290</td><td class="n">27 g</td></tr>
+        <tr><td class="k">Cena</td><td>Crema de verduras 350 ml + tortilla de 2 huevos con 100 g gambas + 40 g pan</td><td class="n">560</td><td class="n">38 g</td></tr>
+        <tr class="total"><td>Total</td><td>P 159 g · G 67 g · HC 220 g · fibra 35 g</td><td class="n">2.100</td><td class="n">159 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <div class="stats">
+      <div><dt>Media semanal</dt><dd class="acc">2.144<small> kcal</small></dd></div>
+      <div><dt>Proteína media</dt><dd>155<small> g</small></dd></div>
+      <div><dt>Grasa media</dt><dd>72<small> g</small></dd></div>
+      <div><dt>HC medio</dt><dd>219<small> g</small></dd></div>
+      <div><dt>Fibra media</dt><dd>34<small> g</small></dd></div>
+    </div>
+    <p><em>Sobre el día 6:</em> la proteína baja a 134 g. No pasa absolutamente nada. Lo que importa es la media semanal, y un día por debajo entre siete no tiene ningún efecto medible sobre la masa muscular.</p>
+  </div>
+</section>
+
+<section id="s17">
+  <h3 class="ch" data-n="17">Intercambios, compra y batch cooking</h3>
+  <p class="deck">Para no depender de un menú fijo</p>
+  <div class="prose">
+    <p>El menú anterior es un ejemplo, no una obligación. Lo que necesitas de verdad es poder <strong>construir tus propios días</strong> intercambiando piezas equivalentes. Estas tres tablas son la herramienta.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 17.1 · Intercambios de proteína · cada línea ≈ 30 g de proteína</caption>
+        <thead><tr><th>Alimento</th><th class="n">Cantidad</th><th class="n">kcal</th><th>Comentario</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Pechuga de pollo o pavo</td><td class="n">130 g</td><td class="n">145</td><td>La opción más eficiente</td></tr>
+          <tr><td class="k">Merluza, bacalao, lenguado</td><td class="n">165 g</td><td class="n">145</td><td>Muy saciante, muy poca grasa</td></tr>
+          <tr><td class="k">Atún al natural</td><td class="n">115 g</td><td class="n">135</td><td>2 latas escurridas</td></tr>
+          <tr><td class="k">Ternera magra</td><td class="n">145 g</td><td class="n">205</td><td>Aporta hierro y B12</td></tr>
+          <tr><td class="k">Salmón</td><td class="n">150 g</td><td class="n">310</td><td>Omega-3; cuenta como grasa también</td></tr>
+          <tr><td class="k">Huevo entero</td><td class="n">4 uds</td><td class="n">285</td><td>Perfil de aminoácidos excelente</td></tr>
+          <tr><td class="k">Yogur griego 0 %</td><td class="n">300 g</td><td class="n">175</td><td>Cómodo para meriendas</td></tr>
+          <tr><td class="k">Requesón</td><td class="n">250 g</td><td class="n">225</td><td>Caseína: buena antes de dormir</td></tr>
+          <tr><td class="k">Whey en polvo</td><td class="n">38 g</td><td class="n">150</td><td>Solo cuando no cuadre la comida real</td></tr>
+          <tr><td class="k">Lentejas o garbanzos cocidos</td><td class="n">400 g</td><td class="n">420</td><td>Combinar con cereal para el perfil completo</td></tr>
+          <tr><td class="k">Tofu firme</td><td class="n">250 g</td><td class="n">300</td><td>Alternativa vegetal completa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 17.2 · Intercambios de carbohidrato · cada línea ≈ 50 g de HC</caption>
+        <thead><tr><th>Alimento</th><th class="n">Cantidad</th><th class="n">kcal</th><th class="n">Fibra</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Arroz <small>(crudo)</small></td><td class="n">65 g</td><td class="n">230</td><td class="n">1 g</td></tr>
+          <tr><td class="k">Pasta integral <small>(cruda)</small></td><td class="n">70 g</td><td class="n">245</td><td class="n">6 g</td></tr>
+          <tr><td class="k">Avena</td><td class="n">75 g</td><td class="n">280</td><td class="n">8 g</td></tr>
+          <tr><td class="k">Pan integral</td><td class="n">110 g</td><td class="n">270</td><td class="n">8 g</td></tr>
+          <tr><td class="k">Patata cocida</td><td class="n">290 g</td><td class="n">220</td><td class="n">6 g</td></tr>
+          <tr><td class="k">Boniato asado</td><td class="n">250 g</td><td class="n">225</td><td class="n">8 g</td></tr>
+          <tr><td class="k">Legumbre cocida</td><td class="n">330 g</td><td class="n">350</td><td class="n">25 g</td></tr>
+          <tr><td class="k">Plátano</td><td class="n">240 g <small>(2 uds)</small></td><td class="n">210</td><td class="n">6 g</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 17.3 · Intercambios de grasa · cada línea ≈ 15 g de grasa</caption>
+        <thead><tr><th>Alimento</th><th class="n">Cantidad</th><th class="n">kcal</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Aceite de oliva virgen extra</td><td class="n">17 g <small>(1½ cda)</small></td><td class="n">150</td></tr>
+          <tr><td class="k">Nueces</td><td class="n">24 g</td><td class="n">155</td></tr>
+          <tr><td class="k">Almendras</td><td class="n">30 g</td><td class="n">175</td></tr>
+          <tr><td class="k">Aguacate</td><td class="n">100 g</td><td class="n">160</td></tr>
+          <tr><td class="k">Crema de cacahuete</td><td class="n">30 g</td><td class="n">180</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Lista de la compra semanal</h4>
+    <div class="scroll">
+      <table>
+        <caption>Tabla 17.4 · Compra para una persona, 7 días · ~60–75 € en España</caption>
+        <thead><tr><th>Categoría</th><th>Productos y cantidades</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Proteína animal</td><td>Pechuga de pollo 1,2 kg · pavo en lonchas 300 g · ternera magra 200 g · salmón 350 g · merluza 250 g · bacalao 150 g · gambas 200 g · 24 huevos · 4 latas de atún al natural</td></tr>
+          <tr><td class="k">Lácteos</td><td>Yogur griego 0 % 1,5 kg · requesón 500 g · queso fresco 200 g · leche semidesnatada 2 L</td></tr>
+          <tr><td class="k">Cereales y tubérculos</td><td>Avena 500 g · arroz 500 g · pasta integral 250 g · quinoa 200 g · pan integral 1 kg · patata 2 kg · boniato 500 g</td></tr>
+          <tr><td class="k">Legumbres</td><td>4 botes de lentejas y garbanzos cocidos (o 500 g en seco)</td></tr>
+          <tr><td class="k">Grasas</td><td>AOVE 1 L · nueces 200 g · almendras 200 g · 2 aguacates</td></tr>
+          <tr><td class="k">Verdura</td><td>Espinacas · brócoli · judías verdes · calabacín · pimiento · cebolla · zanahoria · tomate · 3 bolsas de ensalada</td></tr>
+          <tr><td class="k">Fruta</td><td>7 plátanos · 5 manzanas · 500 g frutos rojos congelados · 2 limones · fruta de temporada</td></tr>
+          <tr><td class="k">Despensa</td><td>Especias · salsa de soja · tomate triturado · vinagre · miel · canela</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Batch cooking · domingo, 90 minutos</h4>
+    <ol>
+      <li><strong>Enciende el horno a 200 °C</strong> y mete dos bandejas: una con 1 kg de pollo troceado y especias, otra con verduras (calabacín, pimiento, cebolla, zanahoria) y patata o boniato. 35–40 minutos.</li>
+      <li><strong>Mientras tanto, dos ollas</strong>: 400 g de arroz en una, 8 huevos cociendo en la otra (10 minutos).</li>
+      <li><strong>Sofrito base</strong>: cebolla, ajo y tomate triturado. Sirve para lentejas, garbanzos, pasta y arroz durante toda la semana.</li>
+      <li><strong>Lava y corta</strong> la verdura de ensalada; guárdala en un táper con papel de cocina que absorba humedad.</li>
+      <li><strong>Reparte en táperes</strong> y pesa cada ración al guardarla, anotando el peso en la tapa. Así no tienes que pesar entre semana.</li>
+    </ol>
+    <p>El pollo y el arroz cocidos aguantan 3–4 días en nevera. Lo que no vayas a comer antes del jueves, al congelador. Pescado y huevos, mejor del día.</p>
+  </div>
+</section>
+
+<section id="s18">
+  <h3 class="ch" data-n="18">Comer fuera, alcohol y vida social</h3>
+  <p class="deck">Presupuestado, no prohibido</p>
+  <div class="prose">
+    <p>Una dieta que se rompe cada vez que quedas a cenar no es una dieta, es una cuenta atrás. El plan asume que sales, y le reserva sitio: el día 6 del menú tiene una comida fuera de 950 kcal ya incluida.</p>
+
+    <h4>Estrategias en el restaurante</h4>
+    <ul>
+      <li><strong>Elige el método de cocinado</strong>: plancha, horno, parrilla, vapor o guiso ligero por encima de rebozados, fritos y salsas cremosas. Es la decisión que más calorías mueve, con diferencia.</li>
+      <li><strong>Proteína primero</strong>: pide siempre un plato con una fuente clara de proteína. Sacia y protege el músculo.</li>
+      <li><strong>Cambia la guarnición</strong>: doble de verdura o ensalada en lugar de patatas fritas. Casi todos los sitios lo hacen sin problema.</li>
+      <li><strong>Salsas aparte</strong>: una salsa cremosa puede sumar 200–300 kcal sin que lo notes.</li>
+      <li><strong>Pan</strong>: una rebanada, no la cesta.</li>
+      <li><strong>Postre</strong>: café solo o cortado por defecto. Si quieres postre de verdad, que sea la excepción consciente, no la costumbre.</li>
+    </ul>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 18.1 · Coste energético del alcohol y bebidas</caption>
+        <thead><tr><th>Bebida</th><th class="n">Cantidad</th><th class="n">kcal</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Caña de cerveza</td><td class="n">200 ml</td><td class="n">90</td></tr>
+          <tr><td class="k">Tercio de cerveza</td><td class="n">330 ml</td><td class="n">140</td></tr>
+          <tr><td class="k">Copa de vino</td><td class="n">150 ml</td><td class="n">120</td></tr>
+          <tr><td class="k">Copa / combinado</td><td class="n">1 ud</td><td class="n">200–250</td></tr>
+          <tr><td class="k">Refresco azucarado</td><td class="n">330 ml</td><td class="n">140</td></tr>
+          <tr><td class="k">Refresco zero, agua, café solo</td><td class="n">—</td><td class="n">0–5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>El alcohol aporta <strong>7 kcal por gramo</strong>, casi tanto como la grasa, y no aporta nada más. Además interfiere con la síntesis proteica y —esto pesa más— empeora la calidad del sueño y con ella la recuperación. No hace falta eliminarlo: <strong>hasta 3–4 unidades a la semana</strong> encajan sin comprometer el plan. Lo que sí destruye un déficit son las noches de 8–10 unidades, no por las calorías del alcohol sino por lo que se come durante y al día siguiente.</p>
+
+    <div class="card">
+      <span class="tag">El banco de calorías</span>
+      <p>Si sabes que el viernes tienes cena, resta 150 kcal los martes, miércoles y jueves. Habrás «ahorrado» 450 kcal para el viernes sin haber pasado hambre ningún día. Es el mismo principio del ciclado calórico y funciona porque <strong>lo que cuenta es el balance semanal</strong>, no el diario.</p>
+      <p>Lo que <em>no</em> funciona: compensar al revés, es decir, ayunar el sábado porque el viernes te pasaste. Eso genera el ciclo de restricción-atracón, que es el mecanismo por el que fracasan la mayoría de dietas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s19">
+  <h3 class="ch" data-n="19">Sueño, estrés y recuperación</h3>
+  <p class="deck">Las variables que no están en el plato ni en la sesión</p>
+  <div class="prose">
+    <p>Si tuviera que ordenar los factores por impacto real sobre tu composición corporal, el sueño estaría en tercer lugar, justo detrás del balance energético y la proteína — por delante de la elección de ejercicios, del <em>timing</em> de comidas y de cualquier suplemento.</p>
+
+    <h4>El dato que lo demuestra</h4>
+    <p>Nedeltcheva y colaboradores (<em>Annals of Internal Medicine</em>, 2010) sometieron a un mismo déficit calórico a dos grupos, uno durmiendo 8,5 h y otro 5,5 h. Ambos perdieron el mismo peso total. Pero el grupo que dormía poco perdió aproximadamente un <strong>55 % menos de grasa</strong> y un <strong>60 % más de masa magra</strong>. Mismo déficit, resultado casi opuesto.</p>
+
+    <p>Los mecanismos: dormir poco eleva la grelina (hambre) y baja la leptina (saciedad), aumenta el cortisol, reduce la sensibilidad a la insulina, deprime la testosterona y —de forma muy medible— hunde el NEAT porque simplemente te mueves menos cuando estás cansado.</p>
+
+    <h4>Protocolo de sueño</h4>
+    <ul class="tight">
+      <li><strong>7–9 horas</strong>, con horario de acostarse y levantarse razonablemente estable, también el fin de semana.</li>
+      <li>Habitación <strong>oscura, fresca</strong> (18–20 °C) y silenciosa.</li>
+      <li>Sin cafeína después de las <strong>15:00</strong>: su vida media es de 5–6 horas, así que un café de las 17:00 sigue actuando a medianoche.</li>
+      <li>Sin alcohol en las 3 horas previas: te duerme antes y destroza la fase REM.</li>
+      <li>Pantallas fuera en los últimos 30–60 minutos, o al menos con luz cálida.</li>
+      <li>Si entrenas por la noche, deja 1,5–2 h entre la sesión y la cama.</li>
+    </ul>
+
+    <h4>Estrés</h4>
+    <p>El cortisol crónicamente elevado favorece el acúmulo de grasa visceral, retiene líquido (lo que enmascara el progreso en la báscula durante semanas) y dispara el hambre emocional. Lo que funciona, en orden de eficacia: dormir suficiente, entrenar fuerza, caminar al aire libre, y tener el plan escrito para no gastar energía mental decidiendo cada día qué comer — que es, en el fondo, buena parte de para qué sirve este documento.</p>
+
+    <h4>Descanso entre sesiones</h4>
+    <ul class="tight">
+      <li><strong>48 horas</strong> entre sesiones que trabajen el mismo grupo muscular.</li>
+      <li>Las agujetas no son indicador de nada útil: puedes entrenar con agujetas leves.</li>
+      <li>Señales de que necesitas una descarga: fuerza estancada o a la baja dos semanas seguidas, sueño peor, irritabilidad, dolores articulares difusos, pérdida de ganas de entrenar.</li>
+      <li>Un día de descanso completo por semana, mínimo. Descanso completo significa caminar, no «cardio suave».</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s20">
+  <h3 class="ch" data-n="20">Suplementos</h3>
+  <p class="deck">Lo que tiene evidencia, lo que es opcional y lo que es marketing</p>
+  <div class="prose">
+    <p>Orden de prioridades, para que quede claro: <strong>calorías → proteína → entrenamiento → sueño → suplementos</strong>. Los suplementos son la última casilla y, bien elegidos, aportan quizá un 2–5 % del resultado. Con las tres primeras casillas sin resolver, no aportan nada.</p>
+
+    <div class="scroll">
+      <table>
+        <caption>Tabla 20.1 · Evaluación por nivel de evidencia</caption>
+        <thead><tr><th>Suplemento</th><th>Dosis</th><th>Evidencia</th><th>¿Para ti?</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Creatina monohidrato</td><td>3–5 g/día, a cualquier hora, todos los días</td><td>Muy sólida. El suplemento más estudiado del deporte</td><td><strong>Sí.</strong> +5–15 % de fuerza y volumen de trabajo. 15–25 €/año</td></tr>
+          <tr><td class="k">Proteína en polvo <small>(whey)</small></td><td>25–30 g cuando no llegues con comida</td><td>Sólida como alimento, nula como «magia»</td><td><strong>Útil.</strong> Es comida cómoda, no un suplemento</td></tr>
+          <tr><td class="k">Vitamina D3</td><td>1.000–2.000 UI/día si hay déficit</td><td>Sólida en personas deficitarias</td><td><strong>Según analítica.</strong> Déficit común aun en España</td></tr>
+          <tr><td class="k">Omega-3 <small>(EPA/DHA)</small></td><td>1–2 g/día de EPA+DHA</td><td>Moderada: inflamación, perfil lipídico</td><td><strong>Solo si</strong> comes menos de 2 raciones de pescado azul a la semana</td></tr>
+          <tr><td class="k">Cafeína</td><td>3 mg/kg ≈ 240 mg, 30–45 min antes</td><td>Sólida para rendimiento</td><td><strong>Opcional.</strong> No después de las 15:00</td></tr>
+          <tr><td class="k">Multivitamínico</td><td>1/día</td><td>Débil con dieta variada</td><td><strong>Innecesario</strong> con el menú de este plan</td></tr>
+          <tr><td class="k">BCAA / aminoácidos ramificados</td><td>—</td><td>Nula si la proteína total es suficiente</td><td><strong>No.</strong> Dinero tirado con 165 g de proteína</td></tr>
+          <tr><td class="k">Quemagrasas, L-carnitina, CLA</td><td>—</td><td>Nula o irrelevante</td><td><strong>No.</strong></td></tr>
+          <tr><td class="k">Glutamina, testo-boosters</td><td>—</td><td>Nula en sujetos sanos</td><td><strong>No.</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card warn">
+      <span class="tag">Creatina y báscula · léelo antes de empezar</span>
+      <p>La creatina hace que el músculo retenga agua intracelular. En las primeras 2–4 semanas eso suele traducirse en <strong>+1 a +1,5 kg de báscula</strong>. No es grasa, es agua dentro del músculo, y viene acompañada de más fuerza.</p>
+      <p>Pero choca frontalmente con tu objetivo declarado de ver −2 kg. Dos opciones: <strong>(a)</strong> empezar la creatina en la Fase 2, cuando ya hayas visto bajar la báscula, o <strong>(b)</strong> empezarla ya y aceptar que durante el primer mes tu métrica es la cintura, no el peso. La opción (b) es la técnicamente mejor; la (a) es la psicológicamente más segura dado tu historial. Elige tú.</p>
+    </div>
+
+    <p><strong>Sobre calidad</strong>: en creatina, busca «creatina monohidrato» a secas, preferiblemente con sello Creapure. No existe una versión mejor: las formas «avanzadas» (HCl, éster etílico, kre-alkalyn) cuestan más y no han demostrado ninguna ventaja. No hace falta fase de carga; 3–5 g diarios saturan el músculo en 3–4 semanas igualmente.</p>
+  </div>
+</section>
+
+<!-- ================== PARTE V ================== -->
+<div class="part-head">
+  <span class="lbl">Parte V</span>
+  <h2>Control y anexos</h2>
+</div>
+
+<section id="s21">
+  <h3 class="ch" data-n="21">Panel de seguimiento</h3>
+  <p class="deck">Qué medir, cuándo, y qué hacer con el dato</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 21.1 · Sistema de métricas</caption>
+        <thead><tr><th>Métrica</th><th>Frecuencia</th><th>Cómo</th><th>Qué buscas</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Peso</td><td>Diario</td><td>Al levantarte, tras orinar, en ayunas, sin ropa</td><td>Media de 7 días bajando 0,2–0,4 kg/sem</td></tr>
+          <tr><td class="k">Cintura</td><td>Semanal</td><td>Mismo día, en ayunas, ombligo, espiración normal</td><td>−0,3 a −0,5 cm/sem</td></tr>
+          <tr><td class="k">Fotos</td><td>Cada 4 sem</td><td>Frente, perfil, espalda. Misma luz, hora y sitio</td><td>Cambios que el día a día esconde</td></tr>
+          <tr><td class="k">Registro de fuerza</td><td>Cada sesión</td><td>Ejercicio, peso, series, repeticiones, RIR</td><td>Progreso en 2 de 4 patrones al mes</td></tr>
+          <tr><td class="k">Ingesta</td><td>Diario <small>(fases 0–1)</small></td><td>App, pesando; ver capítulo 6</td><td>±100 kcal del objetivo</td></tr>
+          <tr><td class="k">Pasos</td><td>Diario</td><td>Móvil o reloj</td><td>Media semanal ≥ objetivo</td></tr>
+          <tr><td class="k">Sueño</td><td>Diario</td><td>Hora de acostarse y de levantarse</td><td>≥ 7 h el 80 % de las noches</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>La media móvil, en detalle</h4>
+    <p>Suma los pesos de los últimos siete días y divide entre siete. Compara ese número con el de la semana anterior. <strong>Nunca compares días sueltos</strong>: la diferencia entre el lunes y el martes es ruido puro. Cualquier app de peso lo hace automáticamente; también sirve una hoja de cálculo con siete columnas.</p>
+
+    <h4>Revisión de los domingos · 10 minutos</h4>
+    <ul class="checklist">
+      <li>Calcular la media de peso de la semana y compararla con la anterior</li>
+      <li>Medir cintura y anotarla</li>
+      <li>Revisar el registro de comida: ¿cuántos días completos? ¿pesaste el aceite?</li>
+      <li>Revisar el registro de entrenamiento: ¿subió algo respecto a la semana pasada?</li>
+      <li>Media de pasos y de horas de sueño</li>
+      <li>Aplicar las reglas de ajuste del capítulo 10 — como mucho una modificación por semana</li>
+      <li>Planificar la comida de la semana y hacer la compra</li>
+    </ul>
+
+    <div class="card">
+      <span class="tag">Principio de un solo cambio</span>
+      <p>Cuando algo no funcione, cambia <strong>una sola variable</strong> y espera dos semanas. Si tocas calorías, pasos y entrenamiento a la vez, no sabrás qué funcionó y no aprenderás nada sobre tu propio cuerpo — que es el activo real que construyes con este proceso.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s22">
+  <h3 class="ch" data-n="22">Solución de problemas</h3>
+  <p class="deck">Los ocho escenarios que van a ocurrir</p>
+  <div class="prose">
+    <div class="scroll">
+      <table>
+        <caption>Tabla 22.1 · Diagnóstico y respuesta</caption>
+        <thead><tr><th>Situación</th><th>Causa probable</th><th>Qué hacer</th></tr></thead>
+        <tbody>
+          <tr><td class="k">El peso no baja en 2–3 semanas</td><td>Errores de registro (aceite, fines de semana) en el 80 % de los casos; caída de NEAT en el resto</td><td>Pesa todo durante 5 días, incluido el finde. Si el registro es limpio, resta 150 kcal <em>o</em> suma 1.500 pasos</td></tr>
+          <tr><td class="k">El peso sube de golpe 1–2 kg</td><td>Sodio, carbohidratos, estrés, entrenamiento reciente o tránsito lento</td><td>Nada. Sigue el plan y mira la media dentro de 5 días</td></tr>
+          <tr><td class="k">Hambre constante</td><td>Poca proteína, poca fibra, poco volumen de comida, poco sueño</td><td>Sube proteína a 180 g, añade 300 g de verdura a cada comida principal, revisa el sueño, bebe más agua</td></tr>
+          <tr><td class="k">Sin energía en el entreno</td><td>Carbohidrato bajo o mal colocado</td><td>Mueve 50 g de HC a la comida previa al entrenamiento. Si persiste, sube 100 kcal</td></tr>
+          <tr><td class="k">Un atracón</td><td>Restricción excesiva, hambre acumulada, alcohol o estrés</td><td>Vuelve al plan <strong>en la comida siguiente</strong>. No ayunes, no hagas cardio de castigo. Un día no borra una semana; una semana de compensación sí</td></tr>
+          <tr><td class="k">Viaje o vacaciones</td><td>—</td><td>Cambia el objetivo a mantener: prioriza proteína en cada comida y 10.000 pasos. Aceptar 0 progreso es infinitamente mejor que abandonar</td></tr>
+          <tr><td class="k">Enfermedad</td><td>—</td><td>Come a mantenimiento, no entrenes con fiebre. Retoma al 70 % de cargas durante 3–4 días</td></tr>
+          <tr><td class="k">Dolor articular</td><td>Progresión demasiado rápida</td><td>Semáforo del capítulo 15. Sustituye el ejercicio, no canceles la sesión</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>El fin de semana: la matemática incómoda</h4>
+    <p>Cinco días con −300 kcal generan un déficit de 1.500 kcal. Dos días con +750 kcal generan un superávit de 1.500. <strong>Balance semanal: cero.</strong> Esta es, de lejos, la razón más común por la que un plan bien diseñado no produce resultados. No hace falta ser estricto el sábado; hace falta <em>contarlo</em>, y usar el banco de calorías del capítulo 18 para que quepa.</p>
+
+    <h4>Si te saltas una semana entera</h4>
+    <p>No pasa nada y no hay que compensar. Retoma exactamente donde estabas en comida, y en entrenamiento vuelve al 80 % de las cargas durante una semana. El error caro no es la semana perdida: es abandonar el plan porque se ha perdido una semana.</p>
+  </div>
+</section>
+
+<section id="s23">
+  <h3 class="ch" data-n="23">Anexos</h3>
+  <p class="deck">Fórmulas, glosario y fuentes</p>
+  <div class="prose">
+    <h4>A · Fórmulas de referencia</h4>
+    <div class="formula">
+IMC = peso(kg) ÷ altura(m)²<br>
+Ratio cintura/altura = cintura(cm) ÷ altura(cm)   · objetivo &lt; 0,50<br>
+FFMI = masa magra(kg) ÷ altura(m)²<br><br>
+TMB (Mifflin–St Jeor, hombre) = 10×peso + 6,25×altura(cm) − 5×edad + 5<br>
+TMB (Katch–McArdle) = 370 + 21,6 × masa magra(kg)<br>
+GET = TMB × factor de actividad (1,2 – 1,9)<br><br>
+%Grasa (Navy, hombre) = 495 ÷ [1,0324 − 0,19077×log₁₀(cintura−cuello) + 0,15456×log₁₀(altura)] − 450<br><br>
+Proteína = 1,6 – 2,2 g × kg de peso<br>
+Grasa    = 0,8 – 1,0 g × kg de peso<br>
+HC       = (kcal totales − kcal proteína − kcal grasa) ÷ 4<br><br>
+Déficit para X kg/semana ≈ X × 7.700 ÷ 7   kcal/día
+    </div>
+
+    <h4>B · Densidades energéticas</h4>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Macronutriente</th><th class="n">kcal/g</th><th class="n">Efecto térmico</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Proteína</td><td class="n">4</td><td class="n">20–30 %</td></tr>
+          <tr><td class="k">Carbohidrato</td><td class="n">4</td><td class="n">5–10 %</td></tr>
+          <tr><td class="k">Grasa</td><td class="n">9</td><td class="n">0–3 %</td></tr>
+          <tr><td class="k">Alcohol</td><td class="n">7</td><td class="n">10–30 %</td></tr>
+          <tr><td class="k">Fibra</td><td class="n">~2</td><td class="n">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>C · Glosario</h4>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+        <tbody>
+          <tr><td class="k">TMB</td><td>Tasa metabólica basal: energía mínima en reposo absoluto</td></tr>
+          <tr><td class="k">GET / TDEE</td><td>Gasto energético total diario, todo incluido</td></tr>
+          <tr><td class="k">NEAT</td><td>Termogénesis por actividad no deportiva: todo el movimiento cotidiano</td></tr>
+          <tr><td class="k">ETA</td><td>Efecto térmico de los alimentos: energía gastada al digerir</td></tr>
+          <tr><td class="k">RIR</td><td>Repeticiones en reserva: cuántas más podrías haber hecho</td></tr>
+          <tr><td class="k">MLG / FFM</td><td>Masa libre de grasa: músculo, hueso, órganos, agua</td></tr>
+          <tr><td class="k">FFMI</td><td>Índice de masa libre de grasa: MLG ÷ altura²</td></tr>
+          <tr><td class="k">Serie efectiva</td><td>Serie llevada a RIR 0–3, la que produce adaptación</td></tr>
+          <tr><td class="k">Descarga</td><td>Semana planificada de volumen reducido para recuperar</td></tr>
+          <tr><td class="k">Recomposición</td><td>Ganar músculo y perder grasa simultáneamente</td></tr>
+          <tr><td class="k">Doble progresión</td><td>Subir repeticiones dentro de un rango y luego el peso</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>D · Bibliografía de referencia</h4>
+    <p>Las fuentes en las que se apoyan los números y afirmaciones de este documento. Están citadas por autor, publicación y año para que puedas localizarlas; conviene consultar el original si quieres el detalle metodológico.</p>
+    <ul class="refs">
+      <li data-n="01">Mifflin MD, St Jeor ST, et al. <em>A new predictive equation for resting energy expenditure in healthy individuals.</em> American Journal of Clinical Nutrition, 1990. — Ecuación de TMB usada en el capítulo 2.</li>
+      <li data-n="02">Hall KD, et al. <em>Quantification of the effect of energy imbalance on bodyweight.</em> The Lancet, 2011. — Modelo dinámico del balance energético; por qué la regla de las 7.700 kcal sobreestima.</li>
+      <li data-n="03">Helms ER, Aragon AA, Fitschen PJ. <em>Evidence-based recommendations for natural bodybuilding contest preparation: nutrition and supplementation.</em> Journal of the International Society of Sports Nutrition, 2014. — Proteína en déficit, ritmo de pérdida.</li>
+      <li data-n="04">Morton RW, et al. <em>A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength.</em> British Journal of Sports Medicine, 2018. — La meseta de 1,6 g/kg.</li>
+      <li data-n="05">Schoenfeld BJ, Ogborn D, Krieger JW. <em>Dose-response relationship between weekly resistance training volume and increases in muscle mass.</em> Journal of Sports Sciences, 2017. — Series efectivas por semana.</li>
+      <li data-n="06">Schoenfeld BJ, et al. <em>Strength and hypertrophy adaptations between low- vs high-load resistance training.</em> Journal of Strength and Conditioning Research, 2017. — Por qué las cargas moderadas al fallo funcionan igual de bien.</li>
+      <li data-n="07">Lichtman SW, et al. <em>Discrepancy between self-reported and actual caloric intake and exercise in obese subjects.</em> New England Journal of Medicine, 1992. — El infrarregistro de la ingesta.</li>
+      <li data-n="08">Nedeltcheva AV, et al. <em>Insufficient sleep undermines dietary efforts to reduce adiposity.</em> Annals of Internal Medicine, 2010. — Sueño y composición corporal.</li>
+      <li data-n="09">Garthe I, et al. <em>Effect of two different weight-loss rates on body composition and strength in elite athletes.</em> International Journal of Sport Nutrition and Exercise Metabolism, 2011. — Pérdida lenta frente a rápida.</li>
+      <li data-n="10">Trexler ET, Smith-Ryan AE, Norton LE. <em>Metabolic adaptation to weight loss: implications for the athlete.</em> JISSN, 2014. — Adaptación metabólica.</li>
+      <li data-n="11">Kreider RB, et al. <em>ISSN position stand: safety and efficacy of creatine supplementation.</em> JISSN, 2017. — Creatina.</li>
+      <li data-n="12">Aragon AA, Schoenfeld BJ, et al. <em>ISSN position stand: diets and body composition.</em> JISSN, 2017. — Comparación de enfoques dietéticos y tasas de ganancia muscular.</li>
+      <li data-n="13">Grgic J, et al. <em>Effects of resistance training frequency on gains in muscular strength.</em> Sports Medicine, 2018. — Frecuencia de entrenamiento.</li>
+      <li data-n="14">Ashwell M, Gunn P, Gibson S. <em>Waist-to-height ratio as an indicator of early health risk.</em> Obesity Reviews, 2012. — El umbral de 0,5.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Estudio físico y nutricional</strong> · Varón, 25 años, 185 cm, 81,5 kg · Elaborado el 10 de agosto de 2026.</p>
+  <p style="margin-top:10px">Documento de orientación sobre nutrición y entrenamiento. No sustituye el consejo de un médico, dietista-nutricionista o fisioterapeuta, especialmente ante patología previa, medicación o dolor persistente. Los valores calóricos y de composición son estimaciones basadas en ecuaciones poblacionales y deben calibrarse con los datos reales de la Fase 0.</p>
+</footer>
+
+</main>
+</div>
+</div>
