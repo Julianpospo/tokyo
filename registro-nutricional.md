@@ -53,9 +53,9 @@ Grasa 17,6 g · HC 8,1 g · **Sal 1,55 g**
 | Desayuno | Pan integral 65 g · 1 huevo revuelto · 3 lonchas Carloteña · café | **430** | **29 g** | Alta — foto + etiquetas. Falta confirmar si llevó aceite |
 | Comida | Entrecot 163 g · lentejas 250 g · AOVE ~15 g | 635 | 61 g | Alta. Sin ensalada ni queso. **Aceite estimado en 15 g, sin confirmar** |
 | Postre | Yogur +Proteínas natural 150 g · **1 nuez** (~5 g) | 123 | 19 g | Alta — confirmado por Julián |
-| Merienda | Tostada pan integral 60 g · muslitos de pollo Carloteña ~100 g | ~335 | ~26 g | **Media — sin etiqueta de los muslitos.** Falta nº de piezas y si llevan hueso |
-| Cena | *propuesta:* pasta de garbanzo 80 g · 2 latas atún natural · setas, tomate y calabacín · AOVE 10 g | 546 | 45 g | Propuesta, sin confirmar |
-| **TOTAL previsto** | | **2.070** | **180 g** | HC ~146 · Grasa ~72 g |
+| Merienda | Gelatina +Proteínas 100 g · plátano | 145 | 11 g | Alta — etiqueta verificada |
+| Cena | Salmón ~200 g · ensalada de espárragos blancos y pepino · AOVE ~10 g | 556 | 42 g | Media — peso del salmón estimado |
+| **TOTAL** | | **1.889** | **162 g** | **HC 97 (−149)** · Grasa 79 g |
 
 Peso de la mañana: **80,8 kg** — primer dato estandarizado de la serie.
 
@@ -96,7 +96,7 @@ Impacto: el día 18 baja de 2.050 a **2.020 kcal**.
 | Día | kcal reales | Objetivo | HC reales | Objetivo HC |
 |---|---:|---:|---:|---:|
 | 18 ago | 2.020 | 2.300 | 167 | 246 |
-| 19 ago | ~2.120 previsto | 2.300 | ~181 | 246 |
+| 19 ago | 1.889 | 2.300 | 97 | 246 |
 
 Durante dos días interpreté esto como «falta hidrato» y traté de rellenar el hueco con pan y plátano.
 **Reinterpretación:** no falla el cumplimiento, es que su ingesta natural ronda las 2.100 kcal. Ese es justamente el dato que la calibración busca.
@@ -111,6 +111,35 @@ El día 18 cerró 79 g corto de hidratos por cenar sin ningún carbohidrato. Hoy
 - **Sesión de torso del miércoles: ¿hecha o no?** — preguntado 4 veces, sin respuesta. Bloquea la programación del viernes
 - Etiqueta del queso de cabra blanco
 - ¿Aceite en la tostada del desayuno?
+
+---
+
+## Día 3 · jueves 20 ago
+
+| Toma | Contenido | kcal | Prot | Grasa | Fiabilidad |
+|---|---|---:|---:|---:|---|
+| Desayuno | Café · trozo pequeño de coca (~60 g) | 220 | **3 g** | 10 g | Media — tipo y peso de la coca sin confirmar |
+| Comida | Cuixa de pollastre al horno 350 g con hueso, **con piel** · poca zanahoria (~60 g) · plátano · AOVE 5 g | 675 | 46 g | 38 g | Media-alta — 350 g pesados, reparto hueso/carne estimado |
+| Merienda | *propuesta:* 2 gelatinas +Proteínas · plátano · 3 lonchas Carloteña | 268 | 29 g | 5 g | Propuesta |
+| Cena | *propuesta:* arroz 80 g seco · 250 g pollo · 2 huevos · AOVE 10 g | 785 | 77 g | 20 g | Propuesta |
+| Postre | *propuesta:* 1 gelatina | 40 | 10 g | 0 | Propuesta |
+| **TOTAL previsto** | | **1.988** | **165 g** | **73 g** | HC ~153 |
+
+Peso de la mañana: **sin registrar** — segundo día perdido de la serie.
+
+### El desayuno de 3 g de proteína
+Café y coca aportan 3 g. Los días 18 y 19 arrancó con 25 y 29 g y las cuentas salían solas.
+Consecuencia: quedaban **116 g de proteína para dos tomas**, y hubo que subir el pollo de la cena de 200 a 250 g y meter 3 gelatinas en la tarde.
+**No es un veto a la coca.** Es que el día que desayuna hidrato sin proteína, la deuda se paga por la tarde y hay que planificarlo desde la mañana.
+
+### La grasa se cerró en la comida
+La cuixa de 350 g con piel aporta 33 g de grasa ella sola. Estimé 344 kcal para «una cuixa»; la real fueron **~500 kcal**. Error de 156 kcal por no preguntar el peso antes de calcular — **tercera vez esta semana**.
+Con la piel puesta el día queda con 25 g de grasa para merienda y cena, de ahí que la merienda se construya con gelatina y fiambre magro, sin frutos secos ni aceite.
+Coste de la piel: **170 kcal y 17 g de grasa por 3 g de proteína.** Se la comió, y con los números del día cuadrando, bien.
+
+### Corrección de mi propia lectura
+El día 19 escribí que «cena tres de tres sin hidrato» y lo traté como hábito fijo. El día 20 propuso él mismo arroz en la cena.
+**Tres puntos no son un patrón.** Generalización retirada.
 
 ---
 
@@ -156,7 +185,7 @@ La media de 7 días es el único dato que se interpreta. Las lecturas sueltas so
 | Día | Fecha | Peso | Media móvil 7 d |
 |---|---|---:|---|
 | 1 | mié 19 ago | **80,8 kg** | — |
-| 2 | jue 20 ago | | |
+| 2 | jue 20 ago | *sin registrar* | |
 | 3 | vie 21 ago | | |
 | 4 | sáb 22 ago | | |
 | 5 | dom 23 ago | | |
