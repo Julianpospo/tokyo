@@ -170,11 +170,24 @@ El día 19 escribí que «cena tres de tres sin hidrato» y lo traté como hábi
 | Bistec de llata, vedella (Bonpreu) | 100 g | 120 | 20 g | Muy magro, 4 g grasa. Bandeja 311 g / 6 uds |
 | Alpro mango (soja) | 100 g | ~78 | 3 g | **No es yogur**: alternativa vegetal, poca proteína |
 | Pollo relleno Carloteña asado | 100 g | 166 | 18,5 g | 97 % pollo · grasa 9,5 g · **sal 1,5 g** · nitrito y polifosfatos. Envase 150 g |
+| **Muslito de pollo Carloteña, asado al horno** | 100 g | **122** | **17,0 g** | 97 % pollo · grasa 6,0 g (sat 0,6) · HC <0,5 g · **sal 1,70 g — lo más salado de la despensa** · 13,9 g prot/100 kcal · sin gluten, sin lactosa · nitrito, polifosfatos, dextrosa · Envase 150 g. **Producto distinto del pollo relleno** |
 | Yogur griego (tarrina azul 125 g) | 100 g | 60 | 5,8 g | Grasa 2,0 g · azúcares 4,7 g (lactosa) · calcio 150 mg |
 | Filete de pechuga extra-tierna (Mercadona) | 100 g | 108 | 23,4 g | Grasa 1,3 g · **sal 1,0 g** · 95 % pollo, resto agua, sal y fibras vegetales. Envase 581 g |
 | Entrecot de vacuno | 100 g | 161 | 22 g | Grasa 8 g · **sal 0,12 g**. Pack 489 g / 3 uds → 163 g por pieza. Mucho más magro de lo estimado |
 | Lentejas caviar en bote | 100 g | 95 | 10,0 g | Grasa 0,70 g · HC 12,2 g · **sal 0,70 g** (enjuagar). Ingredientes: llenties caviar i sal. Bote 400 g neto |
 | Boniato congelado rebozado | 100 g | 163 | ~1,5 g | Rebozado y prefrito. ~35 g HC · ~5 g grasa. **Descartado**: 0,9 g prot/100 kcal |
+
+### Errores de estimación de la semana 1 — todos por calcular antes de tener la etiqueta
+
+| Producto | Mi estimación | Etiqueta real | Desvío |
+|---|---|---|---|
+| Entrecot (por 100 g) | 245 kcal · 20 P · 18 G | **161 · 22 · 8** | −84 kcal |
+| Gelatina +Proteínas | ~70 kcal · 11 P | **40 · 10** | −30 kcal |
+| Nueces del postre | 25 g | **1 nuez, ~5 g** | −140 kcal |
+| Cuixa de pollastre | 344 kcal | **~500 kcal** | +156 kcal |
+| Muslito Carloteña (por 100 g) | 185 kcal · 21 P | **122 · 17** | −63 kcal |
+
+**Norma adoptada: peso y etiqueta primero, cuentas después.** El orden de fiabilidad no cambia: **etiqueta > base de datos > foto**.
 
 ### Ranking por proteína cada 100 kcal
 
@@ -187,6 +200,7 @@ El día 19 escribí que «cena tres de tres sin hidrato» y lo traté como hábi
 | Entrecot | 13,7 |
 | Lentejas caviar en bote | **10,5** |
 | Pechuga de pollo | 20,9 |
+| **Muslito de pollo Carloteña** | **13,9** |
 | Pollo relleno Carloteña | 11,1 |
 | Yogur griego 125 g | 9,7 |
 | Pasta de garbanzo | 5,7 |
