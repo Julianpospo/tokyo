@@ -170,6 +170,7 @@ El día 19 escribí que «cena tres de tres sin hidrato» y lo traté como hábi
 | Bistec de llata, vedella (Bonpreu) | 100 g | 120 | 20 g | Muy magro, 4 g grasa. Bandeja 311 g / 6 uds |
 | Alpro mango (soja) | 100 g | ~78 | 3 g | **No es yogur**: alternativa vegetal, poca proteína |
 | Pollo relleno Carloteña asado | 100 g | 166 | 18,5 g | 97 % pollo · grasa 9,5 g · **sal 1,5 g** · nitrito y polifosfatos. Envase 150 g |
+| **+Proteínas bebible Hacendado, fresa-plátano** | vaso 250 g | **121** | **17,4 g** | 0 % materia grasa · 0 % azúcares añadidos · grasa 1,0 g · HC 10,6 g (9,8 azúcares de la leche) · sal 0,31 g · calcio 300 mg (38 % VRN) · 14,4 g prot/100 kcal · **Botella de 951 ml = 4 vasos = ~70 g de proteína.** Proteína láctea, completa. **Clave para la semana post-quirúrgica: se bebe, no se mastica** |
 | **Muslito de pollo Carloteña, asado al horno** | 100 g | **122** | **17,0 g** | 97 % pollo · grasa 6,0 g (sat 0,6) · HC <0,5 g · **sal 1,70 g — lo más salado de la despensa** · 13,9 g prot/100 kcal · sin gluten, sin lactosa · nitrito, polifosfatos, dextrosa · Envase 150 g. **Producto distinto del pollo relleno** |
 | Yogur griego (tarrina azul 125 g) | 100 g | 60 | 5,8 g | Grasa 2,0 g · azúcares 4,7 g (lactosa) · calcio 150 mg |
 | Filete de pechuga extra-tierna (Mercadona) | 100 g | 108 | 23,4 g | Grasa 1,3 g · **sal 1,0 g** · 95 % pollo, resto agua, sal y fibras vegetales. Envase 581 g |
@@ -197,6 +198,7 @@ El día 19 escribí que «cena tres de tres sin hidrato» y lo traté como hábi
 | Pechuga extra-tierna Mercadona | **21,7** |
 | Merluza | 20,9 |
 | Bistec de llata | 16,7 |
+| **+Proteínas bebible** | **14,4** |
 | Entrecot | 13,7 |
 | Lentejas caviar en bote | **10,5** |
 | Pechuga de pollo | 20,9 |
